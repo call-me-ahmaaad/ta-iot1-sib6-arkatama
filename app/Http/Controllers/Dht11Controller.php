@@ -24,10 +24,10 @@ class Dht11Controller extends Controller
             "message" => "Data Temperature Berhasil Ditambahkan",
             "data" => [
                 "id" => $dht11Id,
-                "nama" => $dht11->temp_c,
-                "anime" => $dht11->temp_f,
-                "tipe" => $dht11->temp_k,
-                "harga" => $dht11->humid
+                "temp_c" => $dht11->temp_c,
+                "temp_f" => $dht11->temp_f,
+                "temp_k" => $dht11->temp_k,
+                "humid" => $dht11->humid
             ]
         ], 201);
     }

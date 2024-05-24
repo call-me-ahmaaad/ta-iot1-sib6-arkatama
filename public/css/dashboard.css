@@ -1,0 +1,172 @@
+body{
+    font-family: "JetBrains Mono", monospace;
+    /* height: 100vh; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(246, 246, 246);
+}
+
+/* Bagian Title */
+.title{
+    text-align: center;
+    color: rgb(55, 55, 55);
+}
+
+.card{
+    margin: 10px 0 10px 0;
+    display: flex;
+    flex-wrap: wrap;
+    width: 80%;
+    align-items: center;
+    justify-content: center;
+}
+
+/* DHT11 */
+.card .button-dht{
+    width: 90%;
+    height: 270px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    border-radius: 12px;
+    border: 3px solid #f94449;
+}
+
+.card .button-dht .data{
+    display: inline-block;
+    width: 200px;
+    height: 200px;/* Sesuaikan lebar card sesuai kebutuhan */
+    padding: 20px;
+    margin: 5px 5px;
+    /* border: 1px solid #ccc; */
+    /* border-radius: 10px;
+    text-align: center;
+    text-decoration: none; */
+    /* color: #ffffff; */
+}
+
+.card .button-dht .data[id="temp"]{
+    margin-left: 10px;
+}
+
+.card .button-dht .data{
+    margin-left: 10px;
+    background-color: #f94449;
+}
+
+.card .button-dht .data:hover{
+    box-shadow: 0 4px 8px 0 #f94449;
+}
+
+.card .button-dht .data h3{
+    top: 10%;
+}
+
+.card .button{
+    display: inline-block;
+    width: 200px;
+    height: 200px;/* Sesuaikan lebar card sesuai kebutuhan */
+    padding: 20px;
+    margin: 10px;
+    border: 3px solid #2c2c2c;
+    border-radius: 10px;
+    text-align: center;
+    text-decoration: none;
+    color: #ffffff;
+    transition: all 0.5s ease;
+}
+
+/* GAS MQ-2 */
+.card .button[id="gas"]{
+    width: 535px;
+    background-color: #6488EA;
+}
+
+.card .button[id="gas"]:hover{
+    box-shadow: 0 4px 8px 0 #6488EA;
+}
+
+/* GAS MQ-2 */
+.card .button[id="rain"]{
+    background-color: #6fc276;
+}
+
+.card .button[id="rain"]:hover{
+    box-shadow: 0 4px 8px 0 #6fc276;
+}
+
+.card .button:hover {
+    transform: translateY(-2px);
+}
+
+.card h3 {
+    margin-top: 0;
+}
+
+.card p {
+    font-size: 50px;
+    margin-top: 60px;
+
+}
+
+.card .led{
+    display: inline-block;
+    width: 200px;
+    height: 200px;/* Sesuaikan lebar card sesuai kebutuhan */
+    padding: 20px;
+    margin: 10px;
+    border: 3px solid #2c2c2c;
+    border-radius: 10px;
+    color: #ffffff;
+    text-align: center;
+    background-color: #b5651d;
+}
+
+.card .led .toggle{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 70%;
+}
+
+.card .led .toggle button{
+    width: 100%;
+    height: 40px;
+    border-radius: 7px;
+    font-family: "JetBrains Mono", monospace;
+    transition: all 0.5s ease;
+}
+.card .led .toggle button:hover, .card .led .toggle .btnLed.active{
+    color: white;
+    transform: translateY(-2px);
+}
+.card .led .toggle button[id="red"]:hover{
+    background-color: #f94449;
+}
+
+.card .led .toggle button[id="green"]:hover{
+    background-color: #6fc276;
+}
+
+.card .led .toggle button[id="blue"]:hover{
+    background-color: #6488EA;
+}
+
+.card .led .toggle .btnLed.active[id="red"]{
+    background-color: #f94449;
+}
+
+.card .led .toggle .btnLed.active[id="green"]{
+    background-color: #6fc276;
+}
+
+.card .led .toggle .btnLed.active[id="blue"]{
+    background-color: #6488EA;
+}
+
+.footer{
+    color: rgb(55, 55, 55);
+}

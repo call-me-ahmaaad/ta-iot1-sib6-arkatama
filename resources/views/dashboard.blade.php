@@ -69,7 +69,7 @@
                     function toggleLED(button, color) {
                         var isActive = button.classList.toggle('active');
                         var action = isActive ? 'on' : 'off';
-                        var url = 'https://192.168.0.15/led/' + color + '/' + action;
+                        var url = 'http://192.168.0.15/led/' + color + '/' + action;
                         fetch(url);
                     }
                 </script>

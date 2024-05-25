@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Dht11Controller;
+use App\Http\Controllers\RaindropController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/dht11', [Dht11Controller::class, 'api_dht11']);
+
+Route::post('/raindrop', [RaindropController::class, 'api_raindrop']);

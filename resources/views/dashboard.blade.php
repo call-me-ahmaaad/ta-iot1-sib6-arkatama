@@ -37,12 +37,49 @@
         <div class="button-dht">
             <a class="button data" id="temp" href="#">
                 <h3>Temperature</h3>
-                <p>70°C</p>
+                <p><span id="temp_c">{{ $temp_c }}°C</span></p>
             </a>
-            <a class="button data" id="humid" href="">
+            <a class="button data" href="#">
                 <h3>Humidity</h3>
-                <p>70%</p>
+                <p><span id="humid_value">{{ $humid }}%</span></p>
             </a>
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                $(document).ready(function() {
+                    function fetchLatestTemp() {
+                        $.ajax({
+                            url: '/latest-temp',
+                            method: 'GET',
+                            success: function(data) {
+                                $('#temp_c').text(data.temp_c + '°C');
+                            },
+                            error: function(error) {
+                                console.log('Error fetching latest temperature:', error);
+                            }
+                        });
+                    }
+
+                    function fetchLatestHumid() {
+                        $.ajax({
+                            url: '/latest-humid',
+                            method: 'GET',
+                            success: function(data) {
+                                $('#humid_value').text(data.humid + '%');
+                            },
+                            error: function(error) {
+                                console.log('Error fetching latest humidity:', error);
+                            }
+                        });
+                    }
+
+                    // Fetch the latest temperature every 5 seconds
+                    setInterval(fetchLatestTemp, 1000);
+
+                    // Fetch the latest humidity every 5 seconds
+                    setInterval(fetchLatestHumid, 1000);
+                });
+            </script>
         </div>
 
         {{-- Raindrop Sensor --}}

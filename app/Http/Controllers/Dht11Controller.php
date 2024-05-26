@@ -8,6 +8,15 @@ use Illuminate\Http\Request;
 
 class Dht11Controller extends Controller
 {
+    public function dashboard(){
+        $latestData = Dht11::latest()->first();
+
+        return view('dashboard', [
+            'temp_c' => $latestData ? $latestData->temp_c : null,
+            'humid' => $latestData ? $latestData->humid : null
+        ]);
+    }
+
     public function api_dht11(Request $request){
         $dht11 = new Dht11;
         $dht11->temp_c = $request->temp_c;

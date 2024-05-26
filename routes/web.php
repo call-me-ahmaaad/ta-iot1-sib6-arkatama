@@ -40,24 +40,24 @@ Route::get('/dashboard', [Dht11Controller::class, 'dashboard'])
 
 // Route untuk mendapatkan data temperature terbaru
 Route::get('/latest-temp', function () {
-    $latestData = Dht11::latest()->first();
+    $latestDhtData = Dht11::latest()->first();
     return response()->json([
-        'temp_c' => $latestData ? $latestData->temp_c : 'No data available',
+        'temp_c' => $latestDhtData ? $latestDhtData->temp_c : 'No data available',
     ]);
 })->middleware(['auth', 'verified']);
 
 // Route untuk mendapatkan data humidity terbaru
 Route::get('/latest-humid', function () {
-    $latestData = Dht11::latest()->first();
+    $latestDhtData = Dht11::latest()->first();
     return response()->json([
-        'humid' => $latestData ? $latestData->humid : 'No data available',
+        'humid' => $latestDhtData ? $latestDhtData->humid : 'No data available',
     ]);
 })->middleware(['auth', 'verified']);
 
 Route::get('/latest-rain', function () {
-    $latestData = Raindrop::latest()->first();
+    $latestRainData = Raindrop::latest()->first();
     return response()->json([
-        'rain_value' => $latestData ? $latestData->rain_value : null,
+        'rain_value' => $latestRainData ? $latestRainData->rain_value : null,
     ]);
 })->middleware(['auth', 'verified']);
 

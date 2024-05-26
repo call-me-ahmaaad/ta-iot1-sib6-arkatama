@@ -49,7 +49,7 @@
         {{-- Raindrop Sensor --}}
         <a class="button" href="" id="rain">
             <h3>Raindrop</h3>
-            <p><span id="rain_value">{{ $rain_value ? 'YES' : 'NO' }}</span></p>
+            <p><span id="rain_value">{{ $rain_value }}</span></p>
         </a>
 
         {{-- Gas Sensor (MQ-2) --}}
@@ -92,7 +92,7 @@
                         url: '/latest-rain',
                         method: 'GET',
                         success: function(data) {
-                            $('#rain_value').text(data.rain_value ? 'YES' : 'NO');
+                            $('#rain_value').text(data.rain_value);
                         },
                         error: function(error) {
                             console.log('Error fetching latest rain data:', error);

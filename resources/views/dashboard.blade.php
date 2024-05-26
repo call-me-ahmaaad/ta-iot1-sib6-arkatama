@@ -24,8 +24,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href={{URL::asset("/css/dashboard.css")}}>
     <title>Document</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     {{-- Bagian Title --}}
     <header class="title">
         <h1>DASHBOARD</h1>
@@ -44,7 +47,6 @@
                 <p><span id="humid_value">{{ $humid }}%</span></p>
             </a>
 
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
             <script>
                 $(document).ready(function() {
                     function fetchLatestTemp() {
@@ -85,7 +87,24 @@
         {{-- Raindrop Sensor --}}
         <a class="button" href="" id="rain">
             <h3>Raindrop</h3>
-            <p>ON</p>
+            <p><span id="rain_value">{{ $rain_value ? 'YES' : 'NO' }}</span></p>
+
+            <script>
+                function fetchLatestRain() {
+                    $.ajax({
+                        url: '/latest-rain',
+                        method: 'GET',
+                        success: function(data) {
+                            $('#rain_value').text(data.rain_value ? 'YES' : 'NO');
+                        },
+                        error: function(error) {
+                            console.log('Error fetching latest rain data:', error);
+                        }
+                    });
+                }
+
+                setInterval(fetchLatestRain, 1000);
+            </script>
         </a>
 
         {{-- Gas Sensor (MQ-2) --}}

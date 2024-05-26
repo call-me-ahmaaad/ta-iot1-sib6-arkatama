@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Dht11Controller;
 use Illuminate\Support\Facades\Route;
+use App\Models\Raindrop;
 
 use App\Models\Dht11;
 
@@ -50,6 +51,13 @@ Route::get('/latest-humid', function () {
     $latestData = Dht11::latest()->first();
     return response()->json([
         'humid' => $latestData ? $latestData->humid : 'No data available',
+    ]);
+})->middleware(['auth', 'verified']);
+
+Route::get('/latest-rain', function () {
+    $latestData = Raindrop::latest()->first();
+    return response()->json([
+        'rain_value' => $latestData ? $latestData->rain_value : null,
     ]);
 })->middleware(['auth', 'verified']);
 

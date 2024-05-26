@@ -3,17 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dht11;
+use App\Models\Raindrop;
 
 use Illuminate\Http\Request;
 
 class Dht11Controller extends Controller
 {
     public function dashboard(){
-        $latestData = Dht11::latest()->first();
+        $latestDhtData = Dht11::latest()->first();
+        $latestRainData = Raindrop::latest()->first();
 
         return view('dashboard', [
-            'temp_c' => $latestData ? $latestData->temp_c : null,
-            'humid' => $latestData ? $latestData->humid : null
+            'temp_c' => $latestDhtData ? $latestDhtData->temp_c : null,
+            'humid' => $latestDhtData ? $latestDhtData->humid : null,
+            'rain_value' => $latestRainData ? $latestRainData->rain_value : null,
         ]);
     }
 

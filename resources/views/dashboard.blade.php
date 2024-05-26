@@ -27,8 +27,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     {{-- Bagian Title --}}
     <header class="title">
         <h1>DASHBOARD</h1>
@@ -46,50 +44,49 @@
                 <h3>Humidity</h3>
                 <p><span id="humid_value">{{ $humid }}%</span></p>
             </a>
-
-            <script>
-                $(document).ready(function() {
-                    function fetchLatestTemp() {
-                        $.ajax({
-                            url: '/latest-temp',
-                            method: 'GET',
-                            success: function(data) {
-                                $('#temp_c').text(data.temp_c + '°C');
-                            },
-                            error: function(error) {
-                                console.log('Error fetching latest temperature:', error);
-                            }
-                        });
-                    }
-
-                    function fetchLatestHumid() {
-                        $.ajax({
-                            url: '/latest-humid',
-                            method: 'GET',
-                            success: function(data) {
-                                $('#humid_value').text(data.humid + '%');
-                            },
-                            error: function(error) {
-                                console.log('Error fetching latest humidity:', error);
-                            }
-                        });
-                    }
-
-                    // Fetch the latest temperature every 5 seconds
-                    setInterval(fetchLatestTemp, 1000);
-
-                    // Fetch the latest humidity every 5 seconds
-                    setInterval(fetchLatestHumid, 1000);
-                });
-            </script>
         </div>
 
         {{-- Raindrop Sensor --}}
         <a class="button" href="" id="rain">
             <h3>Raindrop</h3>
             <p><span id="rain_value">{{ $rain_value ? 'YES' : 'NO' }}</span></p>
+        </a>
 
-            <script>
+        {{-- Gas Sensor (MQ-2) --}}
+        <a class="button" id="gas" href="" id="gas">
+            <h3>Gas</h3>
+            <p>70 ppm</p>
+        </a>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                function fetchLatestTemp() {
+                    $.ajax({
+                        url: '/latest-temp',
+                        method: 'GET',
+                        success: function(data) {
+                            $('#temp_c').text(data.temp_c + '°C');
+                        },
+                        error: function(error) {
+                            console.log('Error fetching latest temperature:', error);
+                        }
+                    });
+                }
+
+                function fetchLatestHumid() {
+                    $.ajax({
+                        url: '/latest-humid',
+                        method: 'GET',
+                        success: function(data) {
+                            $('#humid_value').text(data.humid + '%');
+                        },
+                        error: function(error) {
+                            console.log('Error fetching latest humidity:', error);
+                        }
+                    });
+                }
+
                 function fetchLatestRain() {
                     $.ajax({
                         url: '/latest-rain',
@@ -103,15 +100,16 @@
                     });
                 }
 
-                setInterval(fetchLatestRain, 1000);
-            </script>
-        </a>
+                // Fetch the latest temperature every 5 seconds
+                setInterval(fetchLatestTemp, 1000);
 
-        {{-- Gas Sensor (MQ-2) --}}
-        <a class="button" id="gas" href="" id="gas">
-            <h3>Gas</h3>
-            <p>70 ppm</p>
-        </a>
+                // Fetch the latest humidity every 5 seconds
+                setInterval(fetchLatestHumid, 1000);
+
+                // Fetch the latest rain data every 5 seconds
+                setInterval(fetchLatestRain, 1000);
+            });
+        </script>
 
         {{-- LED Control --}}
         <div class="led" href="" id="led">

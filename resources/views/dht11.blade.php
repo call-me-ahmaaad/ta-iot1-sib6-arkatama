@@ -114,7 +114,11 @@
                             x: {
                                 type: 'time',
                                 time: {
-                                    unit: 'second'
+                                    unit: 'second',
+                                    stepSize: 5, // Display label every 5 seconds
+                                    displayFormats: {
+                                        second: 'HH:mm:ss' // Customize the display format
+                                    }
                                 }
                             },
                             y: {
@@ -154,7 +158,7 @@
                     });
                 }
 
-                // Fetch the latest temperature every second
+                // Fetch the latest temperature every 5 seconds
                 setInterval(fetchLatestTemp_c, 5000);
             });
         </script>

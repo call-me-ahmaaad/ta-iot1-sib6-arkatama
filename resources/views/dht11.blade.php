@@ -124,7 +124,7 @@
                                     maxTicksLimit: 5, // Adjust this to control how many ticks you want to display
                                     callback: function(value, index, ticks) {
                                         const date = new Date(value);
-                                        if (date.getSeconds() % 5 === 0) { // Display label only if the second is a multiple of 5
+                                        if (date.getSeconds() % 2 === 0) { // Display label only if the second is a multiple of 5
                                             return date.toLocaleTimeString();
                                         } else {
                                             return '';

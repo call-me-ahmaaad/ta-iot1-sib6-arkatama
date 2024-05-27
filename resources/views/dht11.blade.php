@@ -136,8 +136,8 @@
                             tempChart.data.labels.push(now);
                             tempChart.data.datasets[0].data.push(temp);
 
-                            // Keep only the last 10 data points
-                            if (tempChart.data.labels.length > 10) {
+                            // Keep only the last 15 data points
+                            if (tempChart.data.labels.length > 15) {
                                 tempChart.data.labels.shift();
                                 tempChart.data.datasets[0].data.shift();
                             }
@@ -154,7 +154,7 @@
                     });
                 }
 
-                // Fetch the latest temperature every second
+                // Fetch the latest temperature every 3 seconds
                 setInterval(fetchLatestTemp_c, 3000);
             });
         </script>

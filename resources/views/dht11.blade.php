@@ -13,11 +13,11 @@
         </div>
         <div class="card" id="farenheit">
             <p id="unit">Farenheit:</p>
-            <p>{{ $temp_f }}°F</p>
+            <p><span id="temp_f">{{ $temp_f }}°F</span></p>
         </div>
         <div class="card" id="kelvin">
             <p id="unit">Kelvin:</p>
-            <p>{{ $temp_k }}°K</p>
+            <p><span id="temp_k">{{ $temp_k }}°K</span></p>
         </div>
         <div class="card" id="humid">
             <p id="unit">Humid:</p>
@@ -26,12 +26,38 @@
 
         <script>
             $(document).ready(function() {
-                function fetchLatestTemp() {
+                function fetchLatestTemp_c() {
                     $.ajax({
-                        url: '/latest-temp',
+                        url: '/latest-temp_c',
                         method: 'GET',
                         success: function(data) {
                             $('#temp_c').text(data.temp_c + '°C');
+                        },
+                        error: function(error) {
+                            console.log('Error fetching latest temperature:', error);
+                        }
+                    });
+                }
+
+                function fetchLatestTemp_f() {
+                    $.ajax({
+                        url: '/latest-temp_f',
+                        method: 'GET',
+                        success: function(data) {
+                            $('#temp_f').text(data.temp_f + '°F');
+                        },
+                        error: function(error) {
+                            console.log('Error fetching latest temperature:', error);
+                        }
+                    });
+                }
+
+                function fetchLatestTemp_k() {
+                    $.ajax({
+                        url: '/latest-temp_k',
+                        method: 'GET',
+                        success: function(data) {
+                            $('#temp_k').text(data.temp_k + '°K');
                         },
                         error: function(error) {
                             console.log('Error fetching latest temperature:', error);
@@ -53,7 +79,11 @@
                 }
 
                 // Fetch the latest temperature every 5 seconds
-                setInterval(fetchLatestTemp, 1000);
+                setInterval(fetchLatestTemp_c, 1000);
+
+                setInterval(fetchLatestTemp_f, 1000);
+
+                setInterval(fetchLatestTemp_k, 1000);
 
                 // Fetch the latest humidity every 5 seconds
                 setInterval(fetchLatestHumid, 1000);

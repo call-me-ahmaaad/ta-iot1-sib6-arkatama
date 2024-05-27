@@ -63,7 +63,7 @@
             $(document).ready(function() {
                 function fetchLatestTemp() {
                     $.ajax({
-                        url: '/latest-temp',
+                        url: '/latest-temp_c',
                         method: 'GET',
                         success: function(data) {
                             $('#temp_c').text(data.temp_c + '°C');

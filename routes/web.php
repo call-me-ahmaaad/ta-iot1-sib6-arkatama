@@ -39,10 +39,24 @@ Route::get('/dashboard', [Dht11Controller::class, 'dashboard'])
 // })->middleware(['auth', 'verified']);
 
 // Route untuk mendapatkan data temperature terbaru
-Route::get('/latest-temp', function () {
+Route::get('/latest-temp_c', function () {
     $latestDhtData = Dht11::latest()->first();
     return response()->json([
         'temp_c' => $latestDhtData ? $latestDhtData->temp_c : 'No data available',
+    ]);
+})->middleware(['auth', 'verified']);
+
+Route::get('/latest-temp_f', function () {
+    $latestDhtData = Dht11::latest()->first();
+    return response()->json([
+        'temp_f' => $latestDhtData ? $latestDhtData->temp_f : 'No data available',
+    ]);
+})->middleware(['auth', 'verified']);
+
+Route::get('/latest-temp_k', function () {
+    $latestDhtData = Dht11::latest()->first();
+    return response()->json([
+        'temp_k' => $latestDhtData ? $latestDhtData->temp_k : 'No data available',
     ]);
 })->middleware(['auth', 'verified']);
 

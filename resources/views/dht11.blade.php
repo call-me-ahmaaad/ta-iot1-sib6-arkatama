@@ -109,7 +109,7 @@
                         }]
                     },
                     options: {
-                        responsive: true,
+                        responsive: false,
                         scales: {
                             x: {
                                 type: 'time',

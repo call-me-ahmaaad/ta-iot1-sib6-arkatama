@@ -155,7 +155,7 @@
                 }
 
                 // Fetch the latest temperature every second
-                setInterval(fetchLatestTemp_c, 1000);
+                setInterval(fetchLatestTemp_c, 3000);
             });
         </script>
     </div>

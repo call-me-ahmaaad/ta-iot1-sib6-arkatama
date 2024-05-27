@@ -1,0 +1,9 @@
+body{
+    font-family: 'JetBrains Mono', monospace;
+    background-color: rgb(246, 246, 246);
+}
+
+.navbar{
+    height: 60px;
+    background-color: aqua;
+}

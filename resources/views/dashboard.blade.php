@@ -36,11 +36,11 @@
     <div class="card">
         {{-- Temperature and Humidity Sensor (DHT11) --}}
         <div class="button-dht">
-            <a class="button data" id="temp" href="#">
+            <a class="button data" id="temp" href={{route('web.dht11')}}>
                 <h3>Temperature</h3>
                 <p><span id="temp_c">{{ $temp_c }}°C</span></p>
             </a>
-            <a class="button data" href="#">
+            <a class="button data" href={{route('web.dht11')}}>
                 <h3>Humidity</h3>
                 <p><span id="humid_value">{{ $humid }}%</span></p>
             </a>

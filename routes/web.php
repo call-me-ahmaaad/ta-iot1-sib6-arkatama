@@ -68,3 +68,5 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('/temp-and-humid', [Dht11Controller::class, 'web_dht11'])->name('web.dht11');

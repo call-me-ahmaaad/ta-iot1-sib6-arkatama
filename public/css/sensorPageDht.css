@@ -26,3 +26,7 @@
     transform: translateY(-2px);
     box-shadow: 0 4px 8px 0 #f94449;
 }
+
+.table #tempChart{
+    width: 200px;
+}

@@ -115,9 +115,20 @@
                                 type: 'time',
                                 time: {
                                     unit: 'second',
-                                    stepSize: 5, // Display label every 5 seconds
                                     displayFormats: {
                                         second: 'HH:mm:ss' // Customize the display format
+                                    }
+                                },
+                                ticks: {
+                                    autoSkip: true,
+                                    maxTicksLimit: 6, // Adjust this to control how many ticks you want to display
+                                    callback: function(value, index, ticks) {
+                                        const date = new Date(value);
+                                        if (date.getSeconds() % 5 === 0) { // Display label only if the second is a multiple of 5
+                                            return date.toLocaleTimeString();
+                                        } else {
+                                            return '';
+                                        }
                                     }
                                 }
                             },

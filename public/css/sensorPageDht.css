@@ -27,6 +27,6 @@
     box-shadow: 0 4px 8px 0 #f94449;
 }
 
-.table #tempChart{
+.table canvas{
     width: 200px;
 }

@@ -114,22 +114,7 @@
                             x: {
                                 type: 'time',
                                 time: {
-                                    unit: 'second',
-                                    displayFormats: {
-                                        second: 'HH:mm:ss' // Customize the display format
-                                    }
-                                },
-                                ticks: {
-                                    autoSkip: true,
-                                    maxTicksLimit: 5, // Adjust this to control how many ticks you want to display
-                                    callback: function(value, index, ticks) {
-                                        const date = new Date(value);
-                                        if (date.getSeconds() % 2 === 0) { // Display label only if the second is a multiple of 5
-                                            return date.toLocaleTimeString();
-                                        } else {
-                                            return '';
-                                        }
-                                    }
+                                    unit: 'second'
                                 }
                             },
                             y: {
@@ -151,8 +136,8 @@
                             tempChart.data.labels.push(now);
                             tempChart.data.datasets[0].data.push(temp);
 
-                            // Keep only the last 20 data points
-                            if (tempChart.data.labels.length > 20) {
+                            // Keep only the last 10 data points
+                            if (tempChart.data.labels.length > 10) {
                                 tempChart.data.labels.shift();
                                 tempChart.data.datasets[0].data.shift();
                             }
@@ -169,8 +154,8 @@
                     });
                 }
 
-                // Fetch the latest temperature every 5 seconds
-                setInterval(fetchLatestTemp_c, 5000);
+                // Fetch the latest temperature every second
+                setInterval(fetchLatestTemp_c, 1000);
             });
         </script>
     </div>

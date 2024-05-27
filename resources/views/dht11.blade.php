@@ -91,6 +91,72 @@
         </script>
     </div>
     <div class="table">
+        <canvas id="tempChart"></canvas>
+        <script>
+            $(document).ready(function() {
+                // Initialize the chart
+                const ctx = document.getElementById('tempChart').getContext('2d');
+                const tempChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: [], // Initial empty labels
+                        datasets: [{
+                            label: 'Temperature (°C)',
+                            data: [], // Initial empty data
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            fill: true,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            x: {
+                                type: 'time',
+                                time: {
+                                    unit: 'second'
+                                }
+                            },
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
 
+                function fetchLatestTemp_c() {
+                    $.ajax({
+                        url: '/latest-temp_c',
+                        method: 'GET',
+                        success: function(data) {
+                            const now = new Date();
+                            const temp = data.temp_c;
+
+                            // Add data to chart
+                            tempChart.data.labels.push(now);
+                            tempChart.data.datasets[0].data.push(temp);
+
+                            // Keep only the last 5 data points
+                            if (tempChart.data.labels.length > 5) {
+                                tempChart.data.labels.shift();
+                                tempChart.data.datasets[0].data.shift();
+                            }
+
+                            // Update chart
+                            tempChart.update();
+
+                            // Update text
+                            $('#temp_c').text(temp + '°C');
+                        },
+                        error: function(error) {
+                            console.log('Error fetching latest temperature:', error);
+                        }
+                    });
+                }
+
+                // Fetch the latest temperature every second
+                setInterval(fetchLatestTemp_c, 1000);
+            });
+        </script>
     </div>
 @endsection

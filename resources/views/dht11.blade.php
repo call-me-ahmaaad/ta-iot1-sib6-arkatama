@@ -121,7 +121,7 @@
                                 },
                                 ticks: {
                                     autoSkip: true,
-                                    maxTicksLimit: 6, // Adjust this to control how many ticks you want to display
+                                    maxTicksLimit: 5, // Adjust this to control how many ticks you want to display
                                     callback: function(value, index, ticks) {
                                         const date = new Date(value);
                                         if (date.getSeconds() % 5 === 0) { // Display label only if the second is a multiple of 5
@@ -151,8 +151,8 @@
                             tempChart.data.labels.push(now);
                             tempChart.data.datasets[0].data.push(temp);
 
-                            // Keep only the last 5 data points
-                            if (tempChart.data.labels.length > 5) {
+                            // Keep only the last 20 data points
+                            if (tempChart.data.labels.length > 20) {
                                 tempChart.data.labels.shift();
                                 tempChart.data.datasets[0].data.shift();
                             }

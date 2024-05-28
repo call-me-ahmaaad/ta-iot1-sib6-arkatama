@@ -80,9 +80,7 @@
 
                 // Fetch the latest temperature every 5 seconds
                 setInterval(fetchLatestTemp_c, 1000);
-
                 setInterval(fetchLatestTemp_f, 1000);
-
                 setInterval(fetchLatestTemp_k, 1000);
 
                 // Fetch the latest humidity every 5 seconds

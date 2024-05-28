@@ -5,9 +5,6 @@ use App\Http\Controllers\SensorController;
 
 use Illuminate\Support\Facades\Route;
 
-// use App\Models\Raindrop;
-// use App\Models\Dht11;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes

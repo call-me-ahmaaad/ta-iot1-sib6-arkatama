@@ -30,11 +30,11 @@ Route::get('/dashboard', [SensorController::class, 'dashboard'])
 
 Route::get('/temp-and-humid', [SensorController::class, 'web_dht11'])->name('web.dht11');
 
-Route::get('/latest-temp_c', [SensorController::class, 'latest_temp_c']);
-Route::get('/latest-temp_f', [SensorController::class, 'latest_temp_f']);
-Route::get('/latest-temp_k', [SensorController::class, 'latest_temp_k']);
-Route::get('/latest-humid', [SensorController::class, 'latest_humid']);
-Route::get('/latest-rain', [SensorController::class, 'latest_rain']);
+Route::get('/latest-dht11', [SensorController::class, 'latest_dht11']);
+// Route::get('/latest-temp_f', [SensorController::class, 'latest_temp_f']);
+// Route::get('/latest-temp_k', [SensorController::class, 'latest_temp_k']);
+// Route::get('/latest-humid', [SensorController::class, 'latest_humid']);
+// Route::get('/latest-rain', [SensorController::class, 'latest_rain']);
 
 // Route untuk mendapatkan data temperature terbaru
 // Route::get('/latest-temp_c', function () {

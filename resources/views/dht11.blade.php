@@ -26,65 +26,24 @@
 
         <script>
             $(document).ready(function() {
-                function fetchLatestTemp_c() {
+                function fetchLatestData() {
                     $.ajax({
-                        url: '/latest-temp_c',
+                        url: '/latest-dht11',
                         method: 'GET',
                         success: function(data) {
                             $('#temp_c').text(data.temp_c + '°C');
-                        },
-                        error: function(error) {
-                            console.log('Error fetching latest temperature:', error);
-                        }
-                    });
-                }
-
-                function fetchLatestTemp_f() {
-                    $.ajax({
-                        url: '/latest-temp_f',
-                        method: 'GET',
-                        success: function(data) {
                             $('#temp_f').text(data.temp_f + '°F');
-                        },
-                        error: function(error) {
-                            console.log('Error fetching latest temperature:', error);
-                        }
-                    });
-                }
-
-                function fetchLatestTemp_k() {
-                    $.ajax({
-                        url: '/latest-temp_k',
-                        method: 'GET',
-                        success: function(data) {
                             $('#temp_k').text(data.temp_k + '°K');
-                        },
-                        error: function(error) {
-                            console.log('Error fetching latest temperature:', error);
-                        }
-                    });
-                }
-
-                function fetchLatestHumid() {
-                    $.ajax({
-                        url: '/latest-humid',
-                        method: 'GET',
-                        success: function(data) {
                             $('#humid_value').text(data.humid + '%');
                         },
                         error: function(error) {
-                            console.log('Error fetching latest humidity:', error);
+                            console.log('Error fetching latest data:', error);
                         }
                     });
                 }
 
-                // Fetch the latest temperature every 5 seconds
-                setInterval(fetchLatestTemp_c, 1000);
-                setInterval(fetchLatestTemp_f, 1000);
-                setInterval(fetchLatestTemp_k, 1000);
-
-                // Fetch the latest humidity every 5 seconds
-                setInterval(fetchLatestHumid, 1000);
+                // Fetch the latest data every 1 seconds
+                setInterval(fetchLatestData, 1000);
             });
         </script>
     </div>

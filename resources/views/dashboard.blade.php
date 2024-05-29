@@ -61,28 +61,16 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             $(document).ready(function() {
-                function fetchLatestTemp() {
+                function fetchLatestTempAndHumid() {
                     $.ajax({
-                        url: '/latest-temp_c',
+                        url: '/latest-dht11',
                         method: 'GET',
                         success: function(data) {
                             $('#temp_c').text(data.temp_c + '°C');
-                        },
-                        error: function(error) {
-                            console.log('Error fetching latest temperature:', error);
-                        }
-                    });
-                }
-
-                function fetchLatestHumid() {
-                    $.ajax({
-                        url: '/latest-humid',
-                        method: 'GET',
-                        success: function(data) {
                             $('#humid_value').text(data.humid + '%');
                         },
                         error: function(error) {
-                            console.log('Error fetching latest humidity:', error);
+                            console.log('Error fetching latest temperature and humidity:', error);
                         }
                     });
                 }
@@ -100,11 +88,8 @@
                     });
                 }
 
-                // Fetch the latest temperature every 5 seconds
-                setInterval(fetchLatestTemp, 1000);
-
-                // Fetch the latest humidity every 5 seconds
-                setInterval(fetchLatestHumid, 1000);
+                // Fetch the latest temperature and humidity every 5 seconds
+                setInterval(fetchLatestTempAndHumid, 1000);
 
                 // Fetch the latest rain data every 5 seconds
                 setInterval(fetchLatestRain, 1000);

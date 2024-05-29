@@ -34,36 +34,39 @@ class SensorController extends Controller
     }
 
     // Fungsi untuk menampilkan data temperature celcius dari database yang terbaru (update terus)
-    public function latest_temp_c(){
+    public function latest_dht11(){
         $latestDhtData = Dht11::latest()->first();
         return response()->json([
             'temp_c' => $latestDhtData ? $latestDhtData->temp_c : 'No data available',
+            'temp_f' => $latestDhtData ? $latestDhtData->temp_f : 'No data available',
+            'temp_k' => $latestDhtData ? $latestDhtData->temp_k : 'No data available',
+            'humid' => $latestDhtData ? $latestDhtData->humid : 'No data available',
         ]);
     }
 
     // Fungsi untuk menampilkan data temperature farenheit dari database yang terbaru (update terus)
-    public function latest_temp_f(){
-        $latestDhtData = Dht11::latest()->first();
-        return response()->json([
-            'temp_f' => $latestDhtData ? $latestDhtData->temp_f : 'No data available',
-        ]);
-    }
+    // public function latest_temp_f(){
+    //     $latestDhtData = Dht11::latest()->first();
+    //     return response()->json([
+    //         'temp_f' => $latestDhtData ? $latestDhtData->temp_f : 'No data available',
+    //     ]);
+    // }
 
     // Fungsi untuk menampilkan data temperature kelvin dari database yang terbaru (update terus)
-    public function latest_temp_k(){
-        $latestDhtData = Dht11::latest()->first();
-        return response()->json([
-            'temp_k' => $latestDhtData ? $latestDhtData->temp_k : 'No data available',
-        ]);
-    }
+    // public function latest_temp_k(){
+    //     $latestDhtData = Dht11::latest()->first();
+    //     return response()->json([
+    //         'temp_k' => $latestDhtData ? $latestDhtData->temp_k : 'No data available',
+    //     ]);
+    // }
 
     // Fungsi untuk menampilkan data humidity dari database yang terbaru (update terus)
-    public function latest_humid(){
-        $latestDhtData = Dht11::latest()->first();
-        return response()->json([
-            'humid' => $latestDhtData ? $latestDhtData->humid : 'No data available',
-        ]);
-    }
+    // public function latest_humid(){
+    //     $latestDhtData = Dht11::latest()->first();
+    //     return response()->json([
+    //         'humid' => $latestDhtData ? $latestDhtData->humid : 'No data available',
+    //     ]);
+    // }
 
     // Fungsi untuk menampilkan data kondisi hujan dari database yang terbaru (update terus)
     public function latest_rain(){

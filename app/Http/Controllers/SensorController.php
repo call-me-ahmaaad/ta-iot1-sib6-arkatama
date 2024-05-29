@@ -37,10 +37,11 @@ class SensorController extends Controller
     public function latest_dht11(){
         $latestDhtData = Dht11::latest()->first();
         return response()->json([
-            'temp_c' => $latestDhtData ? $latestDhtData->temp_c : 'No data available',
-            'temp_f' => $latestDhtData ? $latestDhtData->temp_f : 'No data available',
-            'temp_k' => $latestDhtData ? $latestDhtData->temp_k : 'No data available',
-            'humid' => $latestDhtData ? $latestDhtData->humid : 'No data available',
+            'temp_c' => $latestDhtData ? $latestDhtData->temp_c : null,
+        'temp_f' => $latestDhtData ? $latestDhtData->temp_f : null,
+        'temp_k' => $latestDhtData ? $latestDhtData->temp_k : null,
+        'humid' => $latestDhtData ? $latestDhtData->humid : null,
+        'created_at' => $latestDhtData ? $latestDhtData->created_at : null,
         ]);
     }
 

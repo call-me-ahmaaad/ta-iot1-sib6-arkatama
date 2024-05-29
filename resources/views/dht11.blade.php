@@ -48,8 +48,14 @@
         </script>
     </div>
     <div class="table">
-        <div id="temperatureChart" style="width: 600px; height: 400px;"></div>
-        <div id="humidityChart" style="width: 600px; height: 400px;"></div>
+        <div>
+            <h2>Grafik Suhu (Celsius)</h2>
+            <div id="temperatureChart"></div>
+        </div>
+        <div>
+            <h2>Grafik Kelembaban</h2>
+            <div id="humidityChart"></div>
+        </div>
 
         <script>
             let temperatureChart, humidityChart;

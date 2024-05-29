@@ -22,3 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/dht11', [ApiController::class, 'api_dht11']);
 Route::post('/raindrop', [ApiController::class, 'api_raindrop']);
+
+Route::get('/dht11/latest', [ApiController::class, 'getLatestDht11Data']);

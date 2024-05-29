@@ -20,6 +20,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/realtime', function () {
+    return view('realtime');
+});
+
 Route::get('/dashboard', [SensorController::class, 'dashboard'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');

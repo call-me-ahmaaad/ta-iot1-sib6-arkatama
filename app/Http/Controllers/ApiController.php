@@ -34,6 +34,12 @@ class ApiController extends Controller
         ], 201);
     }
 
+    public function getLatestDht11Data()
+    {
+        $data = Dht11::latest()->first();
+        return response()->json($data);
+    }
+
     // Fungsi API untuk data sensor Raindrop Sensor
     public function api_raindrop(Request $request){
         $raindrop = new Raindrop;

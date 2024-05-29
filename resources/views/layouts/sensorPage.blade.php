@@ -7,6 +7,9 @@
     <title>Document</title>
     <link rel="stylesheet" href="/css/sensorPage.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('css')
 </head>

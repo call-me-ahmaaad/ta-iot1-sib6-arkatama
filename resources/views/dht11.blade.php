@@ -70,9 +70,9 @@
                     });
                     if (result.ok) {
                         const data = await result.json();
-                        console.log('Fetched data:', data);  // Debugging: log fetched data
+                        console.log('Fetched data:', latestDhtData);  // Debugging: log fetched data
 
-                        if (data) {
+                        if (latestDhtData) {
                             let x = new Date(data.created_at).getTime();
                             let tempC = Number(data.temp_c);
                             let humid = Number(data.humid);

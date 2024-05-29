@@ -62,7 +62,7 @@
             const baseUrl = '{{ url('/') }}';
 
             async function requestData() {
-                let endpoint = `${baseUrl}/latest-dht11`;
+                let endpoint = `${baseUrl}/api/dht11/latest`;
 
                 try {
                     const result = await fetch(endpoint, {

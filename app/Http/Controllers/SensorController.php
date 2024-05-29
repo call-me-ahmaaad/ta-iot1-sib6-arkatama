@@ -42,8 +42,6 @@ class SensorController extends Controller
             'temp_k' => $latestDhtData ? $latestDhtData->temp_k : 'No data available',
             'humid' => $latestDhtData ? $latestDhtData->humid : 'No data available',
         ]);
-
-        return response()->json($data);
     }
 
     // Fungsi untuk menampilkan data temperature farenheit dari database yang terbaru (update terus)

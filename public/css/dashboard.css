@@ -212,7 +212,7 @@ body{
 .gaugeMonitoring .gaugeContainer .gaugeIcon {
     position: absolute;
     top: 30%;
-    transform: translateY(-40%);
+    transform: translateY(-30%);
     z-index: 3;
     font-size: 50px; /* Sesuaikan ukuran sesuai kebutuhan */
     overflow: visible; /* Menghindari potongan konten */

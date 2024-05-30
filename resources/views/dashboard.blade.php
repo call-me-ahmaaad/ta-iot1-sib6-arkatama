@@ -90,19 +90,19 @@
                             if (data.temp_c <= 25) {
                                 tempColor = '#6488EA'; // Blue for cold
                                 tempLabel = 'cold = Suhu Dingin';
-                                tempIcon = '❄️'; // Cold icon
+                                tempIcon = '🥶'; // Cold icon
                             } else if (data.temp_c <= 35) {
                                 tempColor = '#6fc276'; // Green for normal
                                 tempLabel = 'normal = Suhu Normal';
-                                tempIcon = '🌿'; // Normal icon
+                                tempIcon = '😌'; // Normal icon
                             } else if (data.temp_c <= 50) {
                                 tempColor = '#ffe37a'; // Yellow for hot
                                 tempLabel = 'hot = Suhu Panas';
-                                tempIcon = '☀️'; // Hot icon
+                                tempIcon = '🥵'; // Hot icon
                             } else {
                                 tempColor = '#f94449'; // Red for very hot
                                 tempLabel = 'very hot = MENYALA ABANGKU';
-                                tempIcon = '🔥'; // Very hot icon
+                                tempIcon = '💀'; // Very hot icon
                             }
 
                             var humidColor;
@@ -115,7 +115,7 @@
                             } else if (data.humid <= 50) {
                                 humidColor = '#6fc276'; // Green for moderate humidity
                                 humidLabel = 'moderate humid = Kelembaban Normal';
-                                humidIcon = '🌿'; // Moderate humidity icon
+                                humidIcon = '🍀'; // Moderate humidity icon
                             } else if (data.humid <= 75) {
                                 humidColor = '#ffe37a'; // Yellow for high humidity
                                 humidLabel = 'high humid = Kelembaban Tinggi';

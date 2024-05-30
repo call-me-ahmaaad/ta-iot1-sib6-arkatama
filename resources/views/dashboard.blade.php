@@ -111,8 +111,8 @@
                             $('#gaugeHumidityLabel').text(data.humid + '%');
 
                             // Adjust label position
-                            $('#gaugeTempLabel').css('left', `calc(${tempPercentage}% - 55px)`);
-                            $('#gaugeHumidityLabel').css('left', `calc(${humidPercentage}% - 35px)`);
+                            $('#gaugeTempLabel').css('left', `calc(${tempPercentage}% - 75px)`);
+                            $('#gaugeHumidityLabel').css('left', `calc(${humidPercentage}% - 55px)`);
                         },
                         error: function(error) {
                             console.log('Error fetching latest temperature and humidity:', error);

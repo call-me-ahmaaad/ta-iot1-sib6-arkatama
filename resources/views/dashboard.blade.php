@@ -45,6 +45,7 @@
                 <p><span id="humid_value">{{ $humid }}%</span></p>
             </a>
             <div class="gaugeMonitoring">
+                <div id="temp-label" class="dynamic-label"></div>
                 <div class="gaugeContainer">
                     <div class="gauge gaugeTemp"></div>
                     <div class="gaugeLabel" id="gaugeTempLabel"></div>
@@ -53,6 +54,7 @@
                     <div class="gauge gaugeHumidity"></div>
                     <div class="gaugeLabel" id="gaugeHumidityLabel"></div>
                 </div>
+                <div id="humid-label" class="dynamic-label"></div>
             </div>
         </div>
 
@@ -83,26 +85,39 @@
                             var humidPercentage = data.humid; // Humidity is in percentage
 
                             var tempColor;
+                            var tempLabel;
                             if (data.temp_c <= 25) {
                                 tempColor = '#6488EA'; // Blue for cold
+                                tempLabel = 'cold = Suhu Dingin';
                             } else if (data.temp_c <= 35) {
                                 tempColor = '#6fc276'; // Green for normal
+                                tempLabel = 'normal = Suhu Normal';
                             } else if (data.temp_c <= 50) {
                                 tempColor = '#ffe37a'; // Yellow for hot
+                                tempLabel = 'hot = Suhu Panas';
                             } else {
                                 tempColor = '#f94449'; // Red for very hot
+                                tempLabel = 'very hot = MENYALA ABANGKU';
                             }
 
                             var humidColor;
+                            var humidLabel;
                             if (data.humid <= 25) {
                                 humidColor = '#6488EA'; // Blue for low humidity
+                                humidLabel = 'low humid = KERING BANG';
                             } else if (data.humid <= 50) {
                                 humidColor = '#6fc276'; // Green for moderate humidity
+                                humidLabel = 'moderate humid = Kelembaban Normal';
                             } else if (data.humid <= 75) {
                                 humidColor = '#ffe37a'; // Yellow for high humidity
+                                humidLabel = 'high humid = Kelembaban Tinggi';
                             } else {
                                 humidColor = '#f94449'; // Red for very high humidity
+                                humidLabel = 'very high humid = Kelembaban Sangat Tinggi';
                             }
+
+                            $('#temp-label').text(tempLabel);
+                            $('#humid-label').text(humidLabel);
 
                             $('.gaugeTemp').css('width', tempPercentage + '%').css('background-color', tempColor);
                             $('.gaugeHumidity').css('width', humidPercentage + '%').css('background-color', humidColor);

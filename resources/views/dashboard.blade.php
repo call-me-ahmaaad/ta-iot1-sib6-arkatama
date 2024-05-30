@@ -84,26 +84,34 @@
                 var tempPercentage = (data.temp_c / 100) * 100; // Assuming max temp is 100°C
                 var humidPercentage = data.humid; // Humidity is in percentage
 
-                var tempColor;
+                var tempColor, tempIcon;
                 if (data.temp_c <= 25) {
                     tempColor = '#00f'; // Blue for cold
+                    tempIcon = '❄️'; // Cold face emoji
                 } else if (data.temp_c <= 35) {
                     tempColor = '#0f0'; // Green for normal
+                    tempIcon = '😊'; // Happy face emoji
                 } else if (data.temp_c <= 50) {
                     tempColor = '#ff0'; // Yellow for hot
+                    tempIcon = '😅'; // Sweat face emoji
                 } else {
                     tempColor = '#f00'; // Red for very hot
+                    tempIcon = '🥵'; // Hot face emoji
                 }
 
-                var humidColor;
+                var humidColor, humidIcon;
                 if (data.humid <= 25) {
                     humidColor = '#00f'; // Blue for low humidity
+                    humidIcon = '❄️'; // Cold face emoji
                 } else if (data.humid <= 50) {
                     humidColor = '#0f0'; // Green for moderate humidity
+                    humidIcon = '😊'; // Happy face emoji
                 } else if (data.humid <= 75) {
                     humidColor = '#ff0'; // Yellow for high humidity
+                    humidIcon = '😅'; // Sweat face emoji
                 } else {
                     humidColor = '#f00'; // Red for very high humidity
+                    humidIcon = '🥵'; // Hot face emoji
                 }
 
                 $('.gaugeTemp').css('width', tempPercentage + '%').css('background-color', tempColor);
@@ -116,9 +124,9 @@
                 $('#gaugeTempLabel').css('left', `calc(${tempPercentage}% - 20px)`);
                 $('#gaugeHumidityLabel').css('left', `calc(${humidPercentage}% - 20px)`);
 
-                // Adjust icon position
-                $('#gaugeTempIcon').css('left', `calc(${tempPercentage}% - 10px)`);
-                $('#gaugeHumidityIcon').css('left', `calc(${humidPercentage}% - 10px)`);
+                // Adjust icon position and set icon
+                $('#gaugeTempIcon').css('left', `calc(${tempPercentage}% - 10px)`).text(tempIcon);
+                $('#gaugeHumidityIcon').css('left', `calc(${humidPercentage}% - 10px)`).text(humidIcon);
             },
             error: function(error) {
                 console.log('Error fetching latest temperature and humidity:', error);
@@ -145,6 +153,7 @@
     // Fetch the latest rain data every 1 second
     setInterval(fetchLatestRain, 1000);
 });
+
 
         </script>
 

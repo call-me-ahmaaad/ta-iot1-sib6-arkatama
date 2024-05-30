@@ -214,6 +214,6 @@ body{
     top: 50%;
     transform: translateY(-50%);
     z-index: 3;
-    font-size: 50px; /* Sesuaikan ukuran sesuai kebutuhan */
+    font-size: 45px; /* Sesuaikan ukuran sesuai kebutuhan */
     overflow: visible; /* Menghindari potongan konten */
 }

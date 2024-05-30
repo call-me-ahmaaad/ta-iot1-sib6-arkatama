@@ -48,12 +48,12 @@
                 <div class="gaugeContainer">
                     <div class="gauge gaugeTemp"></div>
                     <div class="gaugeLabel" id="gaugeTempLabel">0°C</div>
-                    <div class="gaugeIcon" id="gaugeTempIcon">🔵</div> <!-- Icon for temperature gauge -->
+                    <div class="gaugeIcon" id="gaugeTempIcon"></div> <!-- Icon for temperature gauge -->
                 </div>
                 <div class="gaugeContainer">
                     <div class="gauge gaugeHumidity"></div>
                     <div class="gaugeLabel" id="gaugeHumidityLabel">0%</div>
-                    <div class="gaugeIcon" id="gaugeHumidityIcon">💧</div> <!-- Icon for humidity gauge -->
+                    <div class="gaugeIcon" id="gaugeHumidityIcon"></div> <!-- Icon for humidity gauge -->
                 </div>
             </div>
         </div>

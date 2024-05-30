@@ -117,10 +117,10 @@
                 $('#gaugeHumidityLabel').css('left', `calc(${humidPercentage}% - 20px)`);
 
                 // Adjust icon position
-                var iconPositionTemp = tempPercentage > 90 ? 'calc(100% - 20px)' : `calc(${tempPercentage}% - 10px)`;
-                var iconPositionHumid = humidPercentage > 90 ? 'calc(100% - 20px)' : `calc(${humidPercentage}% - 10px)`;
-                $('#gaugeTempIcon').css('left', iconPositionTemp);
-                $('#gaugeHumidityIcon').css('left', iconPositionHumid);
+var iconPositionTemp = tempPercentage > 90 ? 'calc(100% - 20px)' : `calc(${tempPercentage}% - 10px)`;
+var iconPositionHumid = humidPercentage > 90 ? 'calc(100% - 20px)' : `calc(${humidPercentage}% - 10px)`;
+$('#gaugeTempIcon').css('left', iconPositionTemp);
+$('#gaugeHumidityIcon').css('left', iconPositionHumid);
             },
             error: function(error) {
                 console.log('Error fetching latest temperature and humidity:', error);

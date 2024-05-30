@@ -202,7 +202,7 @@ body{
 }
 
 .gaugeMonitoring .gaugeContainer .icon {
-    font-size: 35px;
+    font-size: 50px;
     position: absolute;
     top: 0; /* Adjust based on your design */
 }

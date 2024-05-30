@@ -89,19 +89,19 @@
                             var tempIcon;
                             if (data.temp_c <= 25) {
                                 tempColor = '#6488EA'; // Blue for cold
-                                tempLabel = 'cold = Suhu Dingin';
+                                tempLabel = 'Status: Suhu Dingin';
                                 tempIcon = '🥶'; // Cold icon
                             } else if (data.temp_c <= 35) {
                                 tempColor = '#6fc276'; // Green for normal
-                                tempLabel = 'normal = Suhu Normal';
+                                tempLabel = 'Status: Suhu Normal';
                                 tempIcon = '😌'; // Normal icon
                             } else if (data.temp_c <= 50) {
                                 tempColor = '#ffe37a'; // Yellow for hot
-                                tempLabel = 'hot = Suhu Panas';
+                                tempLabel = 'Status: Suhu Panas';
                                 tempIcon = '🥵'; // Hot icon
                             } else {
                                 tempColor = '#f94449'; // Red for very hot
-                                tempLabel = 'very hot = MENYALA ABANGKU';
+                                tempLabel = 'Status: MENYALA ABANGKU';
                                 tempIcon = '💀'; // Very hot icon
                             }
 
@@ -110,19 +110,19 @@
                             var humidIcon;
                             if (data.humid <= 25) {
                                 humidColor = '#6488EA'; // Blue for low humidity
-                                humidLabel = 'low humid = KERING BANG';
+                                humidLabel = 'Status: Kelembaban Rendah';
                                 humidIcon = '🌵'; // Low humidity icon
                             } else if (data.humid <= 50) {
                                 humidColor = '#6fc276'; // Green for moderate humidity
-                                humidLabel = 'moderate humid = Kelembaban Normal';
+                                humidLabel = 'Status: Kelembaban Normal';
                                 humidIcon = '🍀'; // Moderate humidity icon
                             } else if (data.humid <= 75) {
                                 humidColor = '#ffe37a'; // Yellow for high humidity
-                                humidLabel = 'high humid = Kelembaban Tinggi';
+                                humidLabel = 'Status: Kelembaban Tinggi';
                                 humidIcon = '💧'; // High humidity icon
                             } else {
                                 humidColor = '#f94449'; // Red for very high humidity
-                                humidLabel = 'very high humid = Kelembaban Sangat Tinggi';
+                                humidLabel = 'Status: Kelembaban Sangat Tinggi';
                                 humidIcon = '💦'; // Very high humidity icon
                             }
 

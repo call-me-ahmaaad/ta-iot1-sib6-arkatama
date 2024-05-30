@@ -179,6 +179,7 @@ body{
 }
 .gaugeMonitoring .gaugeContainer {
     width: 100%;
+    background-color: #e0e0e0;
     border-radius: 5px;
     overflow: hidden;
     position: relative;
@@ -201,7 +202,17 @@ body{
 }
 
 .gaugeMonitoring .gaugeContainer .gaugeLabel {
-    position: relative;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
     z-index: 2;
-    font-size: 15px;
+    font-size: 12px;
+}
+
+.gaugeMonitoring .gaugeContainer .gaugeIcon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+    font-size: 16px; /* Adjust the size as needed */
 }

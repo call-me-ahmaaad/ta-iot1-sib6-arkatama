@@ -1,5 +1,9 @@
 .container{
-
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+    align-items: center;
+    justify-content: center;
 }
 
 .label{
@@ -7,22 +11,94 @@
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    height: 90px;
+    height: 620px;
+    flex-direction: column;
+    margin-right: 30px;
 }
 
 .label .card{
     /* background-color: brown; */
     display: flex;
-    width: 220px;
+    width: 170px;
+    height: 110px;
     border-radius: 7px;
     border: 3px solid #2c2c2c;
     color: white;
-    justify-content: space-evenly;
-    background-color: #f94449;
     transition: all 0.5s ease;
+    flex-direction: column;
+    align-items: center;
+}
+
+.label .card[id="celcius"]{
+    background-color: #6488EA;
+}
+
+.label .card[id="farenheit"]{
+    background-color: #6fc276;
+}
+
+.label .card[id="kelvin"]{
+    background-color: #ff8242;
+}
+
+.label .card[id="humid"]{
+    background-color: #7d54ae;
+}
+
+.label .card[id="unit"]{
+    justify-content: space-evenly;
+    height: 70px;
+    background-color: #f94449;
+}
+
+.label .card[id="unit"] select{
+    font-family: "JetBrains Mono", monospace;
+    border-radius: 4px;
+    width: 145px;
+}
+
+.label .card[id="unit"]:hover{
+    box-shadow: 0 4px 8px 0 #f94449;
+}
+
+.label .card[id="celcius"]:hover{
+    box-shadow: 0 4px 8px 0 #6488EA;
+}
+
+.label .card[id="farenheit"]:hover{
+    box-shadow: 0 4px 8px 0 #6fc276;
+}
+
+.label .card[id="kelvin"]:hover{
+    box-shadow: 0 4px 8px 0 #ff8242;
+}
+
+.label .card[id="humid"]:hover{
+    box-shadow: 0 4px 8px 0 #7d54ae;
 }
 
 .label .card:hover{
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px 0 #f94449;
+}
+
+.table{
+    height: 620px;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    width: 80%;
+}
+
+.table div{
+    border: 1px solid #2c2c2c;
+    border-radius: 7px;
+    width: 100%;
+    height: 300px;
+}
+
+.table div .highcharts-title,
+.table div .highcharts-axis-title,
+.table div .highcharts-label,
+.table div .highcharts-tooltip{
+    font-family: "JetBrains Mono", monospace;
 }

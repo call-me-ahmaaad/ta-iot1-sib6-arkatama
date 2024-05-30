@@ -170,3 +170,38 @@ body{
 .footer{
     color: rgb(55, 55, 55);
 }
+
+.gaugeMonitoring{
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    margin-left: 31px;
+}
+.gaugeContainer {
+    width: 100%;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    height: 35px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #2c2c2c;
+    border-radius: 10px;
+}
+
+.gauge {
+    height: 100%;
+    width: 0%;
+    transition: width 0.5s, background-color 0.5s;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.gaugeLabel {
+    position: relative;
+    z-index: 2;
+    font-size: 15px;
+}

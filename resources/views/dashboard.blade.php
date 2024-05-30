@@ -44,6 +44,16 @@
                 <h3>Humidity</h3>
                 <p><span id="humid_value">{{ $humid }}%</span></p>
             </a>
+            <div class="gaugeMonitoring">
+                <div class="gaugeContainer">
+                    <div class="gauge gaugeTemp"></div>
+                    <div class="gaugeLabel" id="gaugeTempLabel">0°C</div>
+                </div>
+                <div class="gaugeContainer">
+                    <div class="gauge gaugeHumidity"></div>
+                    <div class="gaugeLabel" id="gaugeHumidityLabel">0%</div>
+                </div>
+            </div>
         </div>
 
         {{-- Raindrop Sensor --}}
@@ -68,6 +78,37 @@
                         success: function(data) {
                             $('#temp_c').text(data.temp_c + '°C');
                             $('#humid_value').text(data.humid + '%');
+
+                            var tempPercentage = (data.temp_c / 100) * 100; // Assuming max temp is 100°C
+                            var humidPercentage = data.humid; // Humidity is in percentage
+
+                            var tempColor;
+                            if (data.temp_c <= 25) {
+                                tempColor = '#6488EA'; // Blue for cold
+                            } else if (data.temp_c <= 35) {
+                                tempColor = '#6fc276'; // Green for normal
+                            } else if (data.temp_c <= 50) {
+                                tempColor = '#ffe37a'; // Yellow for hot
+                            } else {
+                                tempColor = '#f94449'; // Red for very hot
+                            }
+
+                            var humidColor;
+                            if (data.humid <= 25) {
+                                humidColor = '#6488EA'; // Blue for low humidity
+                            } else if (data.humid <= 50) {
+                                humidColor = '#6fc276'; // Green for moderate humidity
+                            } else if (data.humid <= 75) {
+                                humidColor = '#ffe37a'; // Yellow for high humidity
+                            } else {
+                                humidColor = '#f94449'; // Red for very high humidity
+                            }
+
+                            $('.gaugeTemp').css('width', tempPercentage + '%').css('background-color', tempColor);
+                            $('.gaugeHumidity').css('width', humidPercentage + '%').css('background-color', humidColor);
+
+                            $('#gaugeTempLabel').text(data.temp_c + '°C');
+                            $('#gaugeHumidityLabel').text(data.humid + '%');
                         },
                         error: function(error) {
                             console.log('Error fetching latest temperature and humidity:', error);
@@ -88,10 +129,10 @@
                     });
                 }
 
-                // Fetch the latest temperature and humidity every 5 seconds
+                // Fetch the latest temperature and humidity every 1 second
                 setInterval(fetchLatestTempAndHumid, 1000);
 
-                // Fetch the latest rain data every 5 seconds
+                // Fetch the latest rain data every 1 second
                 setInterval(fetchLatestRain, 1000);
             });
         </script>

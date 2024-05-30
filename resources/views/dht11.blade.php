@@ -7,6 +7,14 @@
 @endsection
 @section('container')
     <div class="label">
+        <div class="card" id="unit">
+            <label for="temperatureUnit">Unit:</label>
+            <select id="temperatureUnit" onchange="updateTemperatureChart()">
+                <option value="celsius">Celsius (°C)</option>
+                <option value="fahrenheit">Fahrenheit (°F)</option>
+                <option value="kelvin">Kelvin (°K)</option>
+            </select>
+        </div>
         <div class="card" id="celcius">
             <p id="unit">Celcius:</p>
             <p><span id="temp_c">{{ $temp_c }}°C</span></p>
@@ -48,110 +56,189 @@
         </script>
     </div>
     <div class="table">
-        <div id="temperatureChart" style="width: 600px; height: 400px;"></div>
-    <div id="humidityChart" style="width: 600px; height: 400px;"></div>
+        <div id="temperatureChart"></div>
+        <div id="humidityChart"></div>
 
-    <script>
-        let temperatureChart, humidityChart;
-        const baseUrl = '{{ url('/') }}';
+        <script>
+            let temperatureChart, humidityChart;
+            const baseUrl = '{{ url('/') }}';
+            let temperatureData = [];
 
-        async function requestData() {
-            let endpoint = `${baseUrl}/latest-dht11`;
+            async function requestData() {
+                let endpoint = `${baseUrl}/latest-dht11`;
 
-            try {
-                const result = await fetch(endpoint, {
-                    method: 'GET',
-                });
-                if (result.ok) {
-                    const data = await result.json();
-                    console.log('Fetched data:', data);  // Debugging: log fetched data
+                try {
+                    const result = await fetch(endpoint, {
+                        method: 'GET',
+                    });
+                    if (result.ok) {
+                        const data = await result.json();
+                        console.log('Fetched data:', data);  // Debugging: log fetched data
 
-                    if (data && data.temp_c !== null && data.humid !== null) {
-                        let x = new Date(data.created_at).getTime();
-                        let tempC = Number(data.temp_c);
-                        let humid = Number(data.humid);
+                        if (data && data.temp_c !== null && data.humid !== null) {
+                            let x = new Date(data.created_at).getTime();
+                            temperatureData.push({
+                                time: x,
+                                celsius: Number(data.temp_c),
+                                fahrenheit: Number(data.temp_f),
+                                kelvin: Number(data.temp_k)
+                            });
+                            let humid = Number(data.humid);
 
-                        console.log(`Temperature X: ${x}, Y: ${tempC}`); // Debugging: log each point
-                        console.log(`Humidity X: ${x}, Y: ${humid}`); // Debugging: log each point
+                            console.log(`Temperature X: ${x}, Y: ${temperatureData}`); // Debugging: log each point
+                            console.log(`Humidity X: ${x}, Y: ${humid}`); // Debugging: log each point
 
-                        // Add data to charts
-                        temperatureChart.series[0].addPoint([x, tempC], true, temperatureChart.series[0].data.length > 20);
-                        humidityChart.series[0].addPoint([x, humid], true, humidityChart.series[0].data.length > 20);
+                            // Add humidity data to chart
+                            humidityChart.series[0].addPoint([x, humid], true, humidityChart.series[0].data.length > 20);
 
-                        // Uncomment to periodically fetch new data
-                        setTimeout(requestData, 3000); // Fetch data every 3 seconds
+                            // Update temperature chart based on selected unit
+                            updateTemperatureChart();
+
+                            // Uncomment to periodically fetch new data
+                            setTimeout(requestData, 3000); // Fetch data every 3 seconds
+                        } else {
+                            console.error('API response is empty or missing required data');
+                        }
                     } else {
-                        console.error('API response is empty or missing required data');
+                        console.error('Failed to fetch data from API');
                     }
-                } else {
-                    console.error('Failed to fetch data from API');
+                } catch (error) {
+                    console.error('Error fetching data:', error);
                 }
-            } catch (error) {
-                console.error('Error fetching data:', error);
             }
-        }
 
-        window.addEventListener('load', function() {
-            temperatureChart = new Highcharts.Chart({
-                chart: {
-                    renderTo: 'temperatureChart',
-                    type: 'spline',
-                    events: {
-                        load: requestData
+            function updateTemperatureChart() {
+                const unit = document.getElementById('temperatureUnit').value;
+                let seriesData = temperatureData.map(point => {
+                    let temp;
+                    switch (unit) {
+                        case 'celsius':
+                            temp = point.celsius;
+                            break;
+                        case 'fahrenheit':
+                            temp = point.fahrenheit;
+                            break;
+                        case 'kelvin':
+                            temp = point.kelvin;
+                            break;
                     }
-                },
-                title: {
-                    text: 'Temperature'
-                },
-                xAxis: {
-                    type: 'datetime',
-                    tickPixelInterval: 150,
-                    maxZoom: 20 * 1000
-                },
-                yAxis: {
-                    minPadding: 0.2,
-                    maxPadding: 0.2,
-                    title: {
-                        text: 'Temperature (°C)',
-                        margin: 80
-                    }
-                },
-                series: [{
-                    name: 'Temperature',
-                    data: []
-                }]
-            });
+                    return [point.time, temp];
+                });
 
-            humidityChart = new Highcharts.Chart({
-                chart: {
-                    renderTo: 'humidityChart',
-                    type: 'spline',
-                    events: {
-                        load: requestData
-                    }
-                },
-                title: {
-                    text: 'Humidity'
-                },
-                xAxis: {
-                    type: 'datetime',
-                    tickPixelInterval: 150,
-                    maxZoom: 20 * 1000
-                },
-                yAxis: {
-                    minPadding: 0.2,
-                    maxPadding: 0.2,
+                let color;
+                switch (unit) {
+                    case 'celsius':
+                        color = 'blue';
+                        break;
+                    case 'fahrenheit':
+                        color = 'green';
+                        break;
+                    case 'kelvin':
+                        color = 'orange';
+                        break;
+                }
+
+                temperatureChart.series[0].update({
+                    data: seriesData,
+                    color: color
+                }, true);
+
+                temperatureChart.yAxis[0].setTitle({
+                    text: `Temperature (${unit === 'celsius' ? '°C' : unit === 'fahrenheit' ? '°F' : '°K'})`
+                });
+
+                // Update color of title and axis titles
+                temperatureChart.update({
                     title: {
-                        text: 'Humidity (%)',
-                        margin: 80
+                        style: {
+                            color: color
+                        }
+                    },
+                    yAxis: {
+                        title: {
+                            style: {
+                                color: color
+                            }
+                        }
                     }
-                },
-                series: [{
-                    name: 'Humidity',
-                    data: []
-                }]
+                });
+            }
+
+            window.addEventListener('load', function() {
+                temperatureChart = new Highcharts.Chart({
+                    chart: {
+                        renderTo: 'temperatureChart',
+                        type: 'spline',
+                        events: {
+                            load: requestData
+                        }
+                    },
+                    title: {
+                        text: 'Temperature',
+                        style: {
+                            color: 'blue'
+                        }
+                    },
+                    xAxis: {
+                        type: 'datetime',
+                        tickPixelInterval: 150,
+                        maxZoom: 20 * 1000
+                    },
+                    yAxis: {
+                        minPadding: 0.2,
+                        maxPadding: 0.2,
+                        title: {
+                            text: 'Temperature (°C)',
+                            margin: 80,
+                            style: {
+                                color: 'blue'
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'Temperature',
+                        data: [],
+                        color: 'blue'
+                    }]
+                });
+
+                humidityChart = new Highcharts.Chart({
+                    chart: {
+                        renderTo: 'humidityChart',
+                        type: 'spline',
+                        events: {
+                            load: requestData
+                        }
+                    },
+                    title: {
+                        text: 'Humidity',
+                        style: {
+                            color: 'purple'
+                        }
+                    },
+                    xAxis: {
+                        type: 'datetime',
+                        tickPixelInterval: 150,
+                        maxZoom: 20 * 1000
+                    },
+                    yAxis: {
+                        minPadding: 0.2,
+                        maxPadding: 0.2,
+                        title: {
+                            text: 'Humidity (%)',
+                            margin: 80,
+                            style: {
+                                color: 'purple'
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'Humidity',
+                        data: [],
+                        color: 'purple'
+                    }]
+                });
             });
-        });
-    </script>
+        </script>
     </div>
 @endsection

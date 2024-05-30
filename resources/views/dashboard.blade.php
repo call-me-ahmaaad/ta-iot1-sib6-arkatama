@@ -86,32 +86,32 @@
 
                 var tempColor, tempIcon;
                 if (data.temp_c <= 25) {
-                    tempColor = '#6488EA'; // Blue for cold
-                    tempIcon = '🥶'; // Cold face emoji
+                    tempColor = '#00f'; // Blue for cold
+                    tempIcon = '❄️'; // Cold face emoji
                 } else if (data.temp_c <= 35) {
-                    tempColor = '#6fc276'; // Green for normal
+                    tempColor = '#0f0'; // Green for normal
                     tempIcon = '😊'; // Happy face emoji
                 } else if (data.temp_c <= 50) {
-                    tempColor = '#ffe37a'; // Yellow for hot
-                    tempIcon = '🥵'; // Sweat face emoji
+                    tempColor = '#ff0'; // Yellow for hot
+                    tempIcon = '😅'; // Sweat face emoji
                 } else {
-                    tempColor = '#f94449'; // Red for very hot
-                    tempIcon = '💀'; // Hot face emoji
+                    tempColor = '#f00'; // Red for very hot
+                    tempIcon = '🥵'; // Hot face emoji
                 }
 
                 var humidColor, humidIcon;
                 if (data.humid <= 25) {
-                    humidColor = '#6488EA'; // Blue for low humidity
-                    humidIcon = '🌵'; // Cold face emoji
+                    humidColor = '#00f'; // Blue for low humidity
+                    humidIcon = '❄️'; // Cold face emoji
                 } else if (data.humid <= 50) {
-                    humidColor = '#6fc276'; // Green for moderate humidity
-                    humidIcon = '💦'; // Happy face emoji
+                    humidColor = '#0f0'; // Green for moderate humidity
+                    humidIcon = '😊'; // Happy face emoji
                 } else if (data.humid <= 75) {
-                    humidColor = '#ffe37a'; // Yellow for high humidity
-                    humidIcon = '🌊'; // Sweat face emoji
+                    humidColor = '#ff0'; // Yellow for high humidity
+                    humidIcon = '😅'; // Sweat face emoji
                 } else {
-                    humidColor = '#f94449'; // Red for very high humidity
-                    humidIcon = '💀'; // Hot face emoji
+                    humidColor = '#f00'; // Red for very high humidity
+                    humidIcon = '🥵'; // Hot face emoji
                 }
 
                 $('.gaugeTemp').css('width', tempPercentage + '%').css('background-color', tempColor);
@@ -121,8 +121,8 @@
                 $('#gaugeHumidityLabel').text(data.humid + '%');
 
                 // Adjust label position
-                $('#gaugeTempLabel').css('left', `calc(${tempPercentage}% - 55px)`);
-                $('#gaugeHumidityLabel').css('left', `calc(${humidPercentage}% - 35px)`);
+                $('#gaugeTempLabel').css('left', `calc(${tempPercentage}% - 20px)`);
+                $('#gaugeHumidityLabel').css('left', `calc(${humidPercentage}% - 20px)`);
 
                 // Adjust icon position and set icon
                 $('#gaugeTempIcon').css('left', `calc(${tempPercentage}% - 10px)`).text(tempIcon);
@@ -153,6 +153,7 @@
     // Fetch the latest rain data every 1 second
     setInterval(fetchLatestRain, 1000);
 });
+
 
 
         </script>

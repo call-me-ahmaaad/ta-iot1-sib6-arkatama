@@ -128,13 +128,13 @@
                 let color;
                 switch (unit) {
                     case 'celsius':
-                        color = 'blue';
+                        color = '#6488EA';
                         break;
                     case 'fahrenheit':
-                        color = 'green';
+                        color = '#6fc276';
                         break;
                     case 'kelvin':
-                        color = 'orange';
+                        color = '#ff8242';
                         break;
                 }
 
@@ -213,7 +213,7 @@
                     title: {
                         text: 'Humidity',
                         style: {
-                            color: 'purple'
+                            color: '#7d54ae'
                         }
                     },
                     xAxis: {
@@ -228,14 +228,14 @@
                             text: 'Humidity (%)',
                             margin: 80,
                             style: {
-                                color: 'purple'
+                                color: '#7d54ae'
                             }
                         }
                     },
                     series: [{
                         name: 'Humidity',
                         data: [],
-                        color: 'purple'
+                        color: '#7d54ae'
                     }]
                 });
             });

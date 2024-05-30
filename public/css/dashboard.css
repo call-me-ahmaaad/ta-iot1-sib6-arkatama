@@ -211,8 +211,8 @@ body{
 
 .gaugeMonitoring .gaugeContainer .gaugeIcon {
     position: absolute;
-    top: 30%;
-    transform: translateY(-30%);
+    top: 50%;
+    transform: translateY(-50%);
     z-index: 3;
     font-size: 50px; /* Sesuaikan ukuran sesuai kebutuhan */
     overflow: visible; /* Menghindari potongan konten */

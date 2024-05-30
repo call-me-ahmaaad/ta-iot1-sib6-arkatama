@@ -177,7 +177,7 @@ body{
     width: 500px;
     margin-left: 31px;
 }
-.gaugeContainer {
+.gaugeMonitoring .gaugeContainer {
     width: 100%;
     border-radius: 5px;
     overflow: hidden;
@@ -191,7 +191,7 @@ body{
     border-radius: 10px;
 }
 
-.gauge {
+.gaugeMonitoring .gaugeContainer .gauge {
     height: 100%;
     width: 0%;
     transition: width 0.5s, background-color 0.5s;
@@ -200,7 +200,7 @@ body{
     left: 0;
 }
 
-.gaugeLabel {
+.gaugeMonitoring .gaugeContainer .gaugeLabel {
     position: relative;
     z-index: 2;
     font-size: 15px;

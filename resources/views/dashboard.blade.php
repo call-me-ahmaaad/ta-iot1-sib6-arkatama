@@ -73,84 +73,74 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             $(document).ready(function() {
-    function fetchLatestTempAndHumid() {
-        $.ajax({
-            url: '/latest-dht11',
-            method: 'GET',
-            success: function(data) {
-                $('#temp_c').text(data.temp_c + '°C');
-                $('#humid_value').text(data.humid + '%');
+                function fetchLatestTempAndHumid() {
+                    $.ajax({
+                        url: '/latest-dht11',
+                        method: 'GET',
+                        success: function(data) {
+                            $('#temp_c').text(data.temp_c + '°C');
+                            $('#humid_value').text(data.humid + '%');
 
-                var tempPercentage = (data.temp_c / 100) * 100; // Assuming max temp is 100°C
-                var humidPercentage = data.humid; // Humidity is in percentage
+                            var tempPercentage = (data.temp_c / 100) * 100; // Assuming max temp is 100°C
+                            var humidPercentage = data.humid; // Humidity is in percentage
 
-                var tempColor;
-                if (data.temp_c <= 25) {
-                    tempColor = '#00f'; // Blue for cold
-                } else if (data.temp_c <= 35) {
-                    tempColor = '#0f0'; // Green for normal
-                } else if (data.temp_c <= 50) {
-                    tempColor = '#ff0'; // Yellow for hot
-                } else {
-                    tempColor = '#f00'; // Red for very hot
+                            var tempColor;
+                            if (data.temp_c <= 25) {
+                                tempColor = '#6488EA'; // Blue for cold
+                            } else if (data.temp_c <= 35) {
+                                tempColor = '#6fc276'; // Green for normal
+                            } else if (data.temp_c <= 50) {
+                                tempColor = '#ffe37a'; // Yellow for hot
+                            } else {
+                                tempColor = '#f94449'; // Red for very hot
+                            }
+
+                            var humidColor;
+                            if (data.humid <= 25) {
+                                humidColor = '#6488EA'; // Blue for low humidity
+                            } else if (data.humid <= 50) {
+                                humidColor = '#6fc276'; // Green for moderate humidity
+                            } else if (data.humid <= 75) {
+                                humidColor = '#ffe37a'; // Yellow for high humidity
+                            } else {
+                                humidColor = '#f94449'; // Red for very high humidity
+                            }
+
+                            $('.gaugeTemp').css('width', tempPercentage + '%').css('background-color', tempColor);
+                            $('.gaugeHumidity').css('width', humidPercentage + '%').css('background-color', humidColor);
+
+                            $('#gaugeTempLabel').text(data.temp_c + '°C');
+                            $('#gaugeHumidityLabel').text(data.humid + '%');
+
+                            // Adjust label position
+                            $('#gaugeTempLabel').css('left', `calc(${tempPercentage}% - 55px)`);
+                            $('#gaugeHumidityLabel').css('left', `calc(${humidPercentage}% - 35px)`);
+                        },
+                        error: function(error) {
+                            console.log('Error fetching latest temperature and humidity:', error);
+                        }
+                    });
                 }
 
-                var humidColor;
-                if (data.humid <= 25) {
-                    humidColor = '#00f'; // Blue for low humidity
-                } else if (data.humid <= 50) {
-                    humidColor = '#0f0'; // Green for moderate humidity
-                } else if (data.humid <= 75) {
-                    humidColor = '#ff0'; // Yellow for high humidity
-                } else {
-                    humidColor = '#f00'; // Red for very high humidity
+                function fetchLatestRain() {
+                    $.ajax({
+                        url: '/latest-rain',
+                        method: 'GET',
+                        success: function(data) {
+                            $('#rain_value').text(data.rain_value);
+                        },
+                        error: function(error) {
+                            console.log('Error fetching latest rain data:', error);
+                        }
+                    });
                 }
 
-                $('.gaugeTemp').css('width', tempPercentage + '%').css('background-color', tempColor);
-                $('.gaugeHumidity').css('width', humidPercentage + '%').css('background-color', humidColor);
+                // Fetch the latest temperature and humidity every 1 second
+                setInterval(fetchLatestTempAndHumid, 1000);
 
-                $('#gaugeTempLabel').text(data.temp_c + '°C');
-                $('#gaugeHumidityLabel').text(data.humid + '%');
-
-                // Adjust label position
-                $('#gaugeTempLabel').css('left', `calc(${tempPercentage}% - 20px)`);
-                $('#gaugeHumidityLabel').css('left', `calc(${humidPercentage}% - 20px)`);
-
-                // Adjust icon position
-var iconPositionTemp = tempPercentage > 90 ? 'calc(100% - 20px)' : `calc(${tempPercentage}% - 10px)`;
-var iconPositionHumid = humidPercentage > 90 ? 'calc(100% - 20px)' : `calc(${humidPercentage}% - 10px)`;
-$('#gaugeTempIcon').css('left', iconPositionTemp);
-$('#gaugeHumidityIcon').css('left', iconPositionHumid);
-            },
-            error: function(error) {
-                console.log('Error fetching latest temperature and humidity:', error);
-            }
-        });
-    }
-
-    function fetchLatestRain() {
-        $.ajax({
-            url: '/latest-rain',
-            method: 'GET',
-            success: function(data) {
-                $('#rain_value').text(data.rain_value);
-            },
-            error: function(error) {
-                console.log('Error fetching latest rain data:', error);
-            }
-        });
-    }
-
-    // Fetch the latest temperature and humidity every 1 second
-    setInterval(fetchLatestTempAndHumid, 1000);
-
-    // Fetch the latest rain data every 1 second
-    setInterval(fetchLatestRain, 1000);
-});
-
-
-
-
+                // Fetch the latest rain data every 1 second
+                setInterval(fetchLatestRain, 1000);
+            });
         </script>
 
         {{-- LED Control --}}

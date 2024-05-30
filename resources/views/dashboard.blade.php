@@ -45,18 +45,16 @@
                 <p><span id="humid_value">{{ $humid }}%</span></p>
             </a>
             <div class="gaugeMonitoring">
-                {{-- <div id="temp-label" class="dynamic-label"></div> --}}
+                <div id="temp-label" class="dynamic-label"></div>
                 <div class="gaugeContainer">
                     <div class="gauge gaugeTemp"></div>
                     <div class="icon" id="gaugeTempIcon"></div>
-                    <div class="value" id="temp_c"></div>
                 </div>
                 <div class="gaugeContainer">
                     <div class="gauge gaugeHumidity"></div>
                     <div class="icon" id="gaugeHumidityIcon"></div>
-                    <div class="value" id="humid_value"></div>
                 </div>
-                {{-- <div id="humid-label" class="dynamic-label"></div> --}}
+                <div id="humid-label" class="dynamic-label"></div>
             </div>
         </div>
 
@@ -87,42 +85,59 @@
                             var humidPercentage = data.humid; // Humidity is in percentage
 
                             var tempColor;
+                            var tempLabel;
                             var tempIcon;
                             if (data.temp_c <= 25) {
                                 tempColor = '#6488EA'; // Blue for cold
+                                tempLabel = 'cold = Suhu Dingin';
                                 tempIcon = '🥶'; // Cold icon
                             } else if (data.temp_c <= 35) {
                                 tempColor = '#6fc276'; // Green for normal
+                                tempLabel = 'normal = Suhu Normal';
                                 tempIcon = '😌'; // Normal icon
                             } else if (data.temp_c <= 50) {
                                 tempColor = '#ffe37a'; // Yellow for hot
+                                tempLabel = 'hot = Suhu Panas';
                                 tempIcon = '🥵'; // Hot icon
                             } else {
                                 tempColor = '#f94449'; // Red for very hot
+                                tempLabel = 'very hot = MENYALA ABANGKU';
                                 tempIcon = '💀'; // Very hot icon
                             }
 
                             var humidColor;
+                            var humidLabel;
                             var humidIcon;
                             if (data.humid <= 25) {
                                 humidColor = '#6488EA'; // Blue for low humidity
+                                humidLabel = 'low humid = KERING BANG';
                                 humidIcon = '🌵'; // Low humidity icon
                             } else if (data.humid <= 50) {
                                 humidColor = '#6fc276'; // Green for moderate humidity
+                                humidLabel = 'moderate humid = Kelembaban Normal';
                                 humidIcon = '🍀'; // Moderate humidity icon
                             } else if (data.humid <= 75) {
                                 humidColor = '#ffe37a'; // Yellow for high humidity
+                                humidLabel = 'high humid = Kelembaban Tinggi';
                                 humidIcon = '💧'; // High humidity icon
                             } else {
                                 humidColor = '#f94449'; // Red for very high humidity
+                                humidLabel = 'very high humid = Kelembaban Sangat Tinggi';
                                 humidIcon = '💦'; // Very high humidity icon
                             }
 
-                            $('.value').css('color', tempColor); // Set text color same as temp color
+                            $('#temp-label').text(tempLabel);
+                            $('#humid-label').text(humidLabel);
 
-                            $('.icon').text(tempIcon); // Set temp icon
-                            $('.icon').css('left', tempPercentage + '%'); // Set temp icon position based on temp percentage
-                            $('#humid_value').css('left', humidPercentage + '%'); // Set humidity value position based on humidity percentage
+                            $('.gaugeTemp').css('width', tempPercentage + '%').css('background-color', tempColor);
+                            $('.gaugeHumidity').css('width', humidPercentage + '%').css('background-color', humidColor);
+
+                            $('#gaugeTempIcon').text(tempIcon);
+                            $('#gaugeHumidityIcon').text(humidIcon);
+
+                            // Adjust icon position
+                            $('#gaugeTempIcon').css('left', `calc(${tempPercentage}% - 35px)`);
+                            $('#gaugeHumidityIcon').css('left', `calc(${humidPercentage}% - 35px)`);
                         },
                         error: function(error) {
                             console.log('Error fetching latest temperature and humidity:', error);

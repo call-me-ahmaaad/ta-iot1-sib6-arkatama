@@ -209,12 +209,3 @@ body{
     width: 50px;
     height: 50px;
 }
-
-.gaugeMonitoring .gaugeContainer .value {
-    font-size: 16px;
-    position: absolute;
-    top: 50px; /* Adjust based on your design */
-    left: 0;
-    right: 0;
-    text-align: center;
-}

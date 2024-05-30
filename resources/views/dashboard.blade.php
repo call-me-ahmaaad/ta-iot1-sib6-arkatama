@@ -48,12 +48,12 @@
                 <div class="gaugeContainer">
                     <div class="gauge gaugeTemp"></div>
                     <div class="gaugeLabel" id="gaugeTempLabel">0°C</div>
-                    <div class="gaugeIcon" id="gaugeTempIcon"></div> <!-- Icon for temperature gauge -->
+                    <div class="gaugeIcon" id="gaugeTempIcon">🔵</div> <!-- Icon for temperature gauge -->
                 </div>
                 <div class="gaugeContainer">
                     <div class="gauge gaugeHumidity"></div>
                     <div class="gaugeLabel" id="gaugeHumidityLabel">0%</div>
-                    <div class="gaugeIcon" id="gaugeHumidityIcon"></div> <!-- Icon for humidity gauge -->
+                    <div class="gaugeIcon" id="gaugeHumidityIcon">💧</div> <!-- Icon for humidity gauge -->
                 </div>
             </div>
         </div>
@@ -84,34 +84,26 @@
                 var tempPercentage = (data.temp_c / 100) * 100; // Assuming max temp is 100°C
                 var humidPercentage = data.humid; // Humidity is in percentage
 
-                var tempColor, tempIcon;
+                var tempColor;
                 if (data.temp_c <= 25) {
                     tempColor = '#00f'; // Blue for cold
-                    tempIcon = '❄️'; // Cold face emoji
                 } else if (data.temp_c <= 35) {
                     tempColor = '#0f0'; // Green for normal
-                    tempIcon = '😊'; // Happy face emoji
                 } else if (data.temp_c <= 50) {
                     tempColor = '#ff0'; // Yellow for hot
-                    tempIcon = '😅'; // Sweat face emoji
                 } else {
                     tempColor = '#f00'; // Red for very hot
-                    tempIcon = '🥵'; // Hot face emoji
                 }
 
-                var humidColor, humidIcon;
+                var humidColor;
                 if (data.humid <= 25) {
                     humidColor = '#00f'; // Blue for low humidity
-                    humidIcon = '❄️'; // Cold face emoji
                 } else if (data.humid <= 50) {
                     humidColor = '#0f0'; // Green for moderate humidity
-                    humidIcon = '😊'; // Happy face emoji
                 } else if (data.humid <= 75) {
                     humidColor = '#ff0'; // Yellow for high humidity
-                    humidIcon = '😅'; // Sweat face emoji
                 } else {
                     humidColor = '#f00'; // Red for very high humidity
-                    humidIcon = '🥵'; // Hot face emoji
                 }
 
                 $('.gaugeTemp').css('width', tempPercentage + '%').css('background-color', tempColor);
@@ -124,9 +116,11 @@
                 $('#gaugeTempLabel').css('left', `calc(${tempPercentage}% - 20px)`);
                 $('#gaugeHumidityLabel').css('left', `calc(${humidPercentage}% - 20px)`);
 
-                // Adjust icon position and set icon
-                $('#gaugeTempIcon').css('left', `calc(${tempPercentage}% - 10px)`).text(tempIcon);
-                $('#gaugeHumidityIcon').css('left', `calc(${humidPercentage}% - 10px)`).text(humidIcon);
+                // Adjust icon position
+                var iconPositionTemp = tempPercentage > 90 ? 'calc(100% - 20px)' : `calc(${tempPercentage}% - 10px)`;
+                var iconPositionHumid = humidPercentage > 90 ? 'calc(100% - 20px)' : `calc(${humidPercentage}% - 10px)`;
+                $('#gaugeTempIcon').css('left', iconPositionTemp);
+                $('#gaugeHumidityIcon').css('left', iconPositionHumid);
             },
             error: function(error) {
                 console.log('Error fetching latest temperature and humidity:', error);
@@ -153,6 +147,7 @@
     // Fetch the latest rain data every 1 second
     setInterval(fetchLatestRain, 1000);
 });
+
 
 
 

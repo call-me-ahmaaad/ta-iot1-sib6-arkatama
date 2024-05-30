@@ -47,11 +47,11 @@
             <div class="gaugeMonitoring">
                 <div class="gaugeContainer">
                     <div class="gauge gaugeTemp"></div>
-                    <div class="gaugeLabel" id="gaugeTempLabel">0°C</div>
+                    <div class="gaugeLabel" id="gaugeTempLabel"></div>
                 </div>
                 <div class="gaugeContainer">
                     <div class="gauge gaugeHumidity"></div>
-                    <div class="gaugeLabel" id="gaugeHumidityLabel">0%</div>
+                    <div class="gaugeLabel" id="gaugeHumidityLabel"></div>
                 </div>
             </div>
         </div>

@@ -136,8 +136,8 @@
                             $('#gaugeHumidityIcon').text(humidIcon);
 
                             // Adjust icon position
-                            $('#gaugeTempIcon').css('left', `calc(${tempPercentage}% - 12px)`);
-                            $('#gaugeHumidityIcon').css('left', `calc(${humidPercentage}% - 12px)`);
+                            $('#gaugeTempIcon').css('left', `calc(${tempPercentage}% - 35px)`);
+                            $('#gaugeHumidityIcon').css('left', `calc(${humidPercentage}% - 35px)`);
                         },
                         error: function(error) {
                             console.log('Error fetching latest temperature and humidity:', error);

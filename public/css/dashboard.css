@@ -201,10 +201,8 @@ body{
     left: 0;
 }
 
-.gaugeMonitoring .gaugeContainer .gaugeLabel {
+.gaugeMonitoring .gaugeContainer .icon {
+    font-size: 24px;
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 3;
-    font-size: 16px;
+    top: -30px; /* Adjust based on your design */
 }

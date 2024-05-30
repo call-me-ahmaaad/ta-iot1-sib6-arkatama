@@ -202,6 +202,10 @@ body{
     border-radius: 7px;
 }
 
+.gaugeMonitoring .gaugeContainer .dynamic-label {
+    font-size: 25px;
+}
+
 .gaugeMonitoring .gaugeContainer .icon {
     font-size: 50px;
     position: absolute;

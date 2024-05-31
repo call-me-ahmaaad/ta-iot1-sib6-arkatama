@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Dht11;
 use App\Models\Raindrop;
+use App\Models\Mq2;
 
 class SensorController extends Controller
 {

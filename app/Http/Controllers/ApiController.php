@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Dht11;
 use App\Models\Raindrop;
+use App\Models\Mq2;
 
 class ApiController extends Controller
 {
@@ -55,6 +56,25 @@ class ApiController extends Controller
             "data" => [
                 "id" => $raindropId,
                 "rain_value" => $raindrop->rain_value
+            ]
+        ], 201);
+    }
+
+    // Fungsi API untuk data sensor MQ-2 Sensor
+    public function api_mq2(Request $request){
+        $mq2 = new Mq2;
+        $mq2->gas_value = $request->gas_value;
+        $mq2->save();
+
+        // Mendapatkan ID produk yang baru saja ditambahkan
+        $mq2Id = $mq2->id;
+
+        // Membuat pesan JSON yang menyertakan data produk yang baru saja ditambahkan
+        return response()->json([
+            "message" => "Data Sensor MQ-2 Berhasil Ditambahkan",
+            "data" => [
+                "id" => $mq2Id,
+                "gas_value" => $mq2->gas_value
             ]
         ], 201);
     }

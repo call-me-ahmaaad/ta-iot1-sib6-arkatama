@@ -32,6 +32,8 @@ Route::get('/temp-and-humid', [SensorController::class, 'web_dht11'])->name('web
 
 Route::get('/latest-dht11', [SensorController::class, 'latest_dht11']);
 Route::get('/latest-rain', [SensorController::class, 'latest_rain']);
+Route::get('/latest-mq2', [SensorController::class, 'latest_mq2']);
+
 // Route::get('/latest-temp_f', [SensorController::class, 'latest_temp_f']);
 // Route::get('/latest-temp_k', [SensorController::class, 'latest_temp_k']);
 // Route::get('/latest-humid', [SensorController::class, 'latest_humid']);

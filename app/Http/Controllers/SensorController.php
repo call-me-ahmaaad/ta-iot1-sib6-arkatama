@@ -13,11 +13,13 @@ class SensorController extends Controller
     public function dashboard(){
         $latestDhtData = Dht11::latest()->first();
         $latestRainData = Raindrop::latest()->first();
+        $latestMq2Data = Mq2::latest()->first();
 
         return view('dashboard', [
             'temp_c' => $latestDhtData ? $latestDhtData->temp_c : null,
             'humid' => $latestDhtData ? $latestDhtData->humid : null,
             'rain_value' => $latestRainData ? $latestRainData->rain_value : null,
+            'gas_value' => $latestMq2Data ? $latestMq2Data->gas_value : null,
         ]);
     }
 
@@ -38,10 +40,10 @@ class SensorController extends Controller
         $latestDhtData = Dht11::latest()->first();
         return response()->json([
             'temp_c' => $latestDhtData ? $latestDhtData->temp_c : null,
-        'temp_f' => $latestDhtData ? $latestDhtData->temp_f : null,
-        'temp_k' => $latestDhtData ? $latestDhtData->temp_k : null,
-        'humid' => $latestDhtData ? $latestDhtData->humid : null,
-        'created_at' => $latestDhtData ? $latestDhtData->created_at : null,
+            'temp_f' => $latestDhtData ? $latestDhtData->temp_f : null,
+            'temp_k' => $latestDhtData ? $latestDhtData->temp_k : null,
+            'humid' => $latestDhtData ? $latestDhtData->humid : null,
+            'created_at' => $latestDhtData ? $latestDhtData->created_at : null,
         ]);
     }
 
@@ -74,6 +76,13 @@ class SensorController extends Controller
         $latestRainData = Raindrop::latest()->first();
         return response()->json([
             'rain_value' => $latestRainData ? $latestRainData->rain_value : null,
+        ]);
+    }
+
+    public function latest_mq2(){
+        $latestMq2Data = Mq2::latest()->first();
+        return response()->json([
+            'gas_value' => $latestMq2Data ? $latestMq2Data->gas_value : null,
         ]);
     }
 }

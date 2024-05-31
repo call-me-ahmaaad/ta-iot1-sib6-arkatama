@@ -67,7 +67,7 @@
         {{-- Gas Sensor (MQ-2) --}}
         <a class="button" id="gas" href="" id="gas">
             <h3>Gas</h3>
-            <p>70 ppm</p>
+            <p><span id="gas_value">{{ $gas_value }}</span></p>
         </a>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -161,11 +161,27 @@
                     });
                 }
 
+                function fetchLatestMq2() {
+                    $.ajax({
+                        url: '/latest-mq2',
+                        method: 'GET',
+                        success: function(data) {
+                            $('#gas_value').text(data.gas_value);
+                        },
+                        error: function(error) {
+                            console.log('Error fetching latest gas data:', error);
+                        }
+                    });
+                }
+
                 // Fetch the latest temperature and humidity every 1 second
                 setInterval(fetchLatestTempAndHumid, 1000);
 
                 // Fetch the latest rain data every 1 second
                 setInterval(fetchLatestRain, 1000);
+
+                // Fetch the latest rain data every 1 second
+                setInterval(fetchLatestMq2, 1000);
             });
         </script>
 

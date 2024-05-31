@@ -166,7 +166,7 @@
                         url: '/latest-mq2',
                         method: 'GET',
                         success: function(data) {
-                            $('#gas_value').text(data.gas_value);
+                            $('#gas_value').text(data.gas_value + 'ppm');
                         },
                         error: function(error) {
                             console.log('Error fetching latest gas data:', error);

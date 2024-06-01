@@ -73,55 +73,6 @@
                     }
                 }
 
-                // Inisialisasi grafik Highcharts
-                const chart = Highcharts.chart('rain_chart', {
-                    chart: {
-                        type: 'area'  // Mengubah tipe grafik menjadi area
-                    },
-                    title: {
-                        text: 'Rain Value Over Time'
-                    },
-                    xAxis: {
-                        type: 'datetime',
-                        title: {
-                            text: 'Time'
-                        }
-                    },
-                    yAxis: {
-                        title: {
-                            text: 'Rain Value'
-                        },
-                        min: 0,
-                        max: 2,
-                        tickPositions: [0, 1], // Menampilkan label hanya untuk angka 0 dan 1
-                        labels: {
-                            formatter: function () {
-                                return this.value === 0 ? '0' : '1'; // Mengubah nilai label menjadi '0' atau '1'
-                            }
-                        }
-                    },
-                    series: [{
-                        name: 'Rain Value',
-                        data: [],
-                        marker: {
-                            enabled: true // Pastikan marker diaktifkan
-                        },
-                        color: 'blue',
-                        fillColor: {
-                            linearGradient: {
-                                x1: 0,
-                                x2: 0,
-                                y1: 0,
-                                y2: 1
-                            },
-                            stops: [
-                                [0, '#f94449'],  // Warna merah
-                                [1, 'rgba(0, 0, 0, 0)']  // Warna transparan
-                            ]
-                        }
-                    }]
-                });
-
                 function fetchLatestRain() {
                     $.ajax({
                         url: '/latest-rain',
@@ -129,44 +80,37 @@
                         success: function(data) {
                             resetDataIfNewDay();
 
-                            if (data && data.rain_value !== null && data.created_at !== null) {
-                                const currentRainValue = data.rain_value;
-                                const currentTime = new Date(data.created_at).getTime();
+                            const currentRainValue = data.rain_value;
 
-                                // Jika rain_value berubah dari 0 ke 1, catat waktu mulai
-                                if (previousRainValue == 0 && currentRainValue == 1) {
-                                    startTime = new Date();
-                                }
-
-                                // Jika rain_value berubah dari 1 ke 0, hitung periode hujan
-                                if (previousRainValue == 1 && currentRainValue == 0) {
-                                    if (startTime !== null) {
-                                        let endTime = new Date();
-                                        // Hitung durasi hujan dalam jam
-                                        let duration = (endTime - startTime) / (1000 * 60 * 60);
-                                        totalRainDuration += duration;
-                                        rainQuantity += 1; // Tambahkan satu kejadian hujan
-                                        startTime = null; // reset waktu mulai
-                                        saveToLocalStorage(); // Simpan perubahan ke localStorage
-                                    }
-                                }
-
-                                // Perbarui nilai rain_value sebelumnya
-                                previousRainValue = currentRainValue;
-
-                                // Update rain_value di halaman
-                                $('#rain_value').text(currentRainValue);
-
-                                // Update kuantitas di halaman
-                                $('#quantity_value').text(rainQuantity);
-
-                                // Update total durasi di halaman
-                                $('#duration_value').text(totalRainDuration.toFixed(2));
-
-                                // Tambahkan data ke grafik
-                                chart.series[0].addPoint([currentTime, currentRainValue]);
-
+                            // Jika rain_value berubah dari 0 ke 1, catat waktu mulai
+                            if (previousRainValue == 0 && currentRainValue == 1) {
+                                startTime = new Date();
                             }
+
+                            // Jika rain_value berubah dari 1 ke 0, hitung periode hujan
+                            if (previousRainValue == 1 && currentRainValue == 0) {
+                                if (startTime !== null) {
+                                    let endTime = new Date();
+                                    // Hitung durasi hujan dalam jam
+                                    let duration = (endTime - startTime) / (1000 * 60 * 60);
+                                    totalRainDuration += duration;
+                                    rainQuantity += 1; // Tambahkan satu kejadian hujan
+                                    startTime = null; // reset waktu mulai
+                                    saveToLocalStorage(); // Simpan perubahan ke localStorage
+                                }
+                            }
+
+                            // Perbarui nilai rain_value sebelumnya
+                            previousRainValue = currentRainValue;
+
+                            // Update rain_value di halaman
+                            $('#rain_value').text(currentRainValue);
+
+                            // Update kuantitas di halaman
+                            $('#quantity_value').text(rainQuantity);
+
+                            // Update total durasi di halaman
+                            $('#duration_value').text(totalRainDuration.toFixed(2));
                         },
                         error: function(error) {
                             console.log('Error fetching latest rain data:', error);
@@ -180,6 +124,88 @@
         </script>
     </div>
     <div class="table">
-        <div id="rain_chart"></div>
+        <div id="gas_container"></div>
+        <script>
+            let gasChart;
+            const baseUrl = '{{ url('/') }}';
+            let lastTimestamp = null;
+
+            async function requestData() {
+                let endpoint = `${baseUrl}/latest-rain`;
+
+                try {
+                    const result = await fetch(endpoint, {
+                        method: 'GET',
+                    });
+                    if (result.ok) {
+                        const data = await result.json();
+                        console.log('Fetched data:', data);  // Debugging: log fetched data
+
+                        if (data && data.rain_value !== null && data.created_at !== null) {
+                            let timestamp = new Date(data.created_at).getTime();
+                            let value = Number(data.rain_value);
+
+                            // Check if the data is new based on created_at
+                            if (timestamp !== lastTimestamp) {
+                                lastTimestamp = timestamp;
+
+                                console.log(`Gas Timestamp: ${timestamp}, Value: ${value}`); // Debugging: log each point
+
+                                // Update gas data to chart
+                                gasChart.series[0].addPoint([timestamp, value], true, gasChart.series[0].data.length > 20);
+                            }
+
+                            // Uncomment to periodically fetch new data
+                            setTimeout(requestData, 3000); // Fetch data every 3 seconds
+                        } else {
+                            console.error('API response is empty or missing required data');
+                        }
+                    } else {
+                        console.error('Failed to fetch data from API');
+                    }
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                }
+            }
+
+            window.addEventListener('load', function() {
+                gasChart = new Highcharts.Chart({
+                    chart: {
+                        renderTo: 'gas_container',
+                        type: 'spline',
+                        events: {
+                            load: requestData
+                        }
+                    },
+                    title: {
+                        text: 'Live Gas Concentration Data',
+                        style: {
+                            color: '#f94449'
+                        }
+                    },
+                    xAxis: {
+                        type: 'datetime',
+                        tickPixelInterval: 150,
+                        maxZoom: 20 * 1000
+                    },
+                    yAxis: {
+                        minPadding: 0.2,
+                        maxPadding: 0.2,
+                        title: {
+                            text: 'Gas Concentration (ppm)',
+                            margin: 80,
+                            style: {
+                                color: '#f94449'
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'Gas Concentration',
+                        data: [],
+                        color: '#f94449'
+                    }]
+                });
+            });
+        </script>
     </div>
 @endsection

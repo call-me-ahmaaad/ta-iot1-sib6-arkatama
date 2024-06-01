@@ -35,5 +35,6 @@
 
 .table{
     height: 620px;
-    width: 80%;
+    width: 620px;
+    background-color: cyan;
 }

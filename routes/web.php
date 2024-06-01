@@ -30,6 +30,7 @@ Route::get('/dashboard', [SensorController::class, 'dashboard'])
 
 Route::get('/temp-and-humid', [SensorController::class, 'web_dht11'])->name('web.dht11');
 Route::get('/gas-monitoring', [SensorController::class, 'web_mq2'])->name('web.mq2');
+Route::get('/rain-monitoring', [SensorController::class, 'web_rain'])->name('web.rain');
 
 Route::get('/latest-dht11', [SensorController::class, 'latest_dht11']);
 Route::get('/latest-rain', [SensorController::class, 'latest_rain']);

@@ -44,6 +44,14 @@ class SensorController extends Controller
         ]);
     }
 
+    public function web_rain(){
+        $latestRainData = Rain::latest()->first();
+
+        return view('rainsensor', [
+            'rain_value' => $latestRainData ? $latestRainData->rain_value : null,
+        ]);
+    }
+
     // Fungsi untuk menampilkan data temperature celcius dari database yang terbaru (update terus)
     public function latest_dht11(){
         $latestDhtData = Dht11::latest()->first();

@@ -36,6 +36,14 @@ class SensorController extends Controller
         ]);
     }
 
+    public function web_mq2(){
+        $latestMq2Data = Mq2::latest()->first();
+
+        return view('mq2', [
+            'gas_value' => $latestMq2Data ? $latestMq2Data->gas_value : null,
+        ]);
+    }
+
     // Fungsi untuk menampilkan data temperature celcius dari database yang terbaru (update terus)
     public function latest_dht11(){
         $latestDhtData = Dht11::latest()->first();

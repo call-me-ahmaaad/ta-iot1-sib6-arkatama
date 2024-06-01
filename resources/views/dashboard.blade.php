@@ -65,7 +65,7 @@
         </a>
 
         {{-- Gas Sensor (MQ-2) --}}
-        <a class="button" id="gas" href="" id="gas">
+        <a class="button" id="gas" href={{route('web.mq2')}} id="gas">
             <h3>Gas</h3>
             <p><span id="gas_value">{{ $gas_value }}</span></p>
         </a>

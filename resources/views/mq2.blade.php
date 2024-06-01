@@ -36,11 +36,11 @@
                             // Determine the color of the gauge bar based on the value
                             var gaugeColor;
                             if (gasValue < 300) {
-                                gaugeColor = '#00ff00'; // Green for safe levels
+                                gaugeColor = '#6fc276'; // Green for safe levels
                             } else if (gasValue < 700) {
-                                gaugeColor = '#ffff00'; // Yellow for caution
+                                gaugeColor = '#ffe37a'; // Yellow for caution
                             } else {
-                                gaugeColor = '#ff0000'; // Red for danger
+                                gaugeColor = '#f94449'; // Red for danger
                             }
 
                             // Update the gauge bar with chaining

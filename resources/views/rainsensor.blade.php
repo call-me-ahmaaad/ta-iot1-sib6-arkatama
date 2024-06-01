@@ -73,6 +73,51 @@
                     }
                 }
 
+                // Inisialisasi grafik Highcharts
+                const chart = Highcharts.chart('rain_chart', {
+                    chart: {
+                        type: 'area'  // Mengubah tipe grafik menjadi area
+                    },
+                    title: {
+                        text: 'Rain Value Over Time',
+                        style: {
+                                color: '#f94449'
+                            }
+                    },
+                    xAxis: {
+                        type: 'datetime',
+                        tickPixelInterval: 150,
+                        maxZoom: 20 * 1000,
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Rain Value',
+                            style: {
+                                color: '#f94449'
+                            }
+                        },
+                        min: 0,
+                        max: 2,
+                    },
+                    series: [{
+                        name: 'Rain Value',
+                        data: [],
+                        color: '#f94449',
+                        fillColor: {
+                            linearGradient: {
+                                x1: 0,
+                                x2: 0,
+                                y1: 0,
+                                y2: 1
+                            },
+                            stops: [
+                                [0, '#f94449'],
+                                [1, 'rgba(0, 0, 0, 0)']
+                            ]
+                        }
+                    }]
+                });
+
                 function fetchLatestRain() {
                     $.ajax({
                         url: '/latest-rain',
@@ -86,13 +131,13 @@
 
                                 // Jika rain_value berubah dari 0 ke 1, catat waktu mulai
                                 if (previousRainValue == 0 && currentRainValue == 1) {
-                                    startTime = new Date(data.created_at);
+                                    startTime = new Date();
                                 }
 
                                 // Jika rain_value berubah dari 1 ke 0, hitung periode hujan
                                 if (previousRainValue == 1 && currentRainValue == 0) {
                                     if (startTime !== null) {
-                                        let endTime = new Date(data.created_at);
+                                        let endTime = new Date();
                                         // Hitung durasi hujan dalam jam
                                         let duration = (endTime - startTime) / (1000 * 60 * 60);
                                         totalRainDuration += duration;
@@ -109,13 +154,14 @@
                                 $('#rain_value').text(currentRainValue);
 
                                 // Update kuantitas di halaman
-                                $('#quantity_value').text(rainQuantity);
+                                $('#quantity_value').text(rainQuantity + ' times');
 
                                 // Update total durasi di halaman
-                                $('#duration_value').text(totalRainDuration.toFixed(2));
+                                $('#duration_value').text(totalRainDuration.toFixed(2) + ' hours');
 
-                                // Update grafik menggunakan fungsi dari chart.js
-                                window.updateChart(currentTime, currentRainValue);
+                                // Tambahkan data ke grafik
+                                chart.series[0].addPoint([currentTime, currentRainValue]);
+
                             }
                         },
                         error: function(error) {
@@ -132,61 +178,4 @@
     <div class="table">
         <div id="rain_chart"></div>
     </div>
-
-    <script>
-        $(document).ready(function() {
-            // Inisialisasi grafik Highcharts
-            const chart = Highcharts.chart('rain_chart', {
-                chart: {
-                    type: 'area'  // Mengubah tipe grafik menjadi area
-                },
-                title: {
-                    text: 'Rain Value Over Time'
-                },
-                xAxis: {
-                    type: 'datetime',
-                    title: {
-                        text: 'Time'
-                    }
-                },
-                yAxis: {
-                    title: {
-                        text: 'Rain Value'
-                    },
-                    min: 0,
-                    max: 2,
-                    tickPositions: [0, 1], // Menampilkan label hanya untuk angka 0 dan 1
-                    labels: {
-                        formatter: function () {
-                            return this.value === 0 ? '0' : '1'; // Mengubah nilai label menjadi '0' atau '1'
-                        }
-                    }
-                },
-                series: [{
-                    name: 'Rain Value',
-                    data: [],
-                    fillColor: {
-                        linearGradient: {
-                            x1: 0,
-                            x2: 0,
-                            y1: 0,
-                            y2: 1
-                        },
-                        stops: [
-                            [0, '#f94449'],  // Warna merah
-                            [1, 'rgba(0, 0, 0, 0)']  // Warna transparan
-                        ]
-                    }
-                }]
-            });
-
-            // Fungsi untuk memperbarui grafik
-            function updateChart(currentTime, currentRainValue) {
-                chart.series[0].addPoint([currentTime, currentRainValue]);
-            }
-
-            // Ekspor fungsi updateChart agar dapat diakses dari file lain
-            window.updateChart = updateChart;
-        });
-    </script>
 @endsection

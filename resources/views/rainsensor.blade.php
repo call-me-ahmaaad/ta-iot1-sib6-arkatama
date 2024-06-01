@@ -106,6 +106,7 @@
                         marker: {
                             enabled: true // Pastikan marker diaktifkan
                         },
+                        color: 'blue',
                         fillColor: {
                             linearGradient: {
                                 x1: 0,

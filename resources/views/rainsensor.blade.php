@@ -124,9 +124,9 @@
         </script>
     </div>
     <div class="table">
-        <div id="gas_container"></div>
+        <div id="rain_chart"></div>
         <script>
-            let gasChart;
+            let rainChart;
             const baseUrl = '{{ url('/') }}';
             let lastTimestamp = null;
 
@@ -149,10 +149,10 @@
                             if (timestamp !== lastTimestamp) {
                                 lastTimestamp = timestamp;
 
-                                console.log(`Gas Timestamp: ${timestamp}, Value: ${value}`); // Debugging: log each point
+                                console.log(`Rain Timestamp: ${timestamp}, Value: ${value}`); // Debugging: log each point
 
                                 // Update gas data to chart
-                                gasChart.series[0].addPoint([timestamp, value], true, gasChart.series[0].data.length > 20);
+                                rainChart.series[0].addPoint([timestamp, value], true, rainChart.series[0].data.length > 20);
                             }
 
                             // Uncomment to periodically fetch new data
@@ -169,18 +169,18 @@
             }
 
             window.addEventListener('load', function() {
-                gasChart = new Highcharts.Chart({
+                rainChart = new Highcharts.Chart({
                     chart: {
-                        renderTo: 'gas_container',
+                        renderTo: 'rain_chart',
                         type: 'spline',
                         events: {
                             load: requestData
                         }
                     },
                     title: {
-                        text: 'Live Gas Concentration Data',
+                        text: 'Rainsensor Detection',
                         style: {
-                            color: '#f94449'
+                            color: '#f94449',
                         }
                     },
                     xAxis: {
@@ -191,8 +191,10 @@
                     yAxis: {
                         minPadding: 0.2,
                         maxPadding: 0.2,
+                        min: 0,
+                        max: 2,
                         title: {
-                            text: 'Gas Concentration (ppm)',
+                            text: 'Rain Value',
                             margin: 80,
                             style: {
                                 color: '#f94449'
@@ -200,7 +202,7 @@
                         }
                     },
                     series: [{
-                        name: 'Gas Concentration',
+                        name: 'Rain Value',
                         data: [],
                         color: '#f94449'
                     }]

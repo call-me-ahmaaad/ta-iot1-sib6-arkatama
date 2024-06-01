@@ -1,6 +1,6 @@
 @extends('layouts.sensorPage')
 @section('css')
-
+    <link rel="stylesheet" href={{URL::asset("/css/sensorPageMq2.css")}}>
 @endsection
 @section('navbar')
 

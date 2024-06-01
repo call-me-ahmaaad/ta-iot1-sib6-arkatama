@@ -7,34 +7,55 @@
 }
 
 .label{
-    background-color: blue;
+    /* background-color: blue; */
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    height: 620px;
+    height: 640px;
     flex-direction: column;
     margin-right: 30px;
 }
 
 .label .card{
-    /* background-color: brown; */
+    background-color: #f94449;
     display: flex;
-    width: 170px;
-    height: 110px;
+    width: 140px;
+    height: 170px;
     border-radius: 7px;
     border: 3px solid #2c2c2c;
     color: white;
     transition: all 0.5s ease;
     flex-direction: column;
     align-items: center;
+    text-align: center;
+}
+
+.label .card #value{
+    font-size: 30px;
+    margin-top: 10px;
+}
+
+.label .gaugeMonitoring{
+    background-color: #f94449;
+    display: flex;
+    width: 140px;
+    height: 435px;
+    border-radius: 7px;
+    border: 3px solid #2c2c2c;
+    color: white;
+    transition: all 0.5s ease;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 .label .card:hover{
     box-shadow: 0 4px 8px 0 #f94449;
+    transform: translateY(-2px);
 }
 
 .table{
     height: 640px;
-    width: 90%;
+    width: 85%;
     background-color: cyan;
 }

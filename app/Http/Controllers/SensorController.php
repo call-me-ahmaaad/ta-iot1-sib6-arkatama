@@ -92,6 +92,7 @@ class SensorController extends Controller
         $latestMq2Data = Mq2::latest()->first();
         return response()->json([
             'gas_value' => $latestMq2Data ? $latestMq2Data->gas_value : null,
+            'created_at' => $latestMq2Data ? $latestMq2Data->created_at : null,
         ]);
     }
 }

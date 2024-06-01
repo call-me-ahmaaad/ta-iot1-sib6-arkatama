@@ -35,9 +35,5 @@
 
 .table{
     height: 620px;
-    display: flex;
-    justify-content: space-evenly;
-    flex-direction: column;
-    width: 600px;
-    background-color: blanchedalmond;
+    width: 80%;
 }

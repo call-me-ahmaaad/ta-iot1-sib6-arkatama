@@ -16,6 +16,6 @@
         </div>
     </div>
     <div class="table">
-
+        Kenapa gak muncul si?
     </div>
 @endsection

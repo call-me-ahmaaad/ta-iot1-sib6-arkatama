@@ -93,6 +93,7 @@ class SensorController extends Controller
         $latestRainData = Raindrop::latest()->first();
         return response()->json([
             'rain_value' => $latestRainData ? $latestRainData->rain_value : null,
+            'created_at' => $latestRainData ? $latestRainData->created_at : null,
         ]);
     }
 

@@ -45,7 +45,7 @@ class SensorController extends Controller
     }
 
     public function web_rain(){
-        $latestRainData = Rain::latest()->first();
+        $latestRainData = Raindrop::latest()->first();
 
         return view('rainsensor', [
             'rain_value' => $latestRainData ? $latestRainData->rain_value : null,

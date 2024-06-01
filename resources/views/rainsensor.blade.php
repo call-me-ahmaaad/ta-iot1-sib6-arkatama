@@ -79,30 +79,33 @@
                         type: 'area'  // Mengubah tipe grafik menjadi area
                     },
                     title: {
-                        text: 'Rain Value Over Time',
-                        style: {
-                                color: '#f94449'
-                            }
+                        text: 'Rain Value Over Time'
                     },
                     xAxis: {
                         type: 'datetime',
-                        tickPixelInterval: 150,
-                        maxZoom: 20 * 1000,
+                        title: {
+                            text: 'Time'
+                        }
                     },
                     yAxis: {
                         title: {
-                            text: 'Rain Value',
-                            style: {
-                                color: '#f94449'
-                            }
+                            text: 'Rain Value'
                         },
                         min: 0,
                         max: 2,
+                        tickPositions: [0, 1], // Menampilkan label hanya untuk angka 0 dan 1
+                        labels: {
+                            formatter: function () {
+                                return this.value === 0 ? '0' : '1'; // Mengubah nilai label menjadi '0' atau '1'
+                            }
+                        }
                     },
                     series: [{
                         name: 'Rain Value',
                         data: [],
-                        color: '#f94449',
+                        marker: {
+                            enabled: true // Pastikan marker diaktifkan
+                        },
                         fillColor: {
                             linearGradient: {
                                 x1: 0,
@@ -111,8 +114,8 @@
                                 y2: 1
                             },
                             stops: [
-                                [0, '#f94449'],
-                                [1, 'rgba(0, 0, 0, 0)']
+                                [0, '#f94449'],  // Warna merah
+                                [1, 'rgba(0, 0, 0, 0)']  // Warna transparan
                             ]
                         }
                     }]
@@ -154,10 +157,10 @@
                                 $('#rain_value').text(currentRainValue);
 
                                 // Update kuantitas di halaman
-                                $('#quantity_value').text(rainQuantity + ' times');
+                                $('#quantity_value').text(rainQuantity);
 
                                 // Update total durasi di halaman
-                                $('#duration_value').text(totalRainDuration.toFixed(2) + ' hours');
+                                $('#duration_value').text(totalRainDuration.toFixed(2));
 
                                 // Tambahkan data ke grafik
                                 chart.series[0].addPoint([currentTime, currentRainValue]);

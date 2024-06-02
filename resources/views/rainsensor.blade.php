@@ -22,7 +22,7 @@
             <p><span id="duration_value">0</span></p>
         </div>
 
-        {{-- <script>
+        <script>
             $(document).ready(function() {
                 let previousRainValue = 0;
                 let rainQuantity = 0;
@@ -121,7 +121,7 @@
                 // Fetch the latest data every 3 seconds
                 setInterval(fetchLatestRain, 3000);
             });
-        </script> --}}
+        </script>
     </div>
     <div class="table">
         <div id="rain_chart"></div>

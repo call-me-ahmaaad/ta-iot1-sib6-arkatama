@@ -75,7 +75,7 @@
             <div class="info">
                 <p><span id="gas_value">{{ $gas_value }}</span></p>
                 <div class="gasGauge">
-                    <div id="container-gauge" style="width: 120px; height: 120px;"></div>
+                    <div id="container-gauge" style="width: 170px; height: 120px;"></div>
                 </div>
             </div>
         </a>

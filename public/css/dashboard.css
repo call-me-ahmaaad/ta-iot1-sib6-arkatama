@@ -88,10 +88,12 @@ body{
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-evenly;
 }
 
-.card .button[id="gas"] .info p span{
-    margin-right: 30px;
+.card .button[id="gas"] .info #container-gauge{
+    border-radius: 7px;
+    border: 3px solid #2c2c2c;
 }
 
 .card .button[id="gas"]:hover{

@@ -74,9 +74,7 @@
             <h3>Gas</h3>
             <div class="info">
                 <p><span id="gas_value">{{ $gas_value }} ppm</span></p>
-                <div class="gasGauge">
-                    <div id="container-gauge" style="width: 170px; height: 120px;"></div>
-                </div>
+                <div id="container-gauge" style="width: 170px; height: 120px;"></div>
             </div>
         </a>
 

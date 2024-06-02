@@ -92,7 +92,7 @@ body{
 }
 
 .card .button[id="gas"] .info p span{
-    margin-right: 10px;
+    margin-right: 30px;
 }
 
 .card .button[id="gas"]:hover{

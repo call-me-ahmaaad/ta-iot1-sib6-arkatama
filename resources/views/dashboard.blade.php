@@ -80,86 +80,75 @@
                 var tempValue;
                 var humidValue;
 
-                // Inisialisasi gauge untuk gas_value
-        Highcharts.chart('gasGaugeContainer', {
-            chart: {
-                type: 'solidgauge'
-            },
-            title: {
-                text: 'Gas Concentration'
-            },
-            pane: {
-                center: ['50%', '85%'],
-                size: '140%',
-                startAngle: -90,
-                endAngle: 90,
-                background: {
-                    backgroundColor:
-                        Highcharts.defaultOptions.legend.backgroundColor || '#EEE',
-                    innerRadius: '60%',
-                    outerRadius: '100%',
-                    shape: 'arc'
-                }
-            },
-            tooltip: {
-                enabled: false
-            },
-            yAxis: {
-                min: 0,
-                max: 2000,
-                title: {
-                    text: 'PPM'
-                },
-                stops: [
-                    [0.1, '#55BF3B'], // green
-                    [0.5, '#DDDF0D'], // yellow
-                    [0.9, '#DF5353'] // red
-                ],
-                lineWidth: 0,
-                tickWidth: 0,
-                minorTickInterval: null,
-                tickAmount: 2,
-                labels: {
-                    y: 16
-                }
-            },
-            plotOptions: {
-                solidgauge: {
-                    dataLabels: {
-                        y: 5,
-                        borderWidth: 0,
-                        useHTML: true
-                    }
-                }
-            },
-            credits: {
-                enabled: false
-            },
-            series: [{
-                name: 'Gas Concentration',
-                data: [0], // initial value
-                dataLabels: {
-                    format:
-                        '<div style="text-align:center">' +
-                        '<span style="font-size:25px">{y}</span><br/>' +
-                        '<span style="font-size:12px;opacity:0.4">PPM</span>' +
-                        '</div>'
-                },
-                tooltip: {
-                    valueSuffix: ' PPM'
-                }
-            }]
-        });
-
-                var gaugeChart = Highcharts.charts[Highcharts.charts.length - 1];
+                // Inisialisasi gauge untuk gas_value dengan jarum
+                var gaugeChart = Highcharts.chart('gasGaugeContainer', {
+                    chart: {
+                        type: 'solidgauge'
+                    },
+                    title: {
+                        text: 'Gas Concentration'
+                    },
+                    pane: {
+                        center: ['50%', '85%'],
+                        size: '140%',
+                        startAngle: -90,
+                        endAngle: 90,
+                        background: {
+                            backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || '#EEE',
+                            innerRadius: '60%',
+                            outerRadius: '100%',
+                            shape: 'arc'
+                        }
+                    },
+                    tooltip: {
+                        enabled: false
+                    },
+                    yAxis: {
+                        min: 0,
+                        max: 2000,
+                        stops: [
+                            [0.1, '#55BF3B'], // green
+                            [0.7, '#DDDF0D'], // yellow
+                            [0.9, '#DF5353']  // red
+                        ],
+                        lineWidth: 0,
+                        minorTickInterval: null,
+                        tickAmount: 2,
+                        title: {
+                            text: 'PPM'
+                        },
+                        labels: {
+                            y: 16
+                        }
+                    },
+                    plotOptions: {
+                        solidgauge: {
+                            dataLabels: {
+                                y: 5,
+                                borderWidth: 0,
+                                useHTML: true
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'Gas Concentration',
+                        data: [0],
+                        dataLabels: {
+                            format: '<div style="text-align:center"><span style="font-size:25px">{y}</span><br/><span style="font-size:12px;opacity:0.4">PPM</span></div>'
+                        },
+                        tooltip: {
+                            valueSuffix: ' PPM'
+                        }
+                    }]
+                });
 
                 function fetchLatestTempAndHumid() {
                     $.ajax({
                         url: '/latest-dht11',
                         method: 'GET',
                         success: function(data) {
-                            tempValue = data.temp_c;
-                            humidValue = data.humid;
+                            tempValue = data.temp_c; // Update tempValue
+                            humidValue = data.humid; // Update humidValue
                             $('#temp_c').text(data.temp_c + '°C');
                             $('#humid_value').text(data.humid + '%');
 
@@ -245,7 +234,7 @@
 
                 // Variabel global untuk menyimpan waktu terakhir pesan dikirim
                 var lastAlertTime = 0;
-                var cooldownTime = 60000; // Waktu cooldown dalam milidetik (10 menit = 600000ms
+                var cooldownTime = 600000; // Waktu cooldown dalam milidetik (10 menit = 600000ms)
 
                 function fetchLatestMq2() {
                     $.ajax({
@@ -274,9 +263,9 @@
 
                     // Check if the cooldown period has passed
                     if (currentTime - lastAlertTime >= cooldownTime) {
-                        var apiKey = 'n9NNqRF_PUbLf8v4TYzP'; // Replace with your Fonnte API key
+                        var apiKey = 'YOUR_FONNTE_API_KEY'; // Replace with your Fonnte API key
                         var phoneNumber = '+6282299006083'; // Target phone number
-                        var message = `🔥🔥🔥 MENYALA ABANGKU 🔥🔥🔥\n\nGas Concentration: ${gasValue} ppm\nTemperature: ${tempValue}°C\nHumidity: ${humidValue}%\n\nThe notification will appear again if conditions remain dangerous in the next 1 minutes.`;
+                        var message = `🔥🔥🔥 MENYALA ABANGKU 🔥🔥🔥\n\nGas Concentration: ${gasValue}\nTemperature: ${tempValue}\nHumidity: ${humidValue}\n\nThe notification will appear again if conditions remain dangerous in the next 10 minutes.`;
 
                         $.ajax({
                             url: 'https://api.fonnte.com/send', // Fonnte API endpoint
@@ -300,20 +289,17 @@
                             }
                         });
                     } else {
-                        console.log('Cooldown active. Alert not sent.');
+                        console.log('Cooldown active. Alert not sent yet.');
                     }
                 }
 
-                // Fetch the latest temperature and humidity every 1 second
-                setInterval(fetchLatestTempAndHumid, 1000);
-
-                // Fetch the latest rain data every 1 second
-                setInterval(fetchLatestRain, 1000);
-
-                // Fetch the latest rain data every 1 second
-                setInterval(fetchLatestMq2, 1000);
+                // Fetch data every 5 seconds
+                setInterval(fetchLatestTempAndHumid, 5000);
+                setInterval(fetchLatestRain, 5000);
+                setInterval(fetchLatestMq2, 5000);
             });
         </script>
+
 
         {{-- LED Control --}}
         <div class="led" href="" id="led">

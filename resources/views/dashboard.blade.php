@@ -71,6 +71,7 @@
         <a class="button" id="gas" href={{route('web.mq2')}} id="gas">
             <h3>Gas</h3>
             <p><span id="gas_value">{{ $gas_value }}</span></p>
+            <div id="gasGaugeContainer" style="width: 400px; height: 300px;"></div>
         </a>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -79,13 +80,86 @@
                 var tempValue;
                 var humidValue;
 
+                // Inisialisasi gauge untuk gas_value
+                Highcharts.chart('gasGaugeContainer', {
+                    chart: {
+                        type: 'solidgauge'
+                    },
+                    title: {
+                        text: 'Gas Concentration'
+                    },
+                    pane: {
+                        center: ['50%', '85%'],
+                        size: '140%',
+                        startAngle: -90,
+                        endAngle: 90,
+                        background: {
+                            backgroundColor:
+                                Highcharts.defaultOptions.legend.backgroundColor || '#EEE',
+                            innerRadius: '60%',
+                            outerRadius: '100%',
+                            shape: 'arc'
+                        }
+                    },
+                    tooltip: {
+                        enabled: false
+                    },
+                    yAxis: {
+                        min: 0,
+                        max: 2000,
+                        title: {
+                            text: 'PPM'
+                        },
+                        stops: [
+                            [0.1, '#6fc276'], // green
+                            [0.5, '#ffe37a'], // yellow
+                            [0.9, '#f94449'] // red
+                        ],
+                        lineWidth: 0,
+                        tickWidth: 0,
+                        minorTickInterval: null,
+                        tickAmount: 2,
+                        labels: {
+                            y: 16
+                        }
+                    },
+                    plotOptions: {
+                        solidgauge: {
+                            dataLabels: {
+                                y: 5,
+                                borderWidth: 0,
+                                useHTML: true
+                            }
+                        }
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    series: [{
+                        name: 'Gas Concentration',
+                        data: [0], // initial value
+                        dataLabels: {
+                            format:
+                                '<div style="text-align:center">' +
+                                '<span style="font-size:25px">{y}</span><br/>' +
+                                '<span style="font-size:12px;opacity:0.4">PPM</span>' +
+                                '</div>'
+                        },
+                        tooltip: {
+                            valueSuffix: ' PPM'
+                        }
+                    }]
+                });
+
+                var gaugeChart = Highcharts.charts[Highcharts.charts.length - 1];
+
                 function fetchLatestTempAndHumid() {
                     $.ajax({
                         url: '/latest-dht11',
                         method: 'GET',
                         success: function(data) {
-                            tempValue = data.temp_c; // Update tempValue
-                            humidValue = data.humid; // Update humidValue
+                            tempValue = data.temp_c;
+                            humidValue = data.humid;
                             $('#temp_c').text(data.temp_c + '°C');
                             $('#humid_value').text(data.humid + '%');
 
@@ -171,7 +245,7 @@
 
                 // Variabel global untuk menyimpan waktu terakhir pesan dikirim
                 var lastAlertTime = 0;
-                var cooldownTime = 600000; // Waktu cooldown dalam milidetik (10 menit = 600000ms)
+                var cooldownTime = 60000; // Waktu cooldown dalam milidetik (10 menit = 600000ms
 
                 function fetchLatestMq2() {
                     $.ajax({
@@ -180,6 +254,9 @@
                         success: function(data) {
                             var gasValue = data.gas_value;
                             $('#gas_value').text(gasValue + ' ppm');
+
+                            // Update the gauge with the new gas value
+                            gaugeChart.series[0].points[0].update(gasValue);
 
                             // Check if the gas value exceeds 1400
                             if (gasValue > 1400) {
@@ -197,9 +274,9 @@
 
                     // Check if the cooldown period has passed
                     if (currentTime - lastAlertTime >= cooldownTime) {
-                        var apiKey = 'YOUR_FONNTE_API_KEY'; // Replace with your Fonnte API key
+                        var apiKey = 'n9NNqRF_PUbLf8v4TYzP'; // Replace with your Fonnte API key
                         var phoneNumber = '+6282299006083'; // Target phone number
-                        var message = `🔥🔥🔥 MENYALA ABANGKU 🔥🔥🔥\n\nGas Concentration: ${gasValue}\nTemperature: ${tempValue}\nHumidity: ${humidValue}\n\nThe notification will appear again if conditions remain dangerous in the next 10 minutes.`;
+                        var message = `🔥🔥🔥 MENYALA ABANGKU 🔥🔥🔥\n\nGas Concentration: ${gasValue} ppm\nTemperature: ${tempValue}°C\nHumidity: ${humidValue}%\n\nThe notification will appear again if conditions remain dangerous in the next 1 minutes.`;
 
                         $.ajax({
                             url: 'https://api.fonnte.com/send', // Fonnte API endpoint
@@ -223,17 +300,20 @@
                             }
                         });
                     } else {
-                        console.log('Cooldown active. Alert not sent yet.');
+                        console.log('Cooldown active. Alert not sent.');
                     }
                 }
 
-                // Fetch data every 5 seconds
-                setInterval(fetchLatestTempAndHumid, 3000);
-                setInterval(fetchLatestRain, 3000);
-                setInterval(fetchLatestMq2, 3000);
+                // Fetch the latest temperature and humidity every 1 second
+                setInterval(fetchLatestTempAndHumid, 1000);
+
+                // Fetch the latest rain data every 1 second
+                setInterval(fetchLatestRain, 1000);
+
+                // Fetch the latest rain data every 1 second
+                setInterval(fetchLatestMq2, 1000);
             });
         </script>
-
 
         {{-- LED Control --}}
         <div class="led" href="" id="led">

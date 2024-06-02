@@ -55,6 +55,12 @@
                     <div class="icon" id="gaugeHumidityIcon"></div>
                 </div>
                 <div id="humid-label" class="dynamic-label"></div>
+
+                <div class="gaugeContainer">
+                    <div class="gauge gaugeGas"></div>
+                    <div class="icon" id="gaugeGasIcon"></div>
+                </div>
+                <div id="gas-label" class="dynamic-label"></div>
             </div>
         </div>
 
@@ -68,11 +74,7 @@
         <a class="button" id="gas" href={{route('web.mq2')}} id="gas">
             <h3>Gas</h3>
             <p><span id="gas_value">{{ $gas_value }}</span></p>
-            <div class="gaugeContainer">
-                <div class="gauge gaugeGas"></div>
-                <div class="icon" id="gaugeGasIcon"></div>
-            </div>
-            <div id="gas-label" class="dynamic-label"></div>
+
         </a>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

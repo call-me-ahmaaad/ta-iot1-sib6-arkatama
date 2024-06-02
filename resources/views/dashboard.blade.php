@@ -25,7 +25,8 @@
     <link rel="stylesheet" href={{URL::asset("/css/dashboard.css")}}>
     <title>Document</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
 </head>
 <body>
     {{-- Bagian Title --}}

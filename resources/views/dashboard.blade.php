@@ -161,6 +161,10 @@
                     });
                 }
 
+                // Variabel global untuk menyimpan waktu terakhir pesan dikirim
+                var lastAlertTime = 0;
+                var cooldownTime = 600000; // Waktu cooldown dalam milidetik (10 menit = 600000ms
+
                 function fetchLatestMq2() {
                     $.ajax({
                         url: '/latest-mq2',
@@ -181,30 +185,38 @@
                 }
 
                 function sendWhatsAppAlert(gasValue) {
-                    var apiKey = 'n9NNqRF_PUbLf8v4TYzP'; // Replace with your Fonnte API key
-                    var phoneNumber = '+6282299006083'; // Target phone number
-                    var message = '🔥🔥🔥 MENYALA ABANGKU! 🔥🔥🔥 Current value: ' + gasValue + ' ppm';
+                    var currentTime = new Date().getTime();
 
-                    $.ajax({
-                        url: 'https://api.fonnte.com/send', // Fonnte API endpoint
-                        method: 'POST',
-                        headers: {
-                            'Authorization': apiKey,
-                            'Content-Type': 'application/x-www-form-urlencoded' // Ensure proper content type
-                        },
-                        data: {
-                            'target': phoneNumber,
-                            'message': message,
-                            'countryCode': '62' // Country code for Indonesia
-                        },
-                        success: function(response) {
-                            console.log('WhatsApp alert sent successfully:', response);
-                        },
-                        error: function(error) {
-                            console.log('Error sending WhatsApp alert:', error);
-                            console.log('Error details:', error.responseText);
-                        }
-                    });
+                    // Check if the cooldown period has passed
+                    if (currentTime - lastAlertTime >= cooldownTime) {
+                        var apiKey = 'n9NNqRF_PUbLf8v4TYzP'; // Replace with your Fonnte API key
+                        var phoneNumber = '+6282299006083'; // Target phone number
+                        var message = 'Alert: Gas value has exceeded 1400 ppm. Current value: ' + gasValue + ' ppm';
+
+                        $.ajax({
+                            url: 'https://api.fonnte.com/send', // Fonnte API endpoint
+                            method: 'POST',
+                            headers: {
+                                'Authorization': apiKey,
+                                'Content-Type': 'application/x-www-form-urlencoded' // Ensure proper content type
+                            },
+                            data: {
+                                'target': phoneNumber,
+                                'message': message,
+                                'countryCode': '62' // Country code for Indonesia
+                            },
+                            success: function(response) {
+                                console.log('WhatsApp alert sent successfully:', response);
+                                lastAlertTime = currentTime; // Update last alert time
+                            },
+                            error: function(error) {
+                                console.log('Error sending WhatsApp alert:', error);
+                                console.log('Error details:', error.responseText);
+                            }
+                        });
+                    } else {
+                        console.log('Cooldown active. Alert not sent.');
+                    }
                 }
 
                 // Fetch the latest temperature and humidity every 1 second

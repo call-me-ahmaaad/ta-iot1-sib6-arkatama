@@ -13,12 +13,12 @@
         </div>
 
         <div class="card" id="quantity">
-            <p id="unit">Quantity:</p>
+            <p id="unit">Quantity in day:</p>
             <p><span id="quantity_value">0</span></p>
         </div>
 
         <div class="card" id="duration">
-            <p id="unit">Duration:</p>
+            <p id="unit">Total Duration:</p>
             <p><span id="duration_value">0</span></p>
         </div>
 
@@ -107,10 +107,10 @@
                             $('#rain_value').text(currentRainValue);
 
                             // Update kuantitas di halaman
-                            $('#quantity_value').text(rainQuantity);
+                            $('#quantity_value').text(rainQuantity + ' times');
 
                             // Update total durasi di halaman
-                            $('#duration_value').text(totalRainDuration.toFixed(2));
+                            $('#duration_value').text(totalRainDuration.toFixed(2) + ' hours');
                         },
                         error: function(error) {
                             console.log('Error fetching latest rain data:', error);

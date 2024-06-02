@@ -33,9 +33,9 @@ Route::get('/temp-and-humid', [SensorController::class, 'web_dht11'])->name('web
 Route::get('/gas-monitoring', [SensorController::class, 'web_mq2'])->name('web.mq2');
 Route::get('/rain-monitoring', [SensorController::class, 'web_rain'])->name('web.rain');
 
-Route::get('/latest-dht11', [SensorController::class, 'latest_dht11']);
-Route::get('/latest-rain', [SensorController::class, 'latest_rain']);
-Route::get('/latest-mq2', [SensorController::class, 'latest_mq2']);
+Route::get('/latest-dht11', [SensorController::class, 'latest_dht11'])->middleware(['auth', 'verified']);
+Route::get('/latest-rain', [SensorController::class, 'latest_rain'])->middleware(['auth', 'verified']);
+Route::get('/latest-mq2', [SensorController::class, 'latest_mq2'])->middleware(['auth', 'verified']);
 
 // Route::get('/latest-temp_f', [SensorController::class, 'latest_temp_f']);
 // Route::get('/latest-temp_k', [SensorController::class, 'latest_temp_k']);

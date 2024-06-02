@@ -191,6 +191,12 @@ body{
     width: 500px;
     margin-left: 31px;
 }
+
+.gaugeMonitoring .dynamic-label{
+    border: 3px solid #2c2c2c;
+    border-radius: 7px;
+}
+
 .gaugeMonitoring .gaugeContainer {
     width: 100%;
     background-color: #e0e0e0;

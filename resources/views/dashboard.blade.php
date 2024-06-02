@@ -123,19 +123,19 @@
                             if (data.humid <= 25) {
                                 humidColor = '#6488EA'; // Blue for low humidity
                                 humidLabel = 'Kelembaban Rendah';
-                                humidIcon = '🌵'; // Low humidity icon
+                                humidIcon = '😓'; // Low humidity icon
                             } else if (data.humid <= 50) {
                                 humidColor = '#6fc276'; // Green for moderate humidity
                                 humidLabel = 'Kelembaban Normal';
-                                humidIcon = '🍀'; // Moderate humidity icon
+                                humidIcon = '😌'; // Moderate humidity icon
                             } else if (data.humid <= 75) {
                                 humidColor = '#ffe37a'; // Yellow for high humidity
                                 humidLabel = 'Kelembaban Tinggi';
-                                humidIcon = '💧'; // High humidity icon
+                                humidIcon = '🥵'; // High humidity icon
                             } else {
                                 humidColor = '#f94449'; // Red for very high humidity
                                 humidLabel = 'Kelembaban Sangat Tinggi';
-                                humidIcon = '💦'; // Very high humidity icon
+                                humidIcon = '💀'; // Very high humidity icon
                             }
 
                             $('#temp-label').text(tempLabel);
@@ -210,79 +210,79 @@
                 }
 
                 // Inisialisasi chart gauge Highcharts
-        var gaugeOptions = {
-            chart: {
-                type: 'solidgauge'
-            },
-            title: null,
-            pane: {
-                center: ['50%', '85%'],
-                size: '140%',
-                startAngle: -90,
-                endAngle: 90,
-                background: {
-                    backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || '#EEE',
-                    innerRadius: '60%',
-                    outerRadius: '100%',
-                    shape: 'arc'
-                }
-            },
-            tooltip: {
-                enabled: false
-            },
-            yAxis: {
-                min: 0,
-                max: 3700, // Sesuaikan nilai maksimum
-                stops: [
-                    [0.1, '#6fc276'], // hijau
-                    [0.5, '#ffe37a'], // kuning
-                    [0.9, '#f94449'] // merah
-                ],
-                lineWidth: 0,
-                tickWidth: 0,
-                minorTickInterval: null,
-                tickAmount: 2,
-                title: {
-                    y: -70
-                },
-                labels: {
-                    y: 16
-                }
-            },
-            plotOptions: {
-                solidgauge: {
-                    dataLabels: {
-                        y: 5,
-                        borderWidth: 0,
-                        useHTML: true
+                var gaugeOptions = {
+                    chart: {
+                        type: 'solidgauge'
+                    },
+                    title: null,
+                    pane: {
+                        center: ['50%', '85%'],
+                        size: '140%',
+                        startAngle: -90,
+                        endAngle: 90,
+                        background: {
+                            backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || '#EEE',
+                            innerRadius: '60%',
+                            outerRadius: '100%',
+                            shape: 'arc'
+                        }
+                    },
+                    tooltip: {
+                        enabled: false
+                    },
+                    yAxis: {
+                        min: 0,
+                        max: 3700, // Sesuaikan nilai maksimum
+                        stops: [
+                            [0.1, '#6fc276'], // hijau
+                            [0.5, '#ffe37a'], // kuning
+                            [0.9, '#f94449'] // merah
+                        ],
+                        lineWidth: 0,
+                        tickWidth: 0,
+                        minorTickInterval: null,
+                        tickAmount: 2,
+                        title: {
+                            y: -70
+                        },
+                        labels: {
+                            y: 16
+                        }
+                    },
+                    plotOptions: {
+                        solidgauge: {
+                            dataLabels: {
+                                y: 5,
+                                borderWidth: 0,
+                                useHTML: true
+                            }
+                        }
+                    },
+                    accessibility: {  // Menambahkan konfigurasi aksesibilitas
+                        enabled: true
                     }
-                }
-            },
-            accessibility: {  // Menambahkan konfigurasi aksesibilitas
-                enabled: true
-            }
-        };
+                };
 
-        var chart = Highcharts.chart('container-gauge', Highcharts.merge(gaugeOptions, {
-            yAxis: {
-                title: {
-                    text: 'Gas Level'
-                }
-            },
-            credits: {
-                enabled: false
-            },
-            series: [{
-                name: 'Gas Level',
-                data: [0],
-                dataLabels: {
-                    format: '<div style="text-align:center"><span style="font-size:25px">{y}</span><br/><span style="font-size:12px;opacity:0.4">ppm</span></div>'
-                },
-                tooltip: {
-                    valueSuffix: ' ppm'
-                }
-            }]
-        }));
+                var chart = Highcharts.chart('container-gauge', Highcharts.merge(gaugeOptions, {
+                    yAxis: {
+                        title: {
+                            text: 'Gas Level'
+                        }
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    series: [{
+                        name: 'Gas Level',
+                        data: [0],
+                        dataLabels: {
+                            format: '<div style="text-align:center"><span style="font-size:25px">{y}</span><br/><span style="font-size:12px;opacity:0.4">ppm</span></div>'
+                        },
+                        tooltip: {
+                            valueSuffix: ' ppm'
+                        }
+                    }]
+                }));
 
                 function updateGauge(gasValue) {
                     chart.series[0].points[0].update(gasValue);

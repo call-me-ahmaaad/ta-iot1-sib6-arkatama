@@ -73,11 +73,16 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             $(document).ready(function() {
+                var tempValue;
+                var humidValue;
+
                 function fetchLatestTempAndHumid() {
                     $.ajax({
                         url: '/latest-dht11',
                         method: 'GET',
                         success: function(data) {
+                            var tempValue = data.gas_value;
+                            var humidValue = data.gas_value;
                             $('#temp_c').text(data.temp_c + '°C');
                             $('#humid_value').text(data.humid + '%');
 
@@ -163,7 +168,7 @@
 
                 // Variabel global untuk menyimpan waktu terakhir pesan dikirim
                 var lastAlertTime = 0;
-                var cooldownTime = 600000; // Waktu cooldown dalam milidetik (10 menit = 600000ms
+                var cooldownTime = 60000; // Waktu cooldown dalam milidetik (10 menit = 600000ms
 
                 function fetchLatestMq2() {
                     $.ajax({
@@ -175,7 +180,7 @@
 
                             // Check if the gas value exceeds 1400
                             if (gasValue > 1400) {
-                                sendWhatsAppAlert(gasValue);
+                                sendWhatsAppAlert(gasValue, tempValue, humidValue);
                             }
                         },
                         error: function(error) {
@@ -191,7 +196,7 @@
                     if (currentTime - lastAlertTime >= cooldownTime) {
                         var apiKey = 'n9NNqRF_PUbLf8v4TYzP'; // Replace with your Fonnte API key
                         var phoneNumber = '+6282299006083'; // Target phone number
-                        var message = 'Alert: Gas value has exceeded 1400 ppm. Current value: ' + gasValue + ' ppm';
+                        var message = `🔥🔥🔥 MENYALA ABANGKU 🔥🔥🔥\n\nGas Concentration: ${gasValue}\nTemperature: ${tempValue}\nHumidity: ${humidValue}\n\nThe notification will appear again if conditions remain dangerous in the next 10 minutes.`;
 
                         $.ajax({
                             url: 'https://api.fonnte.com/send', // Fonnte API endpoint

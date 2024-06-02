@@ -35,8 +35,7 @@ class ApiController extends Controller
         ], 201);
     }
 
-    public function getLatestDht11Data()
-    {
+    public function getLatestDht11Data(){
         $data = Dht11::latest()->first();
         return response()->json($data);
     }

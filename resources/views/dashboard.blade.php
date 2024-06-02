@@ -167,12 +167,35 @@
                         method: 'GET',
                         success: function(data) {
                             $('#gas_value').text(data.gas_value + ' ppm');
+                            if (data.gas_value > 1400) {
+                                sendWhatsappAlert(data.gas_value);
+                            }
                         },
                         error: function(error) {
                             console.log('Error fetching latest gas data:', error);
                         }
                     });
                 }
+
+                function sendWhatsappAlert(gasValue) {
+    $.ajax({
+        url: '/send-whatsapp',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            message: 'Alert! Gas level is too high: ' + gasValue + ' ppm'
+        }),
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(response) {
+            console.log('WhatsApp alert sent successfully:', response);
+        },
+        error: function(error) {
+            console.log('Error sending WhatsApp alert:', error);
+        }
+    });
+}
 
                 // Fetch the latest temperature and humidity every 1 second
                 setInterval(fetchLatestTempAndHumid, 1000);

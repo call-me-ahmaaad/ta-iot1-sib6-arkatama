@@ -74,7 +74,7 @@
             <h3>Gas</h3>
             <div class="info">
                 <p><span id="gas_value">{{ $gas_value }}</span></p>
-                <div class="gauge">
+                <div class="gasGauge">
                     <div id="container-gauge" style="width: 200px; height: 200px;"></div>
                     <p id="gas_value">Loading...</p>
                 </div>

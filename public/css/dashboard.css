@@ -84,6 +84,13 @@ body{
     background-color: #6488EA;
 }
 
+.card .button[id="gas"] .info{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
 .card .button[id="gas"]:hover{
     box-shadow: 0 4px 8px 0 #6488EA;
 }

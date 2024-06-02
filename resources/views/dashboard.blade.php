@@ -70,10 +70,7 @@
             <h3>Gas</h3>
             <p><span id="gas_value">{{ $gas_value }}</span></p>
         </a>
-        <div id="gauge" style="width:300px; height:200px;"></div>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.3.9/justgage.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             $(document).ready(function() {
@@ -182,9 +179,6 @@
                             var gasValue = data.gas_value;
                             $('#gas_value').text(gasValue + ' ppm');
 
-                            // Update the gauge with the new gas value
-                            gasGauge.refresh(gasValue);
-
                             // Check if the gas value exceeds 1400
                             if (gasValue > 1400) {
                                 sendWhatsAppAlert(gasValue, tempValue, humidValue);
@@ -230,18 +224,6 @@
                         console.log('Cooldown active. Alert not sent.');
                     }
                 }
-
-                // Initialize the gauge
-                var gasGauge = new JustGage({
-                    id: "gauge",
-                    value: 0,
-                    min: 0,
-                    max: 2000,
-                    title: "Gas Value (ppm)",
-                    label: "ppm",
-                    gaugeWidthScale: 0.6,
-                    levelColors: ["#00ff00", "#ffbf00", "#ff0000"]
-                });
 
                 // Fetch the latest temperature and humidity every 1 second
                 setInterval(fetchLatestTempAndHumid, 1000);

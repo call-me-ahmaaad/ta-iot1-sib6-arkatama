@@ -5,7 +5,9 @@
     <title>Gas Gauge</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 </head>
 <body>
     <div id="container-gauge" style="width: 400px; height: 400px;"></div>
@@ -89,12 +91,13 @@
 
         function fetchLatestMq2() {
             $.ajax({
-                url: '/latest-mq2',
+                url: '/api/mq2-latest',
                 method: 'GET',
                 success: function(data) {
                     var gasValue = data.gas_value;
                     $('#gas_value').text(gasValue + ' ppm');
                     updateGauge(gasValue);
+                    localStorage.setItem('gasValue', gasValue); // Simpan ke localStorage
                 },
                 error: function(error) {
                     console.log('Error fetching latest gas data:', error);
@@ -106,9 +109,16 @@
             chart.series[0].points[0].update(gasValue);
         }
 
+        // Coba memuat nilai gas terakhir dari localStorage
+        var savedGasValue = localStorage.getItem('gasValue');
+        if (savedGasValue !== null) {
+            updateGauge(parseFloat(savedGasValue));
+            $('#gas_value').text(savedGasValue + ' ppm');
+        }
+
         // Panggil fungsi fetchLatestMq2 untuk pertama kali dan set interval untuk memperbarui data
         fetchLatestMq2();
-        setInterval(fetchLatestMq2, 5000);  // Memperbarui setiap 5 detik, bisa disesuaikan
+        setInterval(fetchLatestMq2, 1000);  // Memperbarui setiap 5 detik, bisa disesuaikan
     </script>
 </body>
 </html>

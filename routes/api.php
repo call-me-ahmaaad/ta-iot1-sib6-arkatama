@@ -25,3 +25,4 @@ Route::post('/raindrop', [ApiController::class, 'api_raindrop']);
 Route::post('/mq2', [ApiController::class, 'api_mq2']);
 
 Route::get('/dht11/latest', [ApiController::class, 'getLatestDht11Data']);
+Route::get('mq2-latest', [ApiController::class, 'api_latest_mq2']);

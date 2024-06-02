@@ -7,7 +7,6 @@
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
-    <script src="https://code.highcharts.com/modules/accessibility.js"></script> <!-- Modul aksesibilitas -->
 </head>
 <body>
     <div id="container-gauge" style="width: 400px; height: 400px;"></div>

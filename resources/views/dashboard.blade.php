@@ -244,6 +244,27 @@
 
 <script>
     $(document).ready(function() {
+        // Function to fetch latest MQ2 data
+        function fetchLatestMq2() {
+            $.ajax({
+                url: '/latest-mq2',
+                method: 'GET',
+                success: function(data) {
+                    var gasValue = data.gas_value;
+                    $('#gas_value').text(gasValue + ' ppm');
+
+                    // Update the gas gauge
+                    if (chartGas) {
+                        var point = chartGas.series[0].points[0];
+                        point.update(gasValue);
+                    }
+                },
+                error: function(error) {
+                    console.log('Error fetching latest gas data:', error);
+                }
+            });
+        }
+
         // Gauge Options
         const gaugeOptions = {
             chart: {
@@ -322,27 +343,6 @@
                 }
             }]
         }));
-
-        // Function to fetch latest MQ2 data
-        function fetchLatestMq2() {
-            $.ajax({
-                url: '/latest-mq2',
-                method: 'GET',
-                success: function(data) {
-                    var gasValue = data.gas_value;
-                    $('#gas_value').text(gasValue + ' ppm');
-
-                    // Update the gas gauge
-                    if (chartGas) {
-                        var point = chartGas.series[0].points[0];
-                        point.update(gasValue);
-                    }
-                },
-                error: function(error) {
-                    console.log('Error fetching latest gas data:', error);
-                }
-            });
-        }
 
         // Fetch the latest MQ2 data every 2 seconds
         setInterval(fetchLatestMq2, 1000);

@@ -70,7 +70,6 @@
         <a class="button" id="gas" href={{route('web.mq2')}} id="gas">
             <h3>Gas</h3>
             <p><span id="gas_value">{{ $gas_value }}</span></p>
-            <div id="gasGaugeContainer" style="width: 400px; height: 300px;"></div>
             <div id="container-gas" style="width: 300px; height: 200px;"></div>
         </a>
 

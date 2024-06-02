@@ -234,9 +234,9 @@
                 min: 0,
                 max: 3700, // Sesuaikan nilai maksimum
                 stops: [
-                    [0.1, '#55BF3B'], // hijau
-                    [0.5, '#DDDF0D'], // kuning
-                    [0.9, '#DF5353'] // merah
+                    [0.1, '#6fc276'], // hijau
+                    [0.5, '#ffe37a'], // kuning
+                    [0.9, '#f94449'] // merah
                 ],
                 lineWidth: 0,
                 tickWidth: 0,

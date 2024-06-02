@@ -166,10 +166,43 @@
                         url: '/latest-mq2',
                         method: 'GET',
                         success: function(data) {
-                            $('#gas_value').text(data.gas_value + ' ppm');
+                            var gasValue = data.gas_value;
+                            $('#gas_value').text(gasValue + ' ppm');
+
+                            // Check if the gas value exceeds 1400
+                            if (gasValue > 1400) {
+                                sendWhatsAppAlert(gasValue);
+                            }
                         },
                         error: function(error) {
                             console.log('Error fetching latest gas data:', error);
+                        }
+                    });
+                }
+
+                function sendWhatsAppAlert(gasValue) {
+                    var apiKey = 'n9NNqRF_PUbLf8v4TYzP'; // Replace with your Fonnte API key
+                    var phoneNumber = '+6282299006083'; // Target phone number
+                    var message = '🔥🔥🔥 MENYALA ABANGKU! 🔥🔥🔥 Current value: ' + gasValue + ' ppm';
+
+                    $.ajax({
+                        url: 'https://api.fonnte.com/send', // Fonnte API endpoint
+                        method: 'POST',
+                        headers: {
+                            'Authorization': apiKey,
+                            'Content-Type': 'application/x-www-form-urlencoded' // Ensure proper content type
+                        },
+                        data: {
+                            'target': phoneNumber,
+                            'message': message,
+                            'countryCode': '62' // Country code for Indonesia
+                        },
+                        success: function(response) {
+                            console.log('WhatsApp alert sent successfully:', response);
+                        },
+                        error: function(error) {
+                            console.log('Error sending WhatsApp alert:', error);
+                            console.log('Error details:', error.responseText);
                         }
                     });
                 }

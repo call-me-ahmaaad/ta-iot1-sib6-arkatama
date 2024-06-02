@@ -25,6 +25,7 @@
     <link rel="stylesheet" href={{URL::asset("/css/dashboard.css")}}>
     <title>Document</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
 </head>
 <body>
     {{-- Bagian Title --}}
@@ -55,12 +56,7 @@
                     <div class="icon" id="gaugeHumidityIcon"></div>
                 </div>
                 <div id="humid-label" class="dynamic-label"></div>
-
-                <div class="gaugeContainer">
-                    <div class="gauge gaugeGas"></div>
-                    <div class="icon" id="gaugeGasIcon"></div>
-                </div>
-                <div id="gas-label" class="dynamic-label"></div>
+                <div id="gasGauge" style="width: 300px; height: 200px;"></div>
             </div>
         </div>
 
@@ -74,176 +70,235 @@
         <a class="button" id="gas" href={{route('web.mq2')}} id="gas">
             <h3>Gas</h3>
             <p><span id="gas_value">{{ $gas_value }}</span></p>
-
         </a>
 
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             $(document).ready(function() {
-    var tempValue;
-    var humidValue;
-    var gasValue;
+                var tempValue;
+                var humidValue;
 
-    function fetchLatestTempAndHumid() {
-        $.ajax({
-            url: '/latest-dht11',
-            method: 'GET',
-            success: function(data) {
-                tempValue = data.temp_c;
-                humidValue = data.humid;
-                $('#temp_c').text(data.temp_c + '°C');
-                $('#humid_value').text(data.humid + '%');
+                function fetchLatestTempAndHumid() {
+                    $.ajax({
+                        url: '/latest-dht11',
+                        method: 'GET',
+                        success: function(data) {
+                            tempValue = data.temp_c;
+                            humidValue = data.humid;
+                            $('#temp_c').text(data.temp_c + '°C');
+                            $('#humid_value').text(data.humid + '%');
 
-                var tempPercentage = (data.temp_c / 100) * 100; // Assuming max temp is 100°C
-                var humidPercentage = data.humid; // Humidity is in percentage
+                            var tempPercentage = (data.temp_c / 100) * 100; // Assuming max temp is 100°C
+                            var humidPercentage = data.humid; // Humidity is in percentage
 
-                var tempColor, tempLabel, tempIcon;
-                if (data.temp_c <= 25) {
-                    tempColor = '#6488EA'; // Blue for cold
-                    tempLabel = 'Suhu Dingin';
-                    tempIcon = '🥶'; // Cold icon
-                } else if (data.temp_c <= 35) {
-                    tempColor = '#6fc276'; // Green for normal
-                    tempLabel = 'Suhu Normal';
-                    tempIcon = '😌'; // Normal icon
-                } else if (data.temp_c <= 50) {
-                    tempColor = '#ffe37a'; // Yellow for hot
-                    tempLabel = 'Suhu Panas';
-                    tempIcon = '🥵'; // Hot icon
-                } else {
-                    tempColor = '#f94449'; // Red for very hot
-                    tempLabel = 'MENYALA ABANGKU';
-                    tempIcon = '💀'; // Very hot icon
+                            var tempColor;
+                            var tempLabel;
+                            var tempIcon;
+                            if (data.temp_c <= 25) {
+                                tempColor = '#6488EA'; // Blue for cold
+                                tempLabel = 'Suhu Dingin';
+                                tempIcon = '🥶'; // Cold icon
+                            } else if (data.temp_c <= 35) {
+                                tempColor = '#6fc276'; // Green for normal
+                                tempLabel = 'Suhu Normal';
+                                tempIcon = '😌'; // Normal icon
+                            } else if (data.temp_c <= 50) {
+                                tempColor = '#ffe37a'; // Yellow for hot
+                                tempLabel = 'Suhu Panas';
+                                tempIcon = '🥵'; // Hot icon
+                            } else {
+                                tempColor = '#f94449'; // Red for very hot
+                                tempLabel = 'MENYALA ABANGKU';
+                                tempIcon = '💀'; // Very hot icon
+                            }
+
+                            var humidColor;
+                            var humidLabel;
+                            var humidIcon;
+                            if (data.humid <= 25) {
+                                humidColor = '#6488EA'; // Blue for low humidity
+                                humidLabel = 'Kelembaban Rendah';
+                                humidIcon = '🌵'; // Low humidity icon
+                            } else if (data.humid <= 50) {
+                                humidColor = '#6fc276'; // Green for moderate humidity
+                                humidLabel = 'Kelembaban Normal';
+                                humidIcon = '🍀'; // Moderate humidity icon
+                            } else if (data.humid <= 75) {
+                                humidColor = '#ffe37a'; // Yellow for high humidity
+                                humidLabel = 'Kelembaban Tinggi';
+                                humidIcon = '💧'; // High humidity icon
+                            } else {
+                                humidColor = '#f94449'; // Red for very high humidity
+                                humidLabel = 'Kelembaban Sangat Tinggi';
+                                humidIcon = '💦'; // Very high humidity icon
+                            }
+
+                            $('#temp-label').text(tempLabel);
+                            $('#humid-label').text(humidLabel);
+
+                            $('#temp-label').css('color', tempColor).css('font-size', '15px');
+                            $('#humid-label').css('color', humidColor).css('font-size', '15px');
+
+                            $('.gaugeTemp').css('width', tempPercentage + '%').css('background-color', tempColor);
+                            $('.gaugeHumidity').css('width', humidPercentage + '%').css('background-color', humidColor);
+
+                            $('#gaugeTempIcon').text(tempIcon);
+                            $('#gaugeHumidityIcon').text(humidIcon);
+
+                            // Adjust icon position
+                            $('#gaugeTempIcon').css('left', `calc(${tempPercentage}% - 35px)`);
+                            $('#gaugeHumidityIcon').css('left', `calc(${humidPercentage}% - 35px)`);
+                        },
+                        error: function(error) {
+                            console.log('Error fetching latest temperature and humidity:', error);
+                        }
+                    });
                 }
 
-                var humidColor, humidLabel, humidIcon;
-                if (data.humid <= 25) {
-                    humidColor = '#6488EA'; // Blue for low humidity
-                    humidLabel = 'Kelembaban Rendah';
-                    humidIcon = '🌵'; // Low humidity icon
-                } else if (data.humid <= 50) {
-                    humidColor = '#6fc276'; // Green for moderate humidity
-                    humidLabel = 'Kelembaban Normal';
-                    humidIcon = '🍀'; // Moderate humidity icon
-                } else if (data.humid <= 75) {
-                    humidColor = '#ffe37a'; // Yellow for high humidity
-                    humidLabel = 'Kelembaban Tinggi';
-                    humidIcon = '💧'; // High humidity icon
-                } else {
-                    humidColor = '#f94449'; // Red for very high humidity
-                    humidLabel = 'Kelembaban Sangat Tinggi';
-                    humidIcon = '💦'; // Very high humidity icon
+                function fetchLatestRain() {
+                    $.ajax({
+                        url: '/latest-rain',
+                        method: 'GET',
+                        success: function(data) {
+                            $('#rain_value').text(data.rain_value);
+                        },
+                        error: function(error) {
+                            console.log('Error fetching latest rain data:', error);
+                        }
+                    });
                 }
 
-                $('#temp-label').text(tempLabel).css('color', tempColor).css('font-size', '15px');
-                $('#humid-label').text(humidLabel).css('color', humidColor).css('font-size', '15px');
+                // Variabel global untuk menyimpan waktu terakhir pesan dikirim
+                var lastAlertTime = 0;
+                var cooldownTime = 60000; // Waktu cooldown dalam milidetik (10 menit = 600000ms
 
-                $('.gaugeTemp').css('width', tempPercentage + '%').css('background-color', tempColor);
-                $('.gaugeHumidity').css('width', humidPercentage + '%').css('background-color', humidColor);
+                function fetchLatestMq2() {
+    $.ajax({
+        url: '/latest-mq2',
+        method: 'GET',
+        success: function(data) {
+            var gasValue = data.gas_value;
+            $('#gas_value').text(gasValue + ' ppm');
 
-                $('#gaugeTempIcon').text(tempIcon).css('left', `calc(${tempPercentage}% - 35px)`);
-                $('#gaugeHumidityIcon').text(humidIcon).css('left', `calc(${humidPercentage}% - 35px)`);
-            },
-            error: function(error) {
-                console.log('Error fetching latest temperature and humidity:', error);
+            // Check if the gas value exceeds 1400
+            if (gasValue > 1400) {
+                sendWhatsAppAlert(gasValue, tempValue, humidValue);
             }
-        });
-    }
 
-    function fetchLatestRain() {
-        $.ajax({
-            url: '/latest-rain',
-            method: 'GET',
-            success: function(data) {
-                $('#rain_value').text(data.rain_value);
-            },
-            error: function(error) {
-                console.log('Error fetching latest rain data:', error);
-            }
-        });
-    }
-
-    var lastAlertTime = 0;
-    var cooldownTime = 60000; // Waktu cooldown dalam milidetik (10 menit = 600000ms)
-
-    function fetchLatestMq2() {
-        $.ajax({
-            url: '/latest-mq2',
-            method: 'GET',
-            success: function(data) {
-                gasValue = data.gas_value;
-                $('#gas_value').text(gasValue + ' ppm');
-
-                var gasPercentage = (gasValue / 5000) * 100; // Assuming max gas concentration is 5000 ppm
-
-                var gasColor, gasLabel, gasIcon;
-                if (gasValue <= 500) {
-                    gasColor = '#6488EA'; // Blue for low gas concentration
-                    gasLabel = 'Gas Level Low';
-                    gasIcon = '🟢'; // Low gas icon
-                } else if (gasValue <= 1400) {
-                    gasColor = '#6fc276'; // Green for moderate gas concentration
-                    gasLabel = 'Gas Level Moderate';
-                    gasIcon = '🟡'; // Moderate gas icon
-                } else {
-                    gasColor = '#f94449'; // Red for high gas concentration
-                    gasLabel = 'Gas Level High';
-                    gasIcon = '🔴'; // High gas icon
-                }
-
-                $('#gas-label').text(gasLabel).css('color', gasColor).css('font-size', '15px');
-                $('.gaugeGas').css('width', gasPercentage + '%').css('background-color', gasColor);
-                $('#gaugeGasIcon').text(gasIcon).css('left', `calc(${gasPercentage}% - 35px)`);
-
-                if (gasValue > 1400) {
-                    sendWhatsAppAlert(gasValue, tempValue, humidValue);
-                }
-            },
-            error: function(error) {
-                console.log('Error fetching latest gas data:', error);
-            }
-        });
-    }
-
-    function sendWhatsAppAlert(gasValue, tempValue, humidValue) {
-        var currentTime = new Date().getTime();
-
-        if (currentTime - lastAlertTime >= cooldownTime) {
-            var apiKey = 'n9NNqRF_PUbLf8v4TYzP';
-            var phoneNumber = '+6282299006083';
-            var message = `🔥🔥🔥 MENYALA ABANGKU 🔥🔥🔥\n\nGas Concentration: ${gasValue} ppm\nTemperature: ${tempValue}°C\nHumidity: ${humidValue}%\n\nThe notification will appear again if conditions remain dangerous in the next 1 minutes.`;
-
-            $.ajax({
-                url: 'https://api.fonnte.com/send',
-                method: 'POST',
-                headers: {
-                    'Authorization': apiKey,
-                    'Content-Type': 'application/x-www-form-urlencoded'
+            // Create the Highcharts gauge chart
+            Highcharts.chart('gasGauge', {
+                chart: {
+                    type: 'gauge',
+                    plotBackgroundColor: null,
+                    plotBackgroundImage: null,
+                    plotBorderWidth: 0,
+                    plotShadow: false
                 },
-                data: {
-                    'target': phoneNumber,
-                    'message': message,
-                    'countryCode': '62'
+                title: {
+                    text: 'Gas Concentration'
                 },
-                success: function(response) {
-                    console.log('WhatsApp alert sent successfully:', response);
-                    lastAlertTime = currentTime;
+                pane: {
+                    startAngle: -150,
+                    endAngle: 150,
+                    background: [{
+                        outerRadius: '112%',
+                        innerRadius: '88%',
+                        backgroundColor: Highcharts.Color(Highcharts.getOptions().colors[0])
+                            .setOpacity(0.3)
+                            .get(),
+                        borderWidth: 0
+                    }, {
+                        outerRadius: '87%',
+                        innerRadius: '63%',
+                        backgroundColor: Highcharts.Color(Highcharts.getOptions().colors[1])
+                            .setOpacity(0.3)
+                            .get(),
+                        borderWidth: 0
+                    }, {
+                        outerRadius: '62%',
+                        innerRadius: '38%',
+                        backgroundColor: Highcharts.Color(Highcharts.getOptions().colors[2])
+                            .setOpacity(0.3)
+                            .get(),
+                        borderWidth: 0
+                    }]
                 },
-                error: function(error) {
-                    console.log('Error sending WhatsApp alert:', error);
-                    console.log('Error details:', error.responseText);
-                }
+                yAxis: {
+                    min: 0,
+                    max: 5000, // Assuming max gas concentration is 5000 ppm
+                    title: {
+                        text: 'ppm'
+                    },
+                    stops: [
+                        [0.1, '#55BF3B'], // green
+                        [0.5, '#DDDF0D'], // yellow
+                        [0.9, '#DF5353'] // red
+                    ],
+                    lineWidth: 0,
+                    minorTickInterval: null,
+                    tickAmount: 2
+                },
+                series: [{
+                    name: 'Gas Concentration',
+                    data: [gasValue],
+                    tooltip: {
+                        valueSuffix: ' ppm'
+                    }
+                }]
             });
-        } else {
-            console.log('Cooldown active. Alert not sent.');
+        },
+        error: function(error) {
+            console.log('Error fetching latest gas data:', error);
         }
-    }
+    });
+}
 
-    setInterval(fetchLatestTempAndHumid, 1000);
-    setInterval(fetchLatestRain, 1000);
-    setInterval(fetchLatestMq2, 1000);
-});
+                function sendWhatsAppAlert(gasValue, tempValue, humidValue) {
+                    var currentTime = new Date().getTime();
 
+                    // Check if the cooldown period has passed
+                    if (currentTime - lastAlertTime >= cooldownTime) {
+                        var apiKey = 'n9NNqRF_PUbLf8v4TYzP'; // Replace with your Fonnte API key
+                        var phoneNumber = '+6282299006083'; // Target phone number
+                        var message = `🔥🔥🔥 MENYALA ABANGKU 🔥🔥🔥\n\nGas Concentration: ${gasValue} ppm\nTemperature: ${tempValue}°C\nHumidity: ${humidValue}%\n\nThe notification will appear again if conditions remain dangerous in the next 1 minutes.`;
+
+                        $.ajax({
+                            url: 'https://api.fonnte.com/send', // Fonnte API endpoint
+                            method: 'POST',
+                            headers: {
+                                'Authorization': apiKey,
+                                'Content-Type': 'application/x-www-form-urlencoded' // Ensure proper content type
+                            },
+                            data: {
+                                'target': phoneNumber,
+                                'message': message,
+                                'countryCode': '62' // Country code for Indonesia
+                            },
+                            success: function(response) {
+                                console.log('WhatsApp alert sent successfully:', response);
+                                lastAlertTime = currentTime; // Update last alert time
+                            },
+                            error: function(error) {
+                                console.log('Error sending WhatsApp alert:', error);
+                                console.log('Error details:', error.responseText);
+                            }
+                        });
+                    } else {
+                        console.log('Cooldown active. Alert not sent.');
+                    }
+                }
+
+                // Fetch the latest temperature and humidity every 1 second
+                setInterval(fetchLatestTempAndHumid, 1000);
+
+                // Fetch the latest rain data every 1 second
+                setInterval(fetchLatestRain, 1000);
+
+                // Fetch the latest rain data every 1 second
+                setInterval(fetchLatestMq2, 1000);
+            });
         </script>
 
         {{-- LED Control --}}

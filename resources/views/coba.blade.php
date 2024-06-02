@@ -91,11 +91,15 @@
 
         function fetchLatestMq2() {
             $.ajax({
-                url: '/latest-mq2',
+                url: '/latest-mq2', // Ganti dengan URL absolut jika perlu
                 method: 'GET',
                 success: function(data) {
                     console.log(data); // Debug: Log data dari server
-                    if (data && typeof data.gas_value === 'number') {
+                    if (data && typeof data.gas_value === 'string' && !isNaN(data.gas_value)) {
+                        var gasValue = parseFloat(data.gas_value);
+                        $('#gas_value').text(gasValue + ' ppm');
+                        updateGauge(gasValue);
+                    } else if (data && typeof data.gas_value === 'number') {
                         var gasValue = data.gas_value;
                         $('#gas_value').text(gasValue + ' ppm');
                         updateGauge(gasValue);
@@ -105,6 +109,7 @@
                 },
                 error: function(error) {
                     console.log('Error fetching latest gas data:', error);
+                    alert('Error fetching latest gas data. Please check console for more details.');
                 }
             });
         }

@@ -25,8 +25,7 @@
     <link rel="stylesheet" href={{URL::asset("/css/dashboard.css")}}>
     <title>Document</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.3.9/justgage.min.js"></script>
+
 </head>
 <body>
     {{-- Bagian Title --}}
@@ -73,6 +72,8 @@
         </a>
         <div id="gauge" style="width:300px; height:200px;"></div>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.3.9/justgage.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             $(document).ready(function() {

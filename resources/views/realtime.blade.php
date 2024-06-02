@@ -6,7 +6,6 @@
     <title>Grafik DHT11 Real-Time</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div>
@@ -21,58 +20,60 @@
     <canvas id="gasGauge" width="400" height="400"></canvas>
         <p id="gas_value">Loading...</p>
 
-    <script>
-        function fetchLatestMq2() {
-            $.ajax({
-                url: '/latest-mq2',
-                method: 'GET',
-                success: function(data) {
-                    var gasValue = data.gas_value;
-                    $('#gas_value').text(gasValue + ' ppm');
-                    updateGauge(gasValue);
-                },
-                error: function(error) {
-                    console.log('Error fetching latest gas data:', error);
-                }
-            });
-        }
-
-        function updateGauge(gasValue) {
-            // Inisialisasi gauge jika belum ada
-            if (!window.gasGauge) {
-                var ctx = document.getElementById('gasGauge').getContext('2d');
-                window.gasGauge = new Chart(ctx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Gas Level'],
-                        datasets: [{
-                            data: [gasValue, 1000 - gasValue],  // 1000 adalah nilai maksimum, bisa disesuaikan
-                            backgroundColor: ['#FF0000', '#EEEEEE'],
-                            borderWidth: 0
-                        }]
-                    },
-                    options: {
-                        circumference: Math.PI,
-                        rotation: Math.PI,
-                        cutout: '70%',
-                        plugins: {
-                            tooltip: { enabled: false },
-                            legend: { display: false }
-                        }
+        <script>
+            function fetchLatestMq2() {
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', '/latest-mq2', true);
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        const data = JSON.parse(xhr.responseText);
+                        const gasValue = data.gas_value;
+                        document.getElementById('gas_value').innerText = gasValue + ' ppm';
+                        updateGauge(gasValue);
+                    } else {
+                        console.log('Error fetching latest gas data:', xhr.status);
                     }
-                });
-            } else {
-                // Update gauge yang sudah ada
-                window.gasGauge.data.datasets[0].data = [gasValue, 1000 - gasValue];  // Update data
-                window.gasGauge.update();
+                };
+                xhr.onerror = function() {
+                    console.log('Error fetching latest gas data');
+                };
+                xhr.send();
             }
-        }
 
-        // Panggil fungsi fetchLatestMq2 untuk pertama kali dan set interval untuk memperbarui data
-        fetchLatestMq2();
-        setInterval(fetchLatestMq2, 5000);  // Memperbarui setiap 5 detik, bisa disesuaikan
-    </script>
+            function updateGauge(gasValue) {
+                const canvas = document.getElementById('gasGauge');
+                const ctx = canvas.getContext('2d');
+                const maxValue = 1000; // Nilai maksimum, bisa disesuaikan
+                const angle = (gasValue / maxValue) * Math.PI;
 
+                // Bersihkan canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Gambar background gauge
+                ctx.beginPath();
+                ctx.arc(200, 200, 150, Math.PI, 2 * Math.PI);
+                ctx.fillStyle = '#EEEEEE';
+                ctx.fill();
+
+                // Gambar nilai gauge
+                ctx.beginPath();
+                ctx.arc(200, 200, 150, Math.PI, Math.PI + angle);
+                ctx.lineTo(200, 200);
+                ctx.fillStyle = '#FF0000';
+                ctx.fill();
+
+                // Gambar border gauge
+                ctx.beginPath();
+                ctx.arc(200, 200, 150, Math.PI, 2 * Math.PI);
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = '#000000';
+                ctx.stroke();
+            }
+
+            // Panggil fungsi fetchLatestMq2 untuk pertama kali dan set interval untuk memperbarui data
+            fetchLatestMq2();
+            setInterval(fetchLatestMq2, 5000); // Memperbarui setiap 5 detik, bisa disesuaikan
+        </script>
     <script>
         let temperatureChart, humidityChart;
         const baseUrl = '{{ url('/') }}';

@@ -80,7 +80,7 @@
                 var tempValue;
                 var humidValue;
 
-                // Inisialisasi gauge untuk gas_value dengan jarum
+                // Inisialisasi gauge untuk gas_value
         Highcharts.chart('gasGaugeContainer', {
             chart: {
                 type: 'solidgauge'
@@ -94,7 +94,8 @@
                 startAngle: -90,
                 endAngle: 90,
                 background: {
-                    backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || '#EEE',
+                    backgroundColor:
+                        Highcharts.defaultOptions.legend.backgroundColor || '#EEE',
                     innerRadius: '60%',
                     outerRadius: '100%',
                     shape: 'arc'
@@ -106,17 +107,18 @@
             yAxis: {
                 min: 0,
                 max: 2000,
-                stops: [
-                    [0.1, '#55BF3B'], // green
-                    [0.7, '#DDDF0D'], // yellow
-                    [0.9, '#DF5353']  // red
-                ],
-                lineWidth: 0,
-                minorTickInterval: null,
-                tickAmount: 2,
                 title: {
                     text: 'PPM'
                 },
+                stops: [
+                    [0.1, '#55BF3B'], // green
+                    [0.5, '#DDDF0D'], // yellow
+                    [0.9, '#DF5353'] // red
+                ],
+                lineWidth: 0,
+                tickWidth: 0,
+                minorTickInterval: null,
+                tickAmount: 2,
                 labels: {
                     y: 16
                 }
@@ -130,11 +132,18 @@
                     }
                 }
             },
+            credits: {
+                enabled: false
+            },
             series: [{
                 name: 'Gas Concentration',
-                data: [0],
+                data: [0], // initial value
                 dataLabels: {
-                    format: '<div style="text-align:center"><span style="font-size:25px">{y}</span><br/><span style="font-size:12px;opacity:0.4">PPM</span></div>'
+                    format:
+                        '<div style="text-align:center">' +
+                        '<span style="font-size:25px">{y}</span><br/>' +
+                        '<span style="font-size:12px;opacity:0.4">PPM</span>' +
+                        '</div>'
                 },
                 tooltip: {
                     valueSuffix: ' PPM'

@@ -232,7 +232,7 @@
             },
             yAxis: {
                 min: 0,
-                max: 1000, // Sesuaikan nilai maksimum
+                max: 3700, // Sesuaikan nilai maksimum
                 stops: [
                     [0.1, '#55BF3B'], // hijau
                     [0.5, '#DDDF0D'], // kuning

@@ -189,7 +189,7 @@
                     });
                 }
 
-                function sendWhatsAppAlert(gasValue) {
+                function sendWhatsAppAlert(gasValue, tempValue, humidValue) {
                     var currentTime = new Date().getTime();
 
                     // Check if the cooldown period has passed

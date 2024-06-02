@@ -162,48 +162,17 @@
                 }
 
                 function fetchLatestMq2() {
-    $.ajax({
-        url: '/latest-mq2',
-        method: 'GET',
-        success: function(data) {
-            var gasValue = data.gas_value;
-            $('#gas_value').text(gasValue + ' ppm');
-
-            // Check if the gas value exceeds 1400
-            if (gasValue > 1400) {
-                sendWhatsAppAlert(gasValue);
-            }
-        },
-        error: function(error) {
-            console.log('Error fetching latest gas data:', error);
-        }
-    });
-}
-
-                function sendWhatsAppAlert(gasValue) {
-    var apiKey = 'n9NNqRF_PUbLf8v4TYzP'; // Replace with your Fonnte API key
-    var phoneNumber = '+6282299006083'; // Target phone number
-    var message = 'Alert: Gas value has exceeded 1400 ppm. Current value: ' + gasValue + ' ppm';
-
-    $.ajax({
-        url: 'https://api.fonnte.com/send', // Fonnte API endpoint
-        method: 'POST',
-        headers: {
-            'Authorization': apiKey
-        },
-        data: {
-            'target': phoneNumber,
-            'message': message,
-            'countryCode': '62' // Country code for Indonesia
-        },
-        success: function(response) {
-            console.log('WhatsApp alert sent successfully:', response);
-        },
-        error: function(error) {
-            console.log('Error sending WhatsApp alert:', error);
-        }
-    });
-}
+                    $.ajax({
+                        url: '/latest-mq2',
+                        method: 'GET',
+                        success: function(data) {
+                            $('#gas_value').text(data.gas_value + ' ppm');
+                        },
+                        error: function(error) {
+                            console.log('Error fetching latest gas data:', error);
+                        }
+                    });
+                }
 
                 // Fetch the latest temperature and humidity every 1 second
                 setInterval(fetchLatestTempAndHumid, 1000);

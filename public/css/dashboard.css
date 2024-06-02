@@ -91,6 +91,10 @@ body{
     justify-content: space-evenly;
 }
 
+.card .button[id="gas"] .info p span{
+    margin-right: 10px;
+}
+
 .card .button[id="gas"]:hover{
     box-shadow: 0 4px 8px 0 #6488EA;
 }

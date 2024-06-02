@@ -94,6 +94,8 @@ body{
 .card .button[id="gas"] .info #container-gauge{
     border-radius: 7px;
     border: 3px solid #2c2c2c;
+    width: 170px;
+    height: 120px;
 }
 
 .card .button[id="gas"]:hover{

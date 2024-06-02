@@ -81,8 +81,8 @@
                         url: '/latest-dht11',
                         method: 'GET',
                         success: function(data) {
-                            var tempValue = data.gas_value;
-                            var humidValue = data.gas_value;
+                            tempValue = data.gas_value;
+                            humidValue = data.gas_value;
                             $('#temp_c').text(data.temp_c + '°C');
                             $('#humid_value').text(data.humid + '%');
 

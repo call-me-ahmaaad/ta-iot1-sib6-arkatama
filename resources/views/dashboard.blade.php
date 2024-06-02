@@ -25,6 +25,9 @@
     <link rel="stylesheet" href={{URL::asset("/css/dashboard.css")}}>
     <title>Document</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
 </head>
 <body>
     {{-- Bagian Title --}}
@@ -68,6 +71,7 @@
         <a class="button" id="gas" href={{route('web.mq2')}} id="gas">
             <h3>Gas</h3>
             <p><span id="gas_value">{{ $gas_value }}</span></p>
+            <div id="gasGaugeContainer" style="width: 400px; height: 300px;"></div>
         </a>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -75,6 +79,98 @@
             $(document).ready(function() {
                 var tempValue;
                 var humidValue;
+
+                // Inisialisasi gauge untuk gas_value dengan jarum
+        Highcharts.chart('gasGaugeContainer', {
+            chart: {
+                type: 'gauge',
+                plotBackgroundColor: null,
+                plotBackgroundImage: null,
+                plotBorderWidth: 0,
+                plotShadow: false
+            },
+            title: {
+                text: 'Gas Concentration'
+            },
+            pane: {
+                startAngle: -150,
+                endAngle: 150,
+                background: [{
+                    backgroundColor: {
+                        linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
+                        stops: [
+                            [0, '#FFF'],
+                            [1, '#333']
+                        ]
+                    },
+                    borderWidth: 0,
+                    outerRadius: '109%'
+                }, {
+                    backgroundColor: {
+                        linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
+                        stops: [
+                            [0, '#333'],
+                            [1, '#FFF']
+                        ]
+                    },
+                    borderWidth: 1,
+                    outerRadius: '107%'
+                }, {
+                    // default background
+                }, {
+                    backgroundColor: '#DDD',
+                    borderWidth: 0,
+                    outerRadius: '105%',
+                    innerRadius: '103%'
+                }]
+            },
+            // the value axis
+            yAxis: {
+                min: 0,
+                max: 2000,
+
+                minorTickInterval: 'auto',
+                minorTickWidth: 1,
+                minorTickLength: 10,
+                minorTickPosition: 'inside',
+                minorTickColor: '#666',
+
+                tickPixelInterval: 30,
+                tickWidth: 2,
+                tickPosition: 'inside',
+                tickLength: 10,
+                tickColor: '#666',
+                labels: {
+                    step: 2,
+                    rotation: 'auto'
+                },
+                title: {
+                    text: 'PPM'
+                },
+                plotBands: [{
+                    from: 0,
+                    to: 1400,
+                    color: '#55BF3B' // green
+                }, {
+                    from: 1400,
+                    to: 1800,
+                    color: '#DDDF0D' // yellow
+                }, {
+                    from: 1800,
+                    to: 2000,
+                    color: '#DF5353' // red
+                }]
+            },
+            series: [{
+                name: 'Gas Concentration',
+                data: [0],
+                tooltip: {
+                    valueSuffix: ' PPM'
+                }
+            }]
+        });
+
+                var gaugeChart = Highcharts.charts[Highcharts.charts.length - 1];
 
                 function fetchLatestTempAndHumid() {
                     $.ajax({
@@ -177,6 +273,9 @@
                         success: function(data) {
                             var gasValue = data.gas_value;
                             $('#gas_value').text(gasValue + ' ppm');
+
+                            // Update the gauge with the new gas value
+                            gaugeChart.series[0].points[0].update(gasValue);
 
                             // Check if the gas value exceeds 1400
                             if (gasValue > 1400) {

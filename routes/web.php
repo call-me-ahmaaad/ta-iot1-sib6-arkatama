@@ -21,6 +21,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/coba', function () {
+    return view('coba');
+});
+
 Route::get('/dashboard', [SensorController::class, 'dashboard'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');

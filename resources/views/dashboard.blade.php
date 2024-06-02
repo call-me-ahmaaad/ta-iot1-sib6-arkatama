@@ -73,6 +73,10 @@
         </a>
 
         <script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             $(document).ready(function() {
@@ -173,86 +177,72 @@
                 var lastAlertTime = 0;
                 var cooldownTime = 60000; // Waktu cooldown dalam milidetik (10 menit = 600000ms
 
-                function fetchLatestMq2() {
-    $.ajax({
-        url: '/latest-mq2',
-        method: 'GET',
-        success: function(data) {
-            var gasValue = data.gas_value;
-            $('#gas_value').text(gasValue + ' ppm');
-
-            // Check if the gas value exceeds 1400
-            if (gasValue > 1400) {
-                sendWhatsAppAlert(gasValue, tempValue, humidValue);
-            }
-
-            // Create the Highcharts gauge chart
-            Highcharts.chart('gasGauge', {
-                chart: {
-                    type: 'gauge',
-                    plotBackgroundColor: null,
-                    plotBackgroundImage: null,
-                    plotBorderWidth: 0,
-                    plotShadow: false
-                },
-                title: {
-                    text: 'Gas Concentration'
-                },
-                pane: {
-                    startAngle: -150,
-                    endAngle: 150,
-                    background: [{
-                        outerRadius: '112%',
-                        innerRadius: '88%',
-                        backgroundColor: Highcharts.Color(Highcharts.getOptions().colors[0])
-                            .setOpacity(0.3)
-                            .get(),
-                        borderWidth: 0
-                    }, {
-                        outerRadius: '87%',
-                        innerRadius: '63%',
-                        backgroundColor: Highcharts.Color(Highcharts.getOptions().colors[1])
-                            .setOpacity(0.3)
-                            .get(),
-                        borderWidth: 0
-                    }, {
-                        outerRadius: '62%',
-                        innerRadius: '38%',
-                        backgroundColor: Highcharts.Color(Highcharts.getOptions().colors[2])
-                            .setOpacity(0.3)
-                            .get(),
-                        borderWidth: 0
-                    }]
-                },
-                yAxis: {
-                    min: 0,
-                    max: 5000, // Assuming max gas concentration is 5000 ppm
-                    title: {
-                        text: 'ppm'
-                    },
-                    stops: [
-                        [0.1, '#55BF3B'], // green
-                        [0.5, '#DDDF0D'], // yellow
-                        [0.9, '#DF5353'] // red
-                    ],
-                    lineWidth: 0,
-                    minorTickInterval: null,
-                    tickAmount: 2
-                },
-                series: [{
-                    name: 'Gas Concentration',
-                    data: [gasValue],
-                    tooltip: {
-                        valueSuffix: ' ppm'
-                    }
+                // Inisialisasi gauge gas dengan Highcharts
+        var chart = Highcharts.chart('gasGauge', {
+            chart: {
+                type: 'solidgauge'
+            },
+            title: {
+                text: 'Gas Concentration'
+            },
+            pane: {
+                startAngle: -90,
+                endAngle: 90,
+                background: [{
+                    outerRadius: '112%',
+                    innerRadius: '88%',
+                    backgroundColor: Highcharts.Color(Highcharts.getOptions().colors[0])
+                        .setOpacity(0.3)
+                        .get(),
+                    borderWidth: 0
                 }]
+            },
+            yAxis: {
+                min: 0,
+                max: 5000, // Sesuaikan dengan nilai maksimum gas Anda
+                title: {
+                    text: 'ppm'
+                },
+                stops: [
+                    [0.1, '#55BF3B'], // green
+                    [0.5, '#DDDF0D'], // yellow
+                    [0.9, '#DF5353'] // red
+                ],
+                lineWidth: 0,
+                tickAmount: 2
+            },
+            series: [{
+                name: 'Gas Concentration',
+                data: [0], // Awal data diisi 0
+                tooltip: {
+                    valueSuffix: ' ppm'
+                },
+                dataLabels: {
+                    format: '<div style="text-align:center"><span style="font-size:25px">{y}</span><br/>' +
+                        '<span style="font-size:12px;opacity:0.4">ppm</span></div>'
+                }
+            }]
+        });
+
+        // Fungsi untuk mengambil data terbaru dan memperbarui grafik
+        function fetchLatestMq2() {
+            $.ajax({
+                url: '/latest-mq2', // Sesuaikan URL dengan endpoint Anda
+                method: 'GET',
+                success: function(data) {
+                    var gasValue = data.gas_value;
+
+                    // Memperbarui nilai gas dalam teks
+                    $('#gas_value').text(gasValue + ' ppm');
+
+                    // Memperbarui gauge gas dengan nilai baru
+                    chart.series[0].setData([gasValue]);
+                },
+                error: function(error) {
+                    console.log('Error fetching latest gas data:', error);
+                }
             });
-        },
-        error: function(error) {
-            console.log('Error fetching latest gas data:', error);
         }
-    });
-}
 
                 function sendWhatsAppAlert(gasValue, tempValue, humidValue) {
                     var currentTime = new Date().getTime();

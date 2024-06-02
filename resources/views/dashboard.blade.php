@@ -71,7 +71,6 @@
         <a class="button" id="gas" href={{route('web.mq2')}} id="gas">
             <h3>Gas</h3>
             <p><span id="gas_value">{{ $gas_value }}</span></p>
-            <div id="gasGaugeContainer" style="width: 400px; height: 300px;"></div>
         </a>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -79,68 +78,6 @@
             $(document).ready(function() {
                 var tempValue;
                 var humidValue;
-
-                // Inisialisasi gauge untuk gas_value dengan jarum
-                var gaugeChart = Highcharts.chart('gasGaugeContainer', {
-                    chart: {
-                        type: 'solidgauge'
-                    },
-                    title: {
-                        text: 'Gas Concentration'
-                    },
-                    pane: {
-                        center: ['50%', '85%'],
-                        size: '140%',
-                        startAngle: -90,
-                        endAngle: 90,
-                        background: {
-                            backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || '#EEE',
-                            innerRadius: '60%',
-                            outerRadius: '100%',
-                            shape: 'arc'
-                        }
-                    },
-                    tooltip: {
-                        enabled: false
-                    },
-                    yAxis: {
-                        min: 0,
-                        max: 2000,
-                        stops: [
-                            [0.1, '#55BF3B'], // green
-                            [0.7, '#DDDF0D'], // yellow
-                            [0.9, '#DF5353']  // red
-                        ],
-                        lineWidth: 0,
-                        minorTickInterval: null,
-                        tickAmount: 2,
-                        title: {
-                            text: 'PPM'
-                        },
-                        labels: {
-                            y: 16
-                        }
-                    },
-                    plotOptions: {
-                        solidgauge: {
-                            dataLabels: {
-                                y: 5,
-                                borderWidth: 0,
-                                useHTML: true
-                            }
-                        }
-                    },
-                    series: [{
-                        name: 'Gas Concentration',
-                        data: [0],
-                        dataLabels: {
-                            format: '<div style="text-align:center"><span style="font-size:25px">{y}</span><br/><span style="font-size:12px;opacity:0.4">PPM</span></div>'
-                        },
-                        tooltip: {
-                            valueSuffix: ' PPM'
-                        }
-                    }]
-                });
 
                 function fetchLatestTempAndHumid() {
                     $.ajax({
@@ -244,9 +181,6 @@
                             var gasValue = data.gas_value;
                             $('#gas_value').text(gasValue + ' ppm');
 
-                            // Update the gauge with the new gas value
-                            gaugeChart.series[0].points[0].update(gasValue);
-
                             // Check if the gas value exceeds 1400
                             if (gasValue > 1400) {
                                 sendWhatsAppAlert(gasValue, tempValue, humidValue);
@@ -294,9 +228,9 @@
                 }
 
                 // Fetch data every 5 seconds
-                setInterval(fetchLatestTempAndHumid, 5000);
-                setInterval(fetchLatestRain, 5000);
-                setInterval(fetchLatestMq2, 5000);
+                setInterval(fetchLatestTempAndHumid, 3000);
+                setInterval(fetchLatestRain, 3000);
+                setInterval(fetchLatestMq2, 3000);
             });
         </script>
 

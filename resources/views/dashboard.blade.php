@@ -26,6 +26,10 @@
     <title>Document</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script> <!-- Modul aksesibilitas -->
 </head>
 <body>
     {{-- Bagian Title --}}
@@ -68,7 +72,13 @@
         {{-- Gas Sensor (MQ-2) --}}
         <a class="button" id="gas" href={{route('web.mq2')}} id="gas">
             <h3>Gas</h3>
-            <p><span id="gas_value">{{ $gas_value }}</span></p>
+            <div class="info">
+                <p><span id="gas_value">{{ $gas_value }}</span></p>
+                <div class="gauge">
+                    <div id="container-gauge" style="width: 400px; height: 400px;"></div>
+                    <p id="gas_value">Loading...</p>
+                </div>
+            </div>
         </a>
 
         <script>
@@ -182,11 +192,103 @@
                             if (gasValue > 1400) {
                                 sendWhatsAppAlert(gasValue, tempValue, humidValue);
                             }
+
+                            console.log(data); // Debug: Log data dari server
+                            if (data && typeof data.gas_value === 'string' && !isNaN(data.gas_value)) {
+                                var gasValue = parseFloat(data.gas_value);
+                                $('#gas_value').text(gasValue + ' ppm');
+                                updateGauge(gasValue);
+                            } else if (data && typeof data.gas_value === 'number') {
+                                var gasValue = data.gas_value;
+                                $('#gas_value').text(gasValue + ' ppm');
+                                updateGauge(gasValue);
+                            } else {
+                                console.error('Invalid data format:', data);
+                            }
                         },
                         error: function(error) {
                             console.log('Error fetching latest gas data:', error);
                         }
                     });
+                }
+
+                // Inisialisasi chart gauge Highcharts
+        var gaugeOptions = {
+            chart: {
+                type: 'solidgauge'
+            },
+            title: null,
+            pane: {
+                center: ['50%', '85%'],
+                size: '140%',
+                startAngle: -90,
+                endAngle: 90,
+                background: {
+                    backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || '#EEE',
+                    innerRadius: '60%',
+                    outerRadius: '100%',
+                    shape: 'arc'
+                }
+            },
+            tooltip: {
+                enabled: false
+            },
+            yAxis: {
+                min: 0,
+                max: 1000, // Sesuaikan nilai maksimum
+                stops: [
+                    [0.1, '#55BF3B'], // hijau
+                    [0.5, '#DDDF0D'], // kuning
+                    [0.9, '#DF5353'] // merah
+                ],
+                lineWidth: 0,
+                tickWidth: 0,
+                minorTickInterval: null,
+                tickAmount: 2,
+                title: {
+                    y: -70
+                },
+                labels: {
+                    y: 16
+                }
+            },
+            plotOptions: {
+                solidgauge: {
+                    dataLabels: {
+                        y: 5,
+                        borderWidth: 0,
+                        useHTML: true
+                    }
+                }
+            },
+            accessibility: {  // Menambahkan konfigurasi aksesibilitas
+                enabled: true
+            }
+        };
+
+        var chart = Highcharts.chart('container-gauge', Highcharts.merge(gaugeOptions, {
+            yAxis: {
+                title: {
+                    text: 'Gas Level'
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                name: 'Gas Level',
+                data: [0],
+                dataLabels: {
+                    format: '<div style="text-align:center"><span style="font-size:25px">{y}</span><br/><span style="font-size:12px;opacity:0.4">ppm</span></div>'
+                },
+                tooltip: {
+                    valueSuffix: ' ppm'
+                }
+            }]
+        }));
+
+                function updateGauge(gasValue) {
+                    chart.series[0].points[0].update(gasValue);
                 }
 
                 function sendWhatsAppAlert(gasValue, tempValue, humidValue) {

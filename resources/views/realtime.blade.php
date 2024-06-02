@@ -19,60 +19,59 @@
     </div>
 
     <canvas id="gasGauge" width="400" height="400"></canvas>
+        <p id="gas_value">Loading...</p>
 
     <script>
         function fetchLatestMq2() {
-    $.ajax({
-        url: '/latest-mq2',
-        method: 'GET',
-        success: function(data) {
-            var gasValue = data.gas_value;
-            $('#gas_value').text(gasValue + ' ppm');
-            updateGauge(gasValue);
-        },
-        error: function(error) {
-            console.log('Error fetching latest gas data:', error);
-        }
-    });
-}
-
-function updateGauge(gasValue) {
-    // Jika gauge belum ada, buat yang baru
-    if (!window.gasGauge) {
-        var ctx = document.getElementById('gasGauge').getContext('2d');
-        window.gasGauge = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Gas Level'],
-                datasets: [{
-                    data: [gasValue, 1000 - gasValue],  // 1000 adalah nilai maksimum, bisa disesuaikan
-                    backgroundColor: ['#FF0000', '#EEEEEE'],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                circumference: Math.PI,
-                rotation: Math.PI,
-                cutout: '70%',
-                plugins: {
-                    tooltip: { enabled: false },
-                    legend: { display: false }
+            $.ajax({
+                url: '/latest-mq2',
+                method: 'GET',
+                success: function(data) {
+                    var gasValue = data.gas_value;
+                    $('#gas_value').text(gasValue + ' ppm');
+                    updateGauge(gasValue);
+                },
+                error: function(error) {
+                    console.log('Error fetching latest gas data:', error);
                 }
+            });
+        }
+
+        function updateGauge(gasValue) {
+            // Inisialisasi gauge jika belum ada
+            if (!window.gasGauge) {
+                var ctx = document.getElementById('gasGauge').getContext('2d');
+                window.gasGauge = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Gas Level'],
+                        datasets: [{
+                            data: [gasValue, 1000 - gasValue],  // 1000 adalah nilai maksimum, bisa disesuaikan
+                            backgroundColor: ['#FF0000', '#EEEEEE'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        circumference: Math.PI,
+                        rotation: Math.PI,
+                        cutout: '70%',
+                        plugins: {
+                            tooltip: { enabled: false },
+                            legend: { display: false }
+                        }
+                    }
+                });
+            } else {
+                // Update gauge yang sudah ada
+                window.gasGauge.data.datasets[0].data = [gasValue, 1000 - gasValue];  // Update data
+                window.gasGauge.update();
             }
-        });
-    } else {
-        // Update gauge yang sudah ada
-        window.gasGauge.data.datasets[0].data[0] = gasValue;
-        window.gasGauge.data.datasets[0].data[1] = 1000 - gasValue;  // 1000 adalah nilai maksimum, bisa disesuaikan
-        window.gasGauge.update();
-    }
-}
+        }
 
-// Panggil fungsi fetchLatestMq2 untuk pertama kali dan set interval untuk memperbarui data
-fetchLatestMq2();
-setInterval(fetchLatestMq2, 5000);  // Memperbarui setiap 5 detik, bisa disesuaikan
-
-        </script>
+        // Panggil fungsi fetchLatestMq2 untuk pertama kali dan set interval untuk memperbarui data
+        fetchLatestMq2();
+        setInterval(fetchLatestMq2, 5000);  // Memperbarui setiap 5 detik, bisa disesuaikan
+    </script>
 
     <script>
         let temperatureChart, humidityChart;

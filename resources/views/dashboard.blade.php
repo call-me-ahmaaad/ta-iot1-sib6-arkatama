@@ -177,16 +177,21 @@
                     });
                 }
 
-                function sendWhatsappAlert(gasValue) {
+                function sendWhatsAppAlert(gasValue) {
+    var apiKey = 'n9NNqRF_PUbLf8v4TYzP'; // Replace with your Fonnte API key
+    var phoneNumber = '+6282299006083'; // Target phone number
+    var message = 'Alert: Gas value has exceeded 1400 ppm. Current value: ' + gasValue + ' ppm';
+
     $.ajax({
-        url: '/send-whatsapp',
+        url: 'https://api.fonnte.com/send', // Fonnte API endpoint
         method: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify({
-            message: 'Alert! Gas level is too high: ' + gasValue + ' ppm'
-        }),
         headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            'Authorization': apiKey
+        },
+        data: {
+            'target': phoneNumber,
+            'message': message,
+            'countryCode': '62' // Country code for Indonesia
         },
         success: function(response) {
             console.log('WhatsApp alert sent successfully:', response);

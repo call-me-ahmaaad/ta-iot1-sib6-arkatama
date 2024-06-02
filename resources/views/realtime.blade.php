@@ -6,6 +6,7 @@
     <title>Grafik DHT11 Real-Time</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
 </head>
 <body>
     <div>
@@ -17,62 +18,104 @@
         <div id="humidityChart"></div>
     </div>
 
-    <canvas id="gasGauge" width="400" height="400"></canvas>
-        <p id="gas_value">Loading...</p>
+    <div id="container-gauge" style="width: 400px; height: 400px;"></div>
+    <p id="gas_value">Loading...</p>
 
         <script>
-            function fetchLatestMq2() {
-                const xhr = new XMLHttpRequest();
-                xhr.open('GET', '/latest-mq2', true);
-                xhr.onload = function() {
-                    if (xhr.status === 200) {
-                        const data = JSON.parse(xhr.responseText);
-                        const gasValue = data.gas_value;
-                        document.getElementById('gas_value').innerText = gasValue + ' ppm';
-                        updateGauge(gasValue);
-                    } else {
-                        console.log('Error fetching latest gas data:', xhr.status);
+            // Inisialisasi chart gauge Highcharts
+            var gaugeOptions = {
+                chart: {
+                    type: 'solidgauge'
+                },
+                title: null,
+                pane: {
+                    center: ['50%', '85%'],
+                    size: '140%',
+                    startAngle: -90,
+                    endAngle: 90,
+                    background: {
+                        backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || '#EEE',
+                        innerRadius: '60%',
+                        outerRadius: '100%',
+                        shape: 'arc'
                     }
-                };
-                xhr.onerror = function() {
-                    console.log('Error fetching latest gas data');
-                };
-                xhr.send();
+                },
+                tooltip: {
+                    enabled: false
+                },
+                yAxis: {
+                    min: 0,
+                    max: 1000, // Sesuaikan nilai maksimum
+                    stops: [
+                        [0.1, '#55BF3B'], // hijau
+                        [0.5, '#DDDF0D'], // kuning
+                        [0.9, '#DF5353'] // merah
+                    ],
+                    lineWidth: 0,
+                    tickWidth: 0,
+                    minorTickInterval: null,
+                    tickAmount: 2,
+                    title: {
+                        y: -70
+                    },
+                    labels: {
+                        y: 16
+                    }
+                },
+                plotOptions: {
+                    solidgauge: {
+                        dataLabels: {
+                            y: 5,
+                            borderWidth: 0,
+                            useHTML: true
+                        }
+                    }
+                }
+            };
+
+            var chart = Highcharts.chart('container-gauge', Highcharts.merge(gaugeOptions, {
+                yAxis: {
+                    title: {
+                        text: 'Gas Level'
+                    }
+                },
+                credits: {
+                    enabled: false
+                },
+                series: [{
+                    name: 'Gas Level',
+                    data: [0],
+                    dataLabels: {
+                        format: '<div style="text-align:center"><span style="font-size:25px">{y}</span><br/><span style="font-size:12px;opacity:0.4">ppm</span></div>'
+                    },
+                    tooltip: {
+                        valueSuffix: ' ppm'
+                    }
+                }]
+            }));
+
+            function fetchLatestMq2() {
+                $.ajax({
+                    url: '/latest-mq2',
+                    method: 'GET',
+                    success: function(data) {
+                        var gasValue = data.gas_value;
+                        $('#gas_value').text(gasValue + ' ppm');
+                        updateGauge(gasValue);
+                    },
+                    error: function(error) {
+                        console.log('Error fetching latest gas data:', error);
+                    }
+                });
             }
 
             function updateGauge(gasValue) {
-                const canvas = document.getElementById('gasGauge');
-                const ctx = canvas.getContext('2d');
-                const maxValue = 1000; // Nilai maksimum, bisa disesuaikan
-                const angle = (gasValue / maxValue) * Math.PI;
-
-                // Bersihkan canvas
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                // Gambar background gauge
-                ctx.beginPath();
-                ctx.arc(200, 200, 150, Math.PI, 2 * Math.PI);
-                ctx.fillStyle = '#EEEEEE';
-                ctx.fill();
-
-                // Gambar nilai gauge
-                ctx.beginPath();
-                ctx.arc(200, 200, 150, Math.PI, Math.PI + angle);
-                ctx.lineTo(200, 200);
-                ctx.fillStyle = '#FF0000';
-                ctx.fill();
-
-                // Gambar border gauge
-                ctx.beginPath();
-                ctx.arc(200, 200, 150, Math.PI, 2 * Math.PI);
-                ctx.lineWidth = 2;
-                ctx.strokeStyle = '#000000';
-                ctx.stroke();
+                chart.series[0].points[0].update(gasValue);
             }
 
             // Panggil fungsi fetchLatestMq2 untuk pertama kali dan set interval untuk memperbarui data
             fetchLatestMq2();
-            setInterval(fetchLatestMq2, 5000); // Memperbarui setiap 5 detik, bisa disesuaikan
+            setInterval(fetchLatestMq2, 5000);  // Memperbarui setiap 5 detik, bisa disesuaikan
         </script>
     <script>
         let temperatureChart, humidityChart;

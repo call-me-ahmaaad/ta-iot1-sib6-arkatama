@@ -94,9 +94,14 @@
                 url: '/latest-mq2',
                 method: 'GET',
                 success: function(data) {
-                    var gasValue = data.gas_value;
-                    $('#gas_value').text(gasValue + ' ppm');
-                    updateGauge(gasValue);
+                    console.log(data); // Debug: Log data dari server
+                    if (data && typeof data.gas_value === 'number') {
+                        var gasValue = data.gas_value;
+                        $('#gas_value').text(gasValue + ' ppm');
+                        updateGauge(gasValue);
+                    } else {
+                        console.error('Invalid data format:', data);
+                    }
                 },
                 error: function(error) {
                     console.log('Error fetching latest gas data:', error);
@@ -110,7 +115,7 @@
 
         // Panggil fungsi fetchLatestMq2 untuk pertama kali dan set interval untuk memperbarui data
         fetchLatestMq2();
-        setInterval(fetchLatestMq2, 1000);  // Memperbarui setiap 5 detik, bisa disesuaikan
+        setInterval(fetchLatestMq2, 1000);  // Memperbarui setiap 1 detik
     </script>
 </body>
 </html>

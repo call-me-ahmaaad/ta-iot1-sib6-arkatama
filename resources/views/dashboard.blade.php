@@ -83,87 +83,59 @@
                 // Inisialisasi gauge untuk gas_value dengan jarum
         Highcharts.chart('gasGaugeContainer', {
             chart: {
-                type: 'gauge',
-                plotBackgroundColor: null,
-                plotBackgroundImage: null,
-                plotBorderWidth: 0,
-                plotShadow: false
+                type: 'solidgauge'
             },
             title: {
                 text: 'Gas Concentration'
             },
             pane: {
-                startAngle: -150,
-                endAngle: 150,
-                background: [{
-                    backgroundColor: {
-                        linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
-                        stops: [
-                            [0, '#FFF'],
-                            [1, '#333']
-                        ]
-                    },
-                    borderWidth: 0,
-                    outerRadius: '109%'
-                }, {
-                    backgroundColor: {
-                        linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
-                        stops: [
-                            [0, '#333'],
-                            [1, '#FFF']
-                        ]
-                    },
-                    borderWidth: 1,
-                    outerRadius: '107%'
-                }, {
-                    // default background
-                }, {
-                    backgroundColor: '#DDD',
-                    borderWidth: 0,
-                    outerRadius: '105%',
-                    innerRadius: '103%'
-                }]
+                center: ['50%', '85%'],
+                size: '140%',
+                startAngle: -90,
+                endAngle: 90,
+                background: {
+                    backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || '#EEE',
+                    innerRadius: '60%',
+                    outerRadius: '100%',
+                    shape: 'arc'
+                }
             },
-            // the value axis
+            tooltip: {
+                enabled: false
+            },
             yAxis: {
                 min: 0,
                 max: 2000,
-
-                minorTickInterval: 'auto',
-                minorTickWidth: 1,
-                minorTickLength: 10,
-                minorTickPosition: 'inside',
-                minorTickColor: '#666',
-
-                tickPixelInterval: 30,
-                tickWidth: 2,
-                tickPosition: 'inside',
-                tickLength: 10,
-                tickColor: '#666',
-                labels: {
-                    step: 2,
-                    rotation: 'auto'
-                },
+                stops: [
+                    [0.1, '#55BF3B'], // green
+                    [0.7, '#DDDF0D'], // yellow
+                    [0.9, '#DF5353']  // red
+                ],
+                lineWidth: 0,
+                minorTickInterval: null,
+                tickAmount: 2,
                 title: {
                     text: 'PPM'
                 },
-                plotBands: [{
-                    from: 0,
-                    to: 1400,
-                    color: '#55BF3B' // green
-                }, {
-                    from: 1400,
-                    to: 1800,
-                    color: '#DDDF0D' // yellow
-                }, {
-                    from: 1800,
-                    to: 2000,
-                    color: '#DF5353' // red
-                }]
+                labels: {
+                    y: 16
+                }
+            },
+            plotOptions: {
+                solidgauge: {
+                    dataLabels: {
+                        y: 5,
+                        borderWidth: 0,
+                        useHTML: true
+                    }
+                }
             },
             series: [{
                 name: 'Gas Concentration',
                 data: [0],
+                dataLabels: {
+                    format: '<div style="text-align:center"><span style="font-size:25px">{y}</span><br/><span style="font-size:12px;opacity:0.4">PPM</span></div>'
+                },
                 tooltip: {
                     valueSuffix: ' PPM'
                 }

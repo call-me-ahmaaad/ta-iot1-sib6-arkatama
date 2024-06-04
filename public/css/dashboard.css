@@ -104,8 +104,8 @@ body{
 .card .button[id="gas"] #container-gauge{
     border-radius: 7px;
     border: 3px solid #2c2c2c;
-    width: 270px;
-    height: 185px;
+    width: 285px;
+    height: 195px;
     margin-left: 30px;
 }
 

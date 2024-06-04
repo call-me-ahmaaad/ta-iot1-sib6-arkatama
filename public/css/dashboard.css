@@ -82,20 +82,24 @@ body{
 .card .button[id="gas"]{
     width: 535px;
     background-color: #6488EA;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
 .card .button[id="gas"] .info{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
 }
 
-.card .button[id="gas"] .info #container-gauge{
+.card .button[id="gas"] #container-gauge{
     border-radius: 7px;
     border: 3px solid #2c2c2c;
-    width: 170px;
-    height: 120px;
+    width: 200px;
+    height: 170px;
 }
 
 .card .button[id="gas"]:hover{

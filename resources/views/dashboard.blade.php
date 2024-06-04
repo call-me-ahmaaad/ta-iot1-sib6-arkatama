@@ -70,12 +70,12 @@
         </a>
 
         {{-- Gas Sensor (MQ-2) --}}
-        <a class="button" id="gas" href={{route('web.mq2')}} id="gas">
-            <h3>Gas</h3>
+        <a class="button" id="gas" href={{route('web.mq2')}}>
             <div class="info">
+                <h3>Gas</h3>
                 <p><span id="gas_value">{{ $gas_value }} ppm</span></p>
-                <div id="container-gauge" style="width: 170px; height: 120px;"></div>
             </div>
+            <div id="container-gauge"></div>
         </a>
 
         <script>

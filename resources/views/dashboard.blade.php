@@ -279,7 +279,7 @@
                         name: 'Gas Level',
                         data: [0],
                         dataLabels: {
-                            format: '<div style="text-align:center"><span style="font-size:25px">{y}</span><br/><span style="font-size:12px;opacity:0.4;font-family:JetBrains Mono">ppm</span></div>'
+                            format: '<div style="text-align:center"><span style="font-size:25px;font-family:JetBrains Mono">{y}</span><br/><span style="font-size:12px;opacity:0.4;font-family:JetBrains Mono">ppm</span></div>'
                         },
                         tooltip: {
                             valueSuffix: ' ppm'

@@ -266,7 +266,10 @@
                 var chart = Highcharts.chart('container-gauge', Highcharts.merge(gaugeOptions, {
                     yAxis: {
                         title: {
-                            text: 'Gas Level'
+                            text: 'Gas Level',
+                            style: {
+                            fontFamily: 'JetBrains Mono'
+                        }
                         }
                     },
                     credits: {
@@ -276,7 +279,7 @@
                         name: 'Gas Level',
                         data: [0],
                         dataLabels: {
-                            format: '<div style="text-align:center"><span style="font-size:25px">{y}</span><br/><span style="font-size:12px;opacity:0.4">ppm</span></div>'
+                            format: '<div style="text-align:center"><span style="font-size:25px">{y}</span><br/><span style="font-size:12px;opacity:0.4";font-family:"JetBrains Mono">ppm</span></div>'
                         },
                         tooltip: {
                             valueSuffix: ' ppm'

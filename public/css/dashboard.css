@@ -89,17 +89,24 @@ body{
 }
 
 .card .button[id="gas"] .info{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
+    display: inline-block;
+}
+
+.card .button[id="gas"] .info h3{
+    margin-top: 0;
+}
+
+.card .button[id="gas"] .info p{
+    font-size: 40px;
+    margin-top: 60px;
 }
 
 .card .button[id="gas"] #container-gauge{
     border-radius: 7px;
     border: 3px solid #2c2c2c;
-    width: 250px;
+    width: 270px;
     height: 185px;
+    margin-left: 30px;
 }
 
 .card .button[id="gas"]:hover{
@@ -126,7 +133,6 @@ body{
 .card p {
     font-size: 50px;
     margin-top: 60px;
-
 }
 
 .card .led{

@@ -201,18 +201,18 @@ body{
     color: rgb(55, 55, 55);
 }
 
-.gaugeGas{
+.gaugeDht{
     display: flex;
     flex-direction: column;
     width: 500px;
     margin-left: 31px;
 }
 
-.gaugeGas .gaugeTitle{
+.gaugeDht .gaugeTitle{
     font-weight: 600;
 }
 
-.gaugeGas .gaugeLabel{
+.gaugeDht .gaugeLabel{
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -221,8 +221,8 @@ body{
     width: 100%;
 }
 
-.gaugeGas .gaugeLabel .dynamic-label{
-    background-color: red;
+.gaugeDht .gaugeLabel .dynamic-label{
+    background-color: #f94449;
     width: 240px;
     height: 50px;
     border: 3px solid #2c2c2c;
@@ -233,7 +233,7 @@ body{
     color: white;
 }
 
-.gaugeGas .gaugeContainer{
+.gaugeDht .gaugeContainer{
     margin: 10px 0;
 }
 

@@ -45,7 +45,7 @@
                 <h3>Humidity</h3>
                 <p><span id="humid_value">{{ $humid }}%</span></p>
             </a>
-            <div class="gaugeGas">
+            <div class="gaugeDht">
                 <div class="gaugeTitle">Temperature</div>
                 <div class="gaugeContainer">
                     <div class="gauge gaugeTemp"></div>
@@ -57,8 +57,8 @@
                     <div class="icon" id="gaugeHumidityIcon"></div>
                 </div>
                 <div class="gaugeLabel">
-                    <div id="temp-label" class="dynamic-label">Heheh</div>
-                    <div id="humid-label" class="dynamic-label">Heheh</div>
+                    <div id="temp-label" class="dynamic-label">Normal Temperature</div>
+                    <div id="humid-label" class="dynamic-label">Normal Humidity</div>
                 </div>
             </div>
         </div>
@@ -75,8 +75,8 @@
             <p><span id="gas_value">{{ $gas_value }} ppm</span></p>
             {{-- <div id="container-gauge"></div> --}}
             <div class="gaugeContainer">
-                <div class="gauge gaugeHumidity"></div>
-                <div class="icon" id="gaugeHumidityIcon"></div>
+                <div class="gauge gaugeGas"></div>
+                <div class="icon" id="gaugeGasIcon"></div>
             </div>
         </a>
 
@@ -191,11 +191,36 @@
                             if (gasValue > 1400) {
                                 sendWhatsAppAlert(gasValue, tempValue, humidValue);
                             }
+
+                            var scaledGas = map(gasValue, 0, 4095, 0, 100);
+                            var gasPercentage = (scaledGas/ 100) * 100;
+
+                            var gasColor;
+                            var gasLabel;
+                            var gasIcon;
+                            if (scaledGas < 30) {
+                                gasColor = '#6fc276'; // Blue for cold
+                                gasIcon = '😌'; // Cold icon
+                            } else if (scaledGas < 70) {
+                                gasColor = '#ffe37a'; // Green for normal
+                                gasIcon = '😨'; // Normal icon
+                            } else {
+                                gasColor = '#f94449'; // Red for very hot
+                                gasIcon = '💀'; // Very hot icon
+                            }
+
+                            $('.gaugeGas').css('width', gasPercentage + '%').css('background-color', gasColor);
+                            $('#gaugeGasIcon').text(gasIcon);
+                            $('#gaugeGasIcon').css('left', `calc(${gasPercentage}% - 35px)`);
                         },
                         error: function(error) {
                             console.log('Error fetching latest gas data:', error);
                         }
                     });
+                }
+
+                function map(value, in_min, in_max, out_min, out_max) {
+                    return (value - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
                 }
 
                 function sendWhatsAppAlert(gasValue, tempValue, humidValue) {

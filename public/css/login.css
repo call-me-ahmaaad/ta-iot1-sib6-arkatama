@@ -1,0 +1,151 @@
+body{
+    font-family: "JetBrains Mono", monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(246, 246, 246);
+}
+
+header{
+    width: 200px;
+    height: 200px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header img{
+    border-radius: 50%;
+    width: 150px;
+    border: 3px solid rgb(55, 55, 55);
+}
+
+.container{
+    background-color: rgb(236, 236, 236);
+    width: 500px;
+    height: 425px;
+    padding: 5px 20px;
+    border-radius: 7px;
+    border: 3px solid rgb(55, 55, 55);
+}
+
+h3{
+    text-align: center;
+}
+
+.input{
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    color: rgb(55, 55, 55);
+}
+
+.input.password{
+    margin-bottom: 10px;
+}
+
+.input.remember_me label{
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 0;
+    width: 150px;
+}
+
+.input.remember_me input{
+    margin-right: 15px;
+    height: 15px;
+}
+
+label{
+    margin-bottom: 5px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+input{
+    height: 40px;
+    border-radius: 7px;
+    padding-left: 10px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+    transition: all 0.5s;
+    border: none;
+    outline: none;
+    box-shadow: 0 0 0 0 transparent;
+}
+
+input[id="email"]:focus{
+    box-shadow: 0 0 0 3px #f94449;
+}
+
+input[id="password"]:focus{
+    box-shadow: 0 0 0 3px #6488EA;
+}
+
+.navBtn{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.navBtn a{
+    text-decoration: none;
+    font-size: 15px;
+    color: rgb(55, 55, 55);
+    transition: all 0.5s ease;
+}
+
+.navBtn a:hover{
+    color: #6488EA;
+}
+
+.actBtn{
+    margin-top: 30px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.actBtn a, .actBtn button{
+    width: 200px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 20px;
+    border-radius: 7px;
+    border: 3px solid rgb(55, 55, 55);
+    padding: 0;
+    line-height: 1; /* Ensure consistent line height */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    text-align: center;
+    font-size: 15px;
+    transition: all 0.5s ease;
+}
+
+.actBtn a{
+    text-decoration: none;
+    color: rgb(55, 55, 55);
+}
+
+.actBtn button{
+    font-family: "JetBrains Mono", monospace;
+}
+
+.actBtn a:hover, .actBtn button:hover{
+    transform: translateY(-2.5px);
+    color: white;
+}
+
+.actBtn button:hover{
+    background-color: #6fc276;
+    box-shadow: 0 4px 8px 0 #6fc276;
+}
+
+.actBtn a:hover{
+    background-color: #f94449;
+    box-shadow: 0 4px 8px 0 #f94449;
+}

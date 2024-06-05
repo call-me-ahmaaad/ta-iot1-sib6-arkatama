@@ -170,7 +170,7 @@
                             var rainLabel;
                             var rainColor;
 
-                            if(data.rain_value = 1){
+                            if(data.rain_value = true){
                                 rainLabel = 'True';
                                 rainColor = '#f94449';
                             }else{

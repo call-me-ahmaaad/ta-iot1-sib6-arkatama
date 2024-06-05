@@ -198,10 +198,10 @@
                             var gasColor;
                             var gasLabel;
                             var gasIcon;
-                            if (scaledGas < 30) {
+                            if (gasValue < 300) {
                                 gasColor = '#6fc276'; // Blue for cold
                                 gasIcon = '😌'; // Cold icon
-                            } else if (scaledGas < 70) {
+                            } else if (gasValue < 700) {
                                 gasColor = '#ffe37a'; // Green for normal
                                 gasIcon = '😨'; // Normal icon
                             } else {
@@ -217,10 +217,6 @@
                             console.log('Error fetching latest gas data:', error);
                         }
                     });
-                }
-
-                function map(value, in_min, in_max, out_min, out_max) {
-                    return (value - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
                 }
 
                 function sendWhatsAppAlert(gasValue, tempValue, humidValue) {

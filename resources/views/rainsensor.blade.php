@@ -14,12 +14,12 @@
 
         <div class="card" id="quantity">
             <p id="unit">Quantity in day:</p>
-            <p><span id="quantity_value">0</span></p>
+            <p><span id="quantity_value">0 times</span></p>
         </div>
 
         <div class="card" id="duration">
             <p id="unit">Total Duration:</p>
-            <p><span id="duration_value">0</span></p>
+            <p><span id="duration_value">0 hours</span></p>
         </div>
 
         <script>

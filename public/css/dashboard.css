@@ -245,7 +245,7 @@ body{
     border-radius: 10px;
 }
 
-.gaugeGas .gaugeContainer .gauge {
+.gaugeContainer .gauge {
     height: 100%;
     width: 0%;
     transition: width 0.5s, background-color 0.5s;
@@ -255,7 +255,7 @@ body{
     border-radius: 7px;
 }
 
-.gaugeGas .gaugeContainer .icon {
+.gaugeContainer .icon {
     font-size: 50px;
     position: absolute;
     top: -20px; /* Adjust based on your design */

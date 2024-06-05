@@ -178,7 +178,7 @@
                                 rainColor = '#6fc276';
                             }
                             $('#rain_value').text(rainLabel);
-                            $('#rain').css('background-color', rainColor).css('box-shadow', `0 4px 8px 0 ${rainColor}`);
+                            $('#rain').css('background-color', rainColor);
                         },
                         error: function(error) {
                             console.log('Error fetching latest rain data:', error);

@@ -66,7 +66,7 @@
         {{-- Raindrop Sensor --}}
         <a class="button" href={{route('web.rain')}} id="rain">
             <h3>Raindrop</h3>
-            <p><span id="rain_value"></span></p>
+            <p><span id="rain_value">{{ $rain_value }}</span></p>
         </a>
 
         {{-- Gas Sensor (MQ-2) --}}

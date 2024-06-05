@@ -144,7 +144,7 @@
                             $('#humid-label').text(humidLabel);
 
                             $('#temp-label').css('background-color', tempColor).css('font-size', '15px');
-                            $('#humid-label').css('background-colorcolor', humidColor).css('font-size', '15px');
+                            $('#humid-label').css('background-color', humidColor).css('font-size', '15px');
 
                             $('.gaugeTemp').css('width', tempPercentage + '%').css('background-color', tempColor);
                             $('.gaugeHumidity').css('width', humidPercentage + '%').css('background-color', humidColor);

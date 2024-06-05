@@ -30,7 +30,7 @@
                             $('#gas_value').text(gasValue + ' ppm');
 
                             // Update the gauge value
-                            var maxGasValue = 1000; // Assuming 1000 ppm is the maximum value for the gauge
+                            var maxGasValue = 10000; // Assuming 1000 ppm is the maximum value for the gauge
                             var gaugeHeight = (gasValue / maxGasValue) * 100;
 
                             // Determine the color of the gauge bar based on the value

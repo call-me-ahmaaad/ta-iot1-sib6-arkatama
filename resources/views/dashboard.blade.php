@@ -143,8 +143,8 @@
                             $('#temp-label').text(tempLabel);
                             $('#humid-label').text(humidLabel);
 
-                            $('#temp-label').css('color', tempColor).css('font-size', '15px');
-                            $('#humid-label').css('color', humidColor).css('font-size', '15px');
+                            $('#temp-label').css('background-color', tempColor).css('font-size', '15px');
+                            $('#humid-label').css('background-colorcolor', humidColor).css('font-size', '15px');
 
                             $('.gaugeTemp').css('width', tempPercentage + '%').css('background-color', tempColor);
                             $('.gaugeHumidity').css('width', humidPercentage + '%').css('background-color', humidColor);
@@ -192,8 +192,8 @@
                                 sendWhatsAppAlert(gasValue, tempValue, humidValue);
                             }
 
-                            var scaledGas = map(gasValue, 0, 4095, 0, 100);
-                            var gasPercentage = (scaledGas/ 100) * 100;
+                            var maxGasValue = 10000; // Assuming 1000 ppm is the maximum value for the gauge
+                            var gasPercentage = (gasValue / maxGasValue) * 100;
 
                             var gasColor;
                             var gasLabel;

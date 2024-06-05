@@ -66,7 +66,7 @@
         {{-- Raindrop Sensor --}}
         <a class="button" href={{route('web.rain')}} id="rain">
             <h3>Raindrop</h3>
-            <p><span id="rain_value">{{ $rain_value }}</span></p>
+            <p><span id="rain_value"></span></p>
         </a>
 
         {{-- Gas Sensor (MQ-2) --}}
@@ -167,7 +167,18 @@
                         url: '/latest-rain',
                         method: 'GET',
                         success: function(data) {
-                            $('#rain_value').text(data.rain_value);
+                            var rainLabel;
+                            var rainColor;
+
+                            if(data.rain_value = 1){
+                                rainLabel = 'True';
+                                rainColor = '#f94449';
+                            }else{
+                                rainLabel = 'False';
+                                rainColor = '#6fc276';
+                            }
+                            $('#rain_value').text(rainLabel);
+                            $('#rain_value').css('background-color', rainColor);
                         },
                         error: function(error) {
                             console.log('Error fetching latest rain data:', error);
@@ -192,16 +203,15 @@
                                 sendWhatsAppAlert(gasValue, tempValue, humidValue);
                             }
 
-                            var maxGasValue = 10000; // Assuming 1000 ppm is the maximum value for the gauge
+                            var maxGasValue = 4095; // Assuming 1000 ppm is the maximum value for the gauge
                             var gasPercentage = (gasValue / maxGasValue) * 100;
 
                             var gasColor;
-                            var gasLabel;
                             var gasIcon;
-                            if (gasValue < 300) {
+                            if (gasValue <= 300) {
                                 gasColor = '#6fc276'; // Blue for cold
                                 gasIcon = '😌'; // Cold icon
-                            } else if (gasValue < 700) {
+                            } else if (gasValue <= 1400) {
                                 gasColor = '#ffe37a'; // Green for normal
                                 gasIcon = '😨'; // Normal icon
                             } else {

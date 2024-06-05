@@ -30,14 +30,14 @@
                             $('#gas_value').text(gasValue + ' ppm');
 
                             // Update the gauge value
-                            var maxGasValue = 10000; // Assuming 1000 ppm is the maximum value for the gauge
+                            var maxGasValue = 4095; // Assuming 1000 ppm is the maximum value for the gauge
                             var gaugeHeight = (gasValue / maxGasValue) * 100;
 
                             // Determine the color of the gauge bar based on the value
                             var gaugeColor;
-                            if (gasValue < 300) {
+                            if (gasValue <= 300) {
                                 gaugeColor = '#6fc276'; // Green for safe levels
-                            } else if (gasValue < 700) {
+                            } else if (gasValue <= 1400) {
                                 gaugeColor = '#ffe37a'; // Yellow for caution
                             } else {
                                 gaugeColor = '#f94449'; // Red for danger

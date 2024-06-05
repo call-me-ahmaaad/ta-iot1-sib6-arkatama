@@ -88,6 +88,12 @@ body{
     justify-content: center; */
 }
 
+.card .button[id="gas"] p{
+    margin-top: 38px;
+    margin-bottom: 45px;
+    font-size: 40px;
+}
+
 /* .card .button[id="gas"] .info{
     display: inline-block;
 } */
@@ -195,25 +201,43 @@ body{
     color: rgb(55, 55, 55);
 }
 
-.gaugeMonitoring{
+.gaugeGas{
     display: flex;
     flex-direction: column;
     width: 500px;
     margin-left: 31px;
 }
 
-.gaugeMonitoring .dynamic-label{
-    font-weight: 500;
+.gaugeGas .gaugeTitle{
+    font-weight: 600;
 }
 
-.gaugeMonitoring .gaugeContainer {
+.gaugeGas .gaugeLabel{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
     width: 100%;
-    background-color: #e0e0e0;
-    border-radius: 5px;
+}
+
+.gaugeGas .gaugeLabel .dynamic-label{
+    background-color: red;
+    width: 240px;
+    height: 50px;
+    border: 3px solid #2c2c2c;
+    border-radius: 7px;
+}
+
+.gaugeGas .gaugeContainer{
+    margin: 10px 0;
+}
+
+.gaugeContainer {
+    background-color: white;
     overflow: visible;
     position: relative;
     height: 35px;
-    margin: 20px 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -221,7 +245,7 @@ body{
     border-radius: 10px;
 }
 
-.gaugeMonitoring .gaugeContainer .gauge {
+.gaugeGas .gaugeContainer .gauge {
     height: 100%;
     width: 0%;
     transition: width 0.5s, background-color 0.5s;
@@ -231,7 +255,7 @@ body{
     border-radius: 7px;
 }
 
-.gaugeMonitoring .gaugeContainer .icon {
+.gaugeGas .gaugeContainer .icon {
     font-size: 50px;
     position: absolute;
     top: -20px; /* Adjust based on your design */

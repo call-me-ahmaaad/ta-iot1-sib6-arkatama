@@ -94,27 +94,6 @@ body{
     font-size: 40px;
 }
 
-/* .card .button[id="gas"] .info{
-    display: inline-block;
-} */
-
-/* .card .button[id="gas"] .info h3{
-    margin-top: 0;
-}
-
-.card .button[id="gas"] .info p{
-    font-size: 40px;
-    margin-top: 60px;
-}
-
-.card .button[id="gas"] #container-gauge{
-    border-radius: 7px;
-    border: 3px solid #2c2c2c;
-    width: 285px;
-    height: 195px;
-    margin-left: 45px;
-} */
-
 .card .button[id="gas"]:hover{
     box-shadow: 0 4px 8px 0 #6488EA;
 }

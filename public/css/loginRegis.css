@@ -3,22 +3,24 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    /* justify-content: center; */
     background-color: rgb(246, 246, 246);
+    height: 97vh;
 }
 
 header{
     width: 200px;
-    height: 200px;
+    height: 150px;
     padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 35px;
 }
 
 header img{
     border-radius: 50%;
-    width: 150px;
+    width: 100px;
     border: 3px solid rgb(55, 55, 55);
 }
 
@@ -29,6 +31,11 @@ header img{
     padding: 5px 20px;
     border-radius: 7px;
     border: 3px solid rgb(55, 55, 55);
+}
+
+.container[id="register"]{
+    height: 555px;
+    margin-top: 78px;
 }
 
 h3{
@@ -76,12 +83,20 @@ input{
     box-shadow: 0 0 0 0 transparent;
 }
 
+input[id="name"]:focus{
+    box-shadow: 0 0 0 3px #6fc276;
+}
+
 input[id="email"]:focus{
     box-shadow: 0 0 0 3px #f94449;
 }
 
 input[id="password"]:focus{
     box-shadow: 0 0 0 3px #6488EA;
+}
+
+input[id="password_confirmation"]:focus{
+    box-shadow: 0 0 0 3px #ffe37a;
 }
 
 .navBtn{

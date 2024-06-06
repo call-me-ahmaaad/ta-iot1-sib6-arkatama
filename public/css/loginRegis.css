@@ -18,6 +18,10 @@ header{
     margin-top: 35px;
 }
 
+header[id="forgotPw"]{
+    margin-top: 70px;
+}
+
 header img{
     border-radius: 50%;
     width: 100px;
@@ -34,12 +38,21 @@ header img{
 }
 
 .container[id="register"]{
-    height: 555px;
+    height: 570px;
     margin-top: 78px;
+}
+
+.container[id="forgotPw"]{
+    height: 325px;
 }
 
 h3{
     text-align: center;
+}
+
+.info{
+    font-size: 14px;
+    line-height: 1.6;
 }
 
 .input{
@@ -66,7 +79,7 @@ h3{
 }
 
 label{
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     font-size: 15px;
     font-weight: 600;
 }
@@ -122,6 +135,13 @@ input[id="password_confirmation"]:focus{
     margin-top: 30px;
     display: inline-flex;
     align-items: center;
+}
+
+.actBtn[id="forgotPw"]{
+    margin-top: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .actBtn a, .actBtn button{

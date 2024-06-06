@@ -8,6 +8,9 @@ use App\Models\Dht11;
 use App\Models\Raindrop;
 use App\Models\Mq2;
 
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Cache;
+
 class ApiController extends Controller
 {
     // Fungsi API untuk data sensor DHT11
@@ -60,6 +63,15 @@ class ApiController extends Controller
         $mq2->gas_value = $request->gas_value;
         $mq2->save();
 
+        // Mendapatkan data terbaru dari sensor lainnya
+        $raindrop = Raindrop::latest()->first();
+        $dht11 = Dht11::latest()->first();
+
+        // Mengecek apakah temp_c melebihi 70
+        if ($mq2->gas_value > 1400) {
+            $this->sendWhatsAppNotification($dht11->temp_c ?? 'N/A', $mq2->gas_value, $raindrop->rain_value ?? 'N/A', $dht11->humid ?? 'N/A');
+        }
+
         // Mendapatkan ID produk yang baru saja ditambahkan
         $mq2Id = $mq2->id;
 
@@ -71,5 +83,42 @@ class ApiController extends Controller
                 "gas_value" => $mq2->gas_value
             ]
         ], 201);
+    }
+
+    // Fungsi untuk mengirim notifikasi WhatsApp menggunakan Fonnte
+    private function sendWhatsAppNotification($temp_c, $gas_value, $rain_value, $humid)
+    {
+        $cacheKey = 'send_whatsapp_notification';
+
+        if (Cache::has($cacheKey)) {
+            // Notifikasi baru-baru ini sudah dikirim, jadi tidak mengirim lagi
+            return;
+        }
+
+        // Membuat pesan yang mencakup data dari semua sensor
+        $rain_condition = $rain_value == true ? 'Rain' : 'Not Rain';
+        $message = "🔥🔥🔥 MENYALA ABANGKU 🔥🔥🔥\n\nGas Concentration: {$gas_value} ppm\nTemperature: {$temp_c}°C\nHumidity: {$humid}%\nRain Condition: {$rain_condition}\n\nThe notification will appear again if conditions remain dangerous in the next 1 minutes.";
+
+        // Kirim notifikasi jika tidak ada dalam cache
+        $client = new Client();
+        $apiKey = 'n9NNqRF_PUbLf8v4TYzP';  // Ganti dengan API Key Anda
+        $phoneNumber = '+6282299006083';  // Ganti dengan nomor WhatsApp yang dituju
+
+        $response = $client->post('https://api.fonnte.com/send', [
+            'headers' => [
+                'Authorization' => $apiKey,
+                'Content-Type' => 'application/json',
+            ],
+            'json' => [
+                'target' => $phoneNumber,
+                'message' => $message,
+                'countryCode' => '62'  // Kode negara untuk Indonesia
+            ],
+        ]);
+
+        // Set cache untuk mencegah pengiriman notifikasi berikutnya dalam 1 menit
+        Cache::put($cacheKey, true, 60);  // 60 detik
+
+        return $response->getBody()->getContents();
     }
 }

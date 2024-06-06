@@ -200,9 +200,9 @@
                             $('#gas_value').text(gasValue + ' ppm');
 
                             // Check if the gas value exceeds 1400
-                            if (gasValue > 1400) {
-                                sendWhatsAppAlert(gasValue, tempValue, humidValue);
-                            }
+                            // if (gasValue > 1400) {
+                            //     sendWhatsAppAlert(gasValue, tempValue, humidValue);
+                            // }
 
                             var maxGasValue = 4095; // Assuming 1000 ppm is the maximum value for the gauge
                             var gasPercentage = (gasValue / maxGasValue) * 100;
@@ -230,40 +230,40 @@
                     });
                 }
 
-                function sendWhatsAppAlert(gasValue, tempValue, humidValue) {
-                    var currentTime = new Date().getTime();
+                // function sendWhatsAppAlert(gasValue, tempValue, humidValue) {
+                //     var currentTime = new Date().getTime();
 
-                    // Check if the cooldown period has passed
-                    if (currentTime - lastAlertTime >= cooldownTime) {
-                        var apiKey = 'n9NNqRF_PUbLf8v4TYzP'; // Replace with your Fonnte API key
-                        var phoneNumber = '+6282299006083'; // Target phone number
-                        var message = `🔥🔥🔥 MENYALA ABANGKU 🔥🔥🔥\n\nGas Concentration: ${gasValue} ppm\nTemperature: ${tempValue}°C\nHumidity: ${humidValue}%\n\nThe notification will appear again if conditions remain dangerous in the next 1 minutes.`;
+                //     // Check if the cooldown period has passed
+                //     if (currentTime - lastAlertTime >= cooldownTime) {
+                //         var apiKey = 'n9NNqRF_PUbLf8v4TYzP'; // Replace with your Fonnte API key
+                //         var phoneNumber = '+6282299006083'; // Target phone number
+                //         var message = `🔥🔥🔥 MENYALA ABANGKU 🔥🔥🔥\n\nGas Concentration: ${gasValue} ppm\nTemperature: ${tempValue}°C\nHumidity: ${humidValue}%\n\nThe notification will appear again if conditions remain dangerous in the next 1 minutes.`;
 
-                        $.ajax({
-                            url: 'https://api.fonnte.com/send', // Fonnte API endpoint
-                            method: 'POST',
-                            headers: {
-                                'Authorization': apiKey,
-                                'Content-Type': 'application/x-www-form-urlencoded' // Ensure proper content type
-                            },
-                            data: {
-                                'target': phoneNumber,
-                                'message': message,
-                                'countryCode': '62' // Country code for Indonesia
-                            },
-                            success: function(response) {
-                                console.log('WhatsApp alert sent successfully:', response);
-                                lastAlertTime = currentTime; // Update last alert time
-                            },
-                            error: function(error) {
-                                console.log('Error sending WhatsApp alert:', error);
-                                console.log('Error details:', error.responseText);
-                            }
-                        });
-                    } else {
-                        console.log('Cooldown active. Alert not sent.');
-                    }
-                }
+                //         $.ajax({
+                //             url: 'https://api.fonnte.com/send', // Fonnte API endpoint
+                //             method: 'POST',
+                //             headers: {
+                //                 'Authorization': apiKey,
+                //                 'Content-Type': 'application/x-www-form-urlencoded' // Ensure proper content type
+                //             },
+                //             data: {
+                //                 'target': phoneNumber,
+                //                 'message': message,
+                //                 'countryCode': '62' // Country code for Indonesia
+                //             },
+                //             success: function(response) {
+                //                 console.log('WhatsApp alert sent successfully:', response);
+                //                 lastAlertTime = currentTime; // Update last alert time
+                //             },
+                //             error: function(error) {
+                //                 console.log('Error sending WhatsApp alert:', error);
+                //                 console.log('Error details:', error.responseText);
+                //             }
+                //         });
+                //     } else {
+                //         console.log('Cooldown active. Alert not sent.');
+                //     }
+                // }
 
                 // Fetch the latest temperature and humidity every 1 second
                 setInterval(fetchLatestTempAndHumid, 1000);

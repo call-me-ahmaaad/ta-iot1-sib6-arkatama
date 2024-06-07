@@ -2,19 +2,24 @@
 @section('container')
     <header>
         <img src={{URL::asset("/image/Biscuit.jpg")}} alt="Biscuit">
-        <p id="erorMsg">Eror message here :3</p>
     </header>
-    <form method="POST" action="{{ route('login') }}">
+    <form method="POST" action="{{ route('login') }}" novalidate>
         @csrf
         <div class="container">
             <h3>Login</h3>
             <div class="input email">
                 <label for="email">Email</label>
                 <input id="email" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" placeholder="Input your email here">
+                @error('email')
+                    <p class="erorMsg">{{$message}}</p>
+                @enderror
             </div>
             <div class="input password">
                 <label for="password">Password</label>
                 <input id="password" type="password" name="password" required autocomplete="current-password" placeholder="Input your password here">
+                @error('password')
+                    <p class="erorMsg">{{$message}}</p>
+                @enderror
             </div>
             <div class="input remember_me">
                 <label for="remember_me">

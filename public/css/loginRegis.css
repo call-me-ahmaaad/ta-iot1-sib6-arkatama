@@ -3,23 +3,20 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* justify-content: center; */
+    justify-content: center;
     background-color: rgb(246, 246, 246);
     height: 97vh;
 }
 
 header{
     width: 200px;
-    height: 150px;
+    height: auto;
     padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 35px;
-}
-
-header[id="forgotPw"]{
-    margin-top: 70px;
+    /* margin-top: 35px; */
+    margin-bottom: 10px;
 }
 
 header img{
@@ -31,23 +28,28 @@ header img{
 .container{
     background-color: rgb(236, 236, 236);
     width: 500px;
-    height: 425px;
+    min-height: 425px;
     padding: 5px 20px;
     border-radius: 7px;
     border: 3px solid rgb(55, 55, 55);
 }
 
 .container[id="register"]{
-    height: 570px;
-    margin-top: 78px;
+    min-height: 570px;
 }
 
 .container[id="forgotPw"]{
-    height: 325px;
+    min-height: 325px;
 }
 
 h3{
     text-align: center;
+}
+
+.erorMsg{
+    font-size: 13px;
+    margin-bottom: 0;
+    color: #f94449;
 }
 
 .info{
@@ -56,15 +58,25 @@ h3{
 }
 
 .input{
-    margin: 20px 0;
+    margin: 20px 0 0;
     display: flex;
     flex-direction: column;
     color: rgb(55, 55, 55);
 }
 
-.input.password{
-    margin-bottom: 10px;
+/* .input.email{
+    margin-bottom: 0;
 }
+
+.input.password{
+    margin-bottom: 0;
+    margin-top: 0;
+} */
+
+/* .input.remember_me{
+    margin-bottom: 10px;
+    margin-top: 0;
+} */
 
 .input.remember_me label{
     display: inline-flex;
@@ -118,6 +130,7 @@ input[id="password_confirmation"]:focus{
     align-items: center;
     justify-content: center;
     margin-top: 30px;
+    margin-bottom: 20px;
 }
 
 .navBtn a{

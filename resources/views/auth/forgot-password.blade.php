@@ -2,9 +2,8 @@
 @section('container')
 <header id="forgotPw">
     <img src={{URL::asset("/image/Bisco.jpg")}} alt="Biscuit">
-    <p id="erorMsg">Eror message here :3</p>
 </header>
-<form method="POST" action="{{ route('password.email') }}">
+<form method="POST" action="{{ route('password.email') }}" novalidate>
     @csrf
     <div class="container" id="forgotPw">
         <h3>Forgot Password</h3>
@@ -12,6 +11,9 @@
         <div class="input email" id="forgotPw">
             <label for="email">Email</label>
             <input id="email" type="email" name="email" :value="old('email')" required autofocus placeholder="Input your email here">
+            @error('email')
+                    <p class="erorMsg">{{$message}}</p>
+            @enderror
         </div>
         <div class="navBtn">
             <div class="actBtn" id="forgotPw">

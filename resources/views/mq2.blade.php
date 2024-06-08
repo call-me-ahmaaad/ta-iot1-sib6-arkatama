@@ -1,9 +1,7 @@
 @extends('layouts.sensorPage')
 @section('css')
     <link rel="stylesheet" href={{URL::asset("/css/sensorPageMq2.css")}}>
-@endsection
-@section('navbar')
-
+    <link rel="shortcut icon" href={{URL::asset("/image/favicon/mq2.ico")}} type="image/x-icon">
 @endsection
 @section('container')
     <div class="label">

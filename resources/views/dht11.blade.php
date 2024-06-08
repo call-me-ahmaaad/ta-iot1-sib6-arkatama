@@ -1,8 +1,8 @@
 @extends('layouts.sensorPage')
 @section('css')
     <link rel="stylesheet" href={{URL::asset("/css/sensorPageDht.css")}}>
+    <link rel="shortcut icon" href={{URL::asset("/image/favicon/dht11.ico")}} type="image/x-icon">
 @endsection
-
 @section('container')
     <div class="label">
         <div class="card" id="unit">

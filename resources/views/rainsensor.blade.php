@@ -1,9 +1,7 @@
 @extends('layouts.sensorPage')
 @section('css')
     <link rel="stylesheet" href={{URL::asset("/css/sensorPageRain.css")}}>
-@endsection
-@section('navbar')
-
+    <link rel="shortcut icon" href={{URL::asset("/image/favicon/raindrop.ico")}} type="image/x-icon">
 @endsection
 @section('container')
     <div class="label">

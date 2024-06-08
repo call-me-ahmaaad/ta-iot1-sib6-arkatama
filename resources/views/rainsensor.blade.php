@@ -76,6 +76,17 @@
                         url: '/latest-rain',
                         method: 'GET',
                         success: function(data) {
+
+                            var rainLabel;
+                            var rainColor;
+                            if(data.rain_value == 1){
+                                rainLabel = 'True';
+                                rainColor = '#f94449';
+                            }else{
+                                rainLabel = 'False';
+                                rainColor = '#6fc276';
+                            }
+
                             resetDataIfNewDay();
 
                             const currentRainValue = data.rain_value;
@@ -102,7 +113,8 @@
                             previousRainValue = currentRainValue;
 
                             // Update rain_value di halaman
-                            $('#rain_value').text(currentRainValue);
+                            $('#rain_value').text(rainLabel);
+                            $('#rain').css('background-color', rainColor);
 
                             // Update kuantitas di halaman
                             $('#quantity_value').text(rainQuantity + ' times');

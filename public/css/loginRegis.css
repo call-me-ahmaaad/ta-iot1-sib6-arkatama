@@ -197,3 +197,7 @@ input[id="password_confirmation"]:focus{
     background-color: #f94449;
     box-shadow: 0 4px 8px 0 #f94449;
 }
+
+button{
+    cursor: pointer;
+}

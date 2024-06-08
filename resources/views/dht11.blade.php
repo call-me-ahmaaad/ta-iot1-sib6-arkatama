@@ -1,10 +1,8 @@
 @extends('layouts.sensorPage')
 @section('css')
-    <link rel="stylesheet" href="/css/sensorPageDht.css">
+    <link rel="stylesheet" href={{URL::asset("/css/sensorPageDht.css")}}>
 @endsection
-@section('navbar')
 
-@endsection
 @section('container')
     <div class="label">
         <div class="card" id="unit">
@@ -174,9 +172,9 @@
                         }
                     },
                     title: {
-                        text: 'Temperature',
+                        text: 'Live Temperature Data',
                         style: {
-                            color: 'blue'
+                            color: '#6488EA'
                         }
                     },
                     xAxis: {
@@ -211,7 +209,7 @@
                         }
                     },
                     title: {
-                        text: 'Humidity',
+                        text: 'Live Humidity Data',
                         style: {
                             color: '#7d54ae'
                         }

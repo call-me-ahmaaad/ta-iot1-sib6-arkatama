@@ -178,7 +178,7 @@
                         }
                     },
                     title: {
-                        text: 'Rainsensor Detection',
+                        text: 'Live Rain Detection',
                         style: {
                             color: '#f94449',
                         }

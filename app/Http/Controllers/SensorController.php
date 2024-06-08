@@ -17,6 +17,7 @@ class SensorController extends Controller
         $latestMq2Data = Mq2::latest()->first();
 
         return view('dashboard', [
+            'title' => 'Dashboard',
             'temp_c' => $latestDhtData ? $latestDhtData->temp_c : null,
             'humid' => $latestDhtData ? $latestDhtData->humid : null,
             'rain_value' => $latestRainData ? $latestRainData->rain_value : null,
@@ -29,6 +30,7 @@ class SensorController extends Controller
         $latestDhtData = Dht11::latest()->first();
 
         return view('dht11', [
+            'title' => 'DHT11 Monitoring Page',
             'temp_c' => $latestDhtData ? $latestDhtData->temp_c : null,
             'temp_f' => $latestDhtData ? $latestDhtData->temp_f : null,
             'temp_k' => $latestDhtData ? $latestDhtData->temp_k : null,
@@ -40,6 +42,7 @@ class SensorController extends Controller
         $latestMq2Data = Mq2::latest()->first();
 
         return view('mq2', [
+            'title' => 'MQ2 Monitoring Page',
             'gas_value' => $latestMq2Data ? $latestMq2Data->gas_value : null,
         ]);
     }
@@ -48,6 +51,7 @@ class SensorController extends Controller
         $latestRainData = Raindrop::latest()->first();
 
         return view('rainsensor', [
+            'title' => 'Raindrop Monitoring Page',
             'rain_value' => $latestRainData ? $latestRainData->rain_value : null,
         ]);
     }

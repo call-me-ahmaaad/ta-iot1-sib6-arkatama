@@ -1,30 +1,106 @@
+html {
+    /* To make use of full height of page*/
+    height: 100%;
+    margin: 0;
+}
+
 body{
     font-family: "JetBrains Mono", monospace;
-    /* height: 100vh; */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     background-color: rgb(246, 246, 246);
+    height: 100%;
+    margin: 0;
 }
 
 /* Bagian Title */
-.title{
-    text-align: center;
+
+header {
+    display: inline-flex;
+    align-items: center;
+    width: 98%;
+    padding: 15px;
+    /* background-color: #6fc276; */
+    justify-content: space-between;
+}
+
+.title h2 {
+    margin: 0;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
     color: rgb(55, 55, 55);
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    width: auto;
+    background-color: rgb(246, 246, 246);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 17px;
+    font-weight: 500;
+    transition: all 0.5s ease;
+    border-radius: 7px;
+}
+
+.dropdown-content {
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    right: 0; /* Align to the right */
+    top: 100%; /* Place below the button */
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    border-radius: 7px;
+    visibility: hidden;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    border-radius: 7px;
+}
+
+.dropdown-content a:hover {
+    background-color: #6488EA;
+    color: white;
+}
+
+.dropdown-content.show {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.dropdown-content.hide {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.5s;
 }
 
 .card{
     margin: 10px 0 10px 0;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     width: 80%;
     align-items: center;
     justify-content: center;
+    /* background-color: #6488EA; */
 }
 
 /* DHT11 */
-.card .button-dht{
+.card .dataRow{
     width: 90%;
     height: 270px;
     display: flex;
@@ -32,9 +108,14 @@ body{
     justify-content: left;
     border-radius: 12px;
     border: 3px solid #2c2c2c;
+    margin: 3px 0;
 }
 
-.card .button-dht .data{
+.card .dataRow.second{
+    border: none;
+}
+
+.card .dataRow .data{
     display: inline-block;
     width: 200px;
     height: 200px;/* Sesuaikan lebar card sesuai kebutuhan */
@@ -47,20 +128,20 @@ body{
     /* color: #ffffff; */
 }
 
-.card .button-dht .data[id="temp"]{
+.card .dataRow .data[id="temp"]{
     margin-left: 10px;
 }
 
-.card .button-dht .data{
+.card .dataRow .data{
     margin-left: 10px;
     background-color: #f94449;
 }
 
-.card .button-dht .data:hover{
+.card .dataRow .data:hover{
     box-shadow: 0 4px 8px 0 #f94449;
 }
 
-.card .button-dht .data h3{
+.card .dataRow .data h3{
     top: 10%;
 }
 
@@ -147,6 +228,7 @@ body{
     border-radius: 7px;
     font-family: "JetBrains Mono", monospace;
     transition: all 0.5s ease;
+    cursor: pointer;
 }
 .card .led .toggle button:hover, .card .led .toggle .btnLed.active{
     color: white;
@@ -178,6 +260,7 @@ body{
 
 .footer{
     color: rgb(55, 55, 55);
+    /* background-color: #b5651d; */
 }
 
 .gaugeDht{

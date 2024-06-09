@@ -268,66 +268,67 @@
                     <button class="btnLed" onclick="toggleLED('green')" id="green">Green</button>
                     <button class="btnLed" onclick="toggleLED('blue')" id="blue">Blue</button>
                     <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
-        <script>
-            var broker = 'wss://a3de186b.ala.asia-southeast1.emqxsl.com:8084/mqtt'; // Alamat WebSocket broker MQTT Anda
-            var topicBase = 'esp32/led/';
-            var client = new Paho.MQTT.Client(broker, 'web_client_' + new Date().getTime());
+                    <script>
+                        var broker = 'wss://a3de186b.ala.asia-southeast1.emqxsl.com:8084/mqtt'; // Alamat WebSocket broker MQTT Anda
+                        var topicBase = 'esp32/led/';
+                        var client = new Paho.MQTT.Client(broker, 'web_client_' + new Date().getTime());
 
-            client.onMessageArrived = function(message) {
-                console.log("onMessageArrived:" + message.payloadString);
-            };
+                        client.onMessageArrived = function(message) {
+                            console.log("onMessageArrived:" + message.payloadString);
+                        };
 
-            client.onConnectionLost = function(responseObject) {
-                console.log('Connection lost: ' + responseObject.errorMessage);
-            };
+                        client.onConnectionLost = function(responseObject) {
+                            console.log('Connection lost: ' + responseObject.errorMessage);
+                        };
 
-            function connectAndSendMessage(color, message) {
-                client.connect({
-                    userName: 'mentoring', // Username
-                    password: 'mentoring', // Password
-                    useSSL: true,
-                    onSuccess: function() {
-                        console.log('Connected to MQTT broker');
-                        var topic = topicBase + color;
-                        var messageObj = new Paho.MQTT.Message(message);
-                        messageObj.destinationName = topic;
-                        client.send(messageObj);
-                        console.log('Message sent:', message);
-                        client.disconnect();
-                    },
-                    onFailure: function(errorMessage) {
-                        console.error('Failed to connect to MQTT broker:', errorMessage);
-                        alert('Failed to send message. Please check MQTT connection.');
-                    }
-                });
-            }
-
-            function deactivateOtherButtons(exceptColor) {
-                var colors = ['red', 'green', 'blue'];
-                colors.forEach(function(color) {
-                    if (color !== exceptColor) {
-                        var button = document.getElementById(color);
-                        if (button) {
-                            button.classList.remove('active');
+                        function connectAndSendMessage(color, message) {
+                            client.connect({
+                                userName: 'mentoring', // Username
+                                password: 'mentoring', // Password
+                                useSSL: true,
+                                onSuccess: function() {
+                                    console.log('Connected to MQTT broker');
+                                    var topic = topicBase + color;
+                                    var messageObj = new Paho.MQTT.Message(message);
+                                    messageObj.destinationName = topic;
+                                    client.send(messageObj);
+                                    console.log('Message sent:', message);
+                                    alert('Message sent successfully!');
+                                    client.disconnect();
+                                },
+                                onFailure: function(errorMessage) {
+                                    console.error('Failed to connect to MQTT broker:', errorMessage);
+                                    alert('Failed to send message. Please check MQTT connection.');
+                                }
+                            });
                         }
-                    }
-                });
-            }
 
-            function toggleLED(color) {
-                var button = document.getElementById(color);
-                if (button) {
-                    var isActive = button.classList.toggle('active');
-                    var message = isActive ? 'on' : 'off';
-                    connectAndSendMessage(color, message);
-                    if (isActive) {
-                        deactivateOtherButtons(color);
-                    }
-                } else {
-                    console.error('Button not found for color:', color);
-                }
-            }
-        </script>
+                        function deactivateOtherButtons(exceptColor) {
+                            var colors = ['red', 'green', 'blue'];
+                            colors.forEach(function(color) {
+                                if (color !== exceptColor) {
+                                    var button = document.getElementById(color);
+                                    if (button) {
+                                        button.classList.remove('active');
+                                    }
+                                }
+                            });
+                        }
+
+                        function toggleLED(color) {
+                            var button = document.getElementById(color);
+                            if (button) {
+                                var isActive = button.classList.toggle('active');
+                                var message = isActive ? 'on' : 'off';
+                                connectAndSendMessage(color, message);
+                                if (isActive) {
+                                    deactivateOtherButtons(color);
+                                }
+                            } else {
+                                console.error('Button not found for color:', color);
+                            }
+                        }
+                    </script>
                 </div>
             </div>
         </div>

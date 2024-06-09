@@ -108,6 +108,29 @@ input{
     box-shadow: 0 0 0 0 transparent;
 }
 
+/* Default input styles */
+.input input {
+    /* Add any other styles here */
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+/* Box shadow when input has value */
+.input.name input.has-value {
+    box-shadow: 0 0 0 3px #6fc276;
+}
+
+.input.email input.has-value {
+    box-shadow: 0 0 0 3px #f94449;
+}
+
+.input.password input.has-value {
+    box-shadow: 0 0 0 3px #6488EA;
+}
+
+.input.re_password input.has-value {
+    box-shadow: 0 0 0 3px #ffe37a;
+}
+
 input[id="name"]:focus{
     box-shadow: 0 0 0 3px #6fc276;
 }

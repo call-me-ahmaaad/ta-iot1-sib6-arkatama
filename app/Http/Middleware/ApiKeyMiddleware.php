@@ -16,8 +16,8 @@ class ApiKeyMiddleware
         if ($apiKey !== $validApiKey) {
             return response()->json([
                 'success' => false,
-                'message' => 'Oops! It looks like you don\'t have access to this resource. Please provide a valid API Key.',
-                'error_code' => 'API_KEY_INVALID'
+                'message' => '⚠️⚠️ Sorry, you do not have access to operate this resource. Gain access to continue operating this resource. ⚠️⚠️',
+                'status' => '🚫🚫 ACCESS DENIED 🚫🚫'
             ], 401);
         }
 

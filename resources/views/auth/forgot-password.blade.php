@@ -35,6 +35,30 @@
                 <button type="submit">Send to Email</button>
             </div>
         </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const inputs = document.querySelectorAll('.input input');
+
+                // Function to check if input has value
+                function checkValue(input) {
+                    if (input.value.trim() !== '') {
+                        input.classList.add('has-value');
+                    } else {
+                        input.classList.remove('has-value');
+                    }
+                }
+
+                // Initial check when page loads for each input
+                inputs.forEach(input => checkValue(input));
+
+                // Add event listeners to each input
+                inputs.forEach(input => {
+                    input.addEventListener('input', () => checkValue(input));
+                    input.addEventListener('change', () => checkValue(input));
+                });
+            });
+        </script>
     </div>
 </form>
 @endsection

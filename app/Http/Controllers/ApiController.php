@@ -69,7 +69,7 @@ class ApiController extends Controller
 
         // Mengecek apakah temp_c melebihi 70
         if ($mq2->gas_value > 1400) {
-            $this->sendWhatsAppNotification($dht11->temp_c ?? 'N/A', $mq2->gas_value, $raindrop->rain_value ?? 'N/A', $dht11->humid ?? 'N/A');
+            $this->sendWhatsAppNotification($dht11->temp_c ?? 'N/A', $dht11->temp_f ?? 'N/A', $dht11->temp_k ?? 'N/A', $mq2->gas_value, $raindrop->rain_value ?? 'N/A', $dht11->humid ?? 'N/A');
         }
 
         // Mendapatkan ID produk yang baru saja ditambahkan
@@ -86,7 +86,7 @@ class ApiController extends Controller
     }
 
     // Fungsi untuk mengirim notifikasi WhatsApp menggunakan Fonnte
-    private function sendWhatsAppNotification($temp_c, $gas_value, $rain_value, $humid)
+    private function sendWhatsAppNotification($temp_c, $temp_f, $temp_k, $gas_value, $rain_value, $humid)
     {
         $cacheKey = 'send_whatsapp_notification';
 
@@ -97,7 +97,7 @@ class ApiController extends Controller
 
         // Membuat pesan yang mencakup data dari semua sensor
         $rain_condition = $rain_value == true ? 'Rain' : 'Not Rain';
-        $message = "🔥🔥🔥 MENYALA ABANGKU 🔥🔥🔥\n\nGas Concentration: {$gas_value} ppm\nTemperature: {$temp_c}°C\nHumidity: {$humid}%\nRain Condition: {$rain_condition}\n\nThe notification will appear again if conditions remain dangerous in the next 1 minutes.";
+        $message = "🔥🔥🔥 *MENYALA ABANGKU* 🔥🔥🔥\n\n*Gas Concentration:* {$gas_value} ppm\n*Temperature:*\n*- Celcius:* {$temp_c}°C\n*- Farenheit:* {$temp_f}°F\n*- Kelvin:* {$temp_k}°K \n*Humidity:* {$humid}%\n*Rain Condition:* {$rain_condition}\n\nThe notification will appear again if conditions remain dangerous in the next 1 minutes.";
 
         // Kirim notifikasi jika tidak ada dalam cache
         $client = new Client();

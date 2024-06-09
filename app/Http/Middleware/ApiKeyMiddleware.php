@@ -16,8 +16,8 @@ class ApiKeyMiddleware
         if ($apiKey !== $validApiKey) {
             return response()->json([
                 'success' => false,
-                'message' => '⚠️⚠️ Sorry, you do not have access to operate this resource. Gain access to continue operating this resource. ⚠️⚠️',
-                'status' => '🚫🚫 ACCESS DENIED 🚫🚫'
+                'message' => 'Sorry, you do not have access to operate this resource. Gain access to continue operating this resource.',
+                'status' => 'ACCESS DENIED!'
             ], 401);
         }
 

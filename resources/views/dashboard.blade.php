@@ -27,19 +27,19 @@
 
         <script>
            document.addEventListener('DOMContentLoaded', () => {
-    const dropdown = document.querySelector('.dropdown');
-    const dropdownContent = document.querySelector('.dropdown-content');
+                const dropdown = document.querySelector('.dropdown');
+                const dropdownContent = document.querySelector('.dropdown-content');
 
-    dropdown.addEventListener('mouseover', () => {
-        dropdownContent.classList.remove('hide');
-        dropdownContent.classList.add('show');
-    });
+                dropdown.addEventListener('mouseover', () => {
+                    dropdownContent.classList.remove('hide');
+                    dropdownContent.classList.add('show');
+                });
 
-    dropdown.addEventListener('mouseout', () => {
-        dropdownContent.classList.remove('show');
-        dropdownContent.classList.add('hide');
-    });
-});
+                dropdown.addEventListener('mouseout', () => {
+                    dropdownContent.classList.remove('show');
+                    dropdownContent.classList.add('hide');
+                });
+            });
         </script>
     </header>
 
@@ -293,12 +293,12 @@
                                     messageObj.destinationName = topic;
                                     client.send(messageObj);
                                     console.log('Message sent:', message);
-                                    alert('Message sent successfully!');
+                                    alert('Message sent: ' + color.toUpperCase() + ' is ' + message.toUpperCase());
                                     client.disconnect();
                                 },
                                 onFailure: function(errorMessage) {
                                     console.error('Failed to connect to MQTT broker:', errorMessage);
-                                    alert('Failed to send message. Please check MQTT connection.');
+                                    alert('Failed to send message for ' + color.toUpperCase() + '. Please check MQTT connection.');
                                 }
                             });
                         }

@@ -20,6 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/dht11', [ApiController::class, 'api_dht11']);
-Route::post('/raindrop', [ApiController::class, 'api_raindrop']);
-Route::post('/mq2', [ApiController::class, 'api_mq2']);
+Route::middleware(['api.key'])->group(function () {
+    Route::post('/dht11', [ApiController::class, 'api_dht11']);
+    Route::post('/raindrop', [ApiController::class, 'api_raindrop']);
+    Route::post('/mq2', [ApiController::class, 'api_mq2']);
+});

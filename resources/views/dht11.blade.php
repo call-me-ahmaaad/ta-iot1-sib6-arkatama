@@ -29,6 +29,9 @@
             <p id="unit">Humid:</p>
             <p><span id="humid_value">{{ $humid }}%</p>
         </div>
+        {{-- <div class="card" id="download">
+            <a href="{{ url('/download-mq2') }}" class="btn btn-primary">Download Data MQ2</a>
+        </div> --}}
 
         <script>
             $(document).ready(function() {

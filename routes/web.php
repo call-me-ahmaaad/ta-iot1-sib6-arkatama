@@ -4,6 +4,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SensorController;
 use App\Http\Controllers\WhatsappController;
 
+use App\Exports\MQ2Export;
+use Maatwebsite\Excel\Facades\Excel;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +39,10 @@ Route::get('/rain-monitoring', [SensorController::class, 'web_rain'])->name('web
 Route::get('/latest-dht11', [SensorController::class, 'latest_dht11']);
 Route::get('/latest-rain', [SensorController::class, 'latest_rain']);
 Route::get('/latest-mq2', [SensorController::class, 'latest_mq2']);
+
+Route::get('/download-mq2', function () {
+    return Excel::download(new MQ2Export, 'mq2_data.xlsx');
+});
 
 // Route::get('/latest-temp_f', [SensorController::class, 'latest_temp_f']);
 // Route::get('/latest-temp_k', [SensorController::class, 'latest_temp_k']);

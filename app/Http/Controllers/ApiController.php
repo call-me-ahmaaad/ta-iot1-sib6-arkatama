@@ -86,8 +86,7 @@ class ApiController extends Controller
     }
 
     // Fungsi untuk mengirim notifikasi WhatsApp menggunakan Fonnte
-    private function sendWhatsAppNotification($temp_c, $temp_f, $temp_k, $gas_value, $rain_value, $humid)
-    {
+    private function sendWhatsAppNotification($temp_c, $temp_f, $temp_k, $gas_value, $rain_value, $humid){
         $cacheKey = 'send_whatsapp_notification';
 
         if (Cache::has($cacheKey)) {

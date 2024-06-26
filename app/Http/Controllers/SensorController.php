@@ -42,7 +42,7 @@ class SensorController extends Controller
         $latestMq2Data = Mq2::latest()->first();
 
         return view('mq2', [
-            'title' => 'MQ2 Monitoring Page',
+            'title' => 'MQ-5 Monitoring Page',
             'gas_value' => $latestMq2Data ? $latestMq2Data->gas_value : null,
         ]);
     }

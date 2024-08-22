@@ -100,8 +100,8 @@ class ApiController extends Controller
 
         // Kirim notifikasi jika tidak ada dalam cache
         $client = new Client();
-        $apiKey = 'n9NNqRF_PUbLf8v4TYzP';  // Ganti dengan API Key Anda
-        $phoneNumber = '+6282299006083';  // Ganti dengan nomor WhatsApp yang dituju
+        $apiKey = '';  // Ganti dengan API Key Anda
+        $phoneNumber = '';  // Ganti dengan nomor WhatsApp yang dituju
 
         $response = $client->post('https://api.fonnte.com/send', [
             'headers' => [
